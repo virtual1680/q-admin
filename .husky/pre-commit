@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+echo "# 开始检测代码格式!"
 npm run lint:lint-staged
-npm run deploy
+echo "# 执行打包------!"
+# npm run deploy
