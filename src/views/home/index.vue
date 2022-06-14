@@ -8,7 +8,7 @@ import HelloWorld from "components/HelloWorld.vue";
 	<div class="imgs">
 		<div class="text">
 			<div>9090</div>
-			<div class="ok">福达合金卡</div>
+			<div class="ok">福达合金卡dd</div>
 			<icon-svg name="icon-msg" color="red"></icon-svg>
 		</div>
 	</div>
