@@ -24,7 +24,7 @@ module.exports = {
 		indentation: null, // 指定缩进空格
 		"no-descending-specificity": null, // 禁止在具有较高优先级的选择器后出现被其覆盖的较低优先级的选择器
 		"function-url-quotes": "always", // 要求或禁止 URL 的引号 "always(必须加上引号)"|"never(没有引号)"
-		"string-quotes": "double", // 指定字符串使用单引号或双引号
+		"string-quotes": "single", // 指定字符串使用单引号或双引号
 		"unit-case": null, // 指定单位的大小写 "lower(全小写)"|"upper(全大写)"
 		"color-hex-case": "lower", // 指定 16 进制颜色的大小写 "lower(全小写)"|"upper(全大写)"
 		"color-hex-length": "long", // 指定 16 进制颜色的简写或扩写 "short(16进制简写)"|"long(16进制扩写)"

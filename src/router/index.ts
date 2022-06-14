@@ -1,16 +1,16 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import { getToken } from 'utils/token';
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+// import { getToken } from "utils/token";
 const routes: Array<RouteRecordRaw> = [
 	{
-		path: '/',
-		name: 'Home',
-		component: () => import(/* webpackChunkName: "home" */ 'views/home/index.vue'),
-	},
+		path: "/",
+		name: "Home",
+		component: () => import(/* webpackChunkName: "home" */ "views/home/index.vue")
+	}
 ];
 
 const router = createRouter({
 	history: createWebHistory(),
-	routes,
+	routes
 });
 
 // router.beforeEach((to, from, next) => {

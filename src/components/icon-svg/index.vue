@@ -5,23 +5,23 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed } from "vue";
 const props = defineProps({
 	name: {
 		type: String,
-		required: true,
+		required: true
 	},
 	color: {
 		type: String,
-		default: '',
-	},
+		default: ""
+	}
 });
 const iconName = computed(() => `#icon-${props.name}`);
 const svgClass = computed(() => {
 	if (props.name) {
 		return `svg-icon icon-${props.name}`;
 	}
-	return 'svg-icon';
+	return "svg-icon";
 });
 </script>
 

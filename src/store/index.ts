@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 interface Socket {
 	isConnected: boolean;
 	message: string;
@@ -9,20 +9,20 @@ interface Socket {
 interface State {
 	socket: Socket;
 }
-export const useStore = defineStore('websocket', {
+export const useStore = defineStore("websocket", {
 	state: (): State => ({
 		socket: {
 			// 连接状态
 			isConnected: false,
 			// 消息内容
-			message: '',
+			message: "",
 			// 重新连接错误
 			reconnectError: false,
 			// 心跳消息发送时间
 			heartBeatInterval: 50000,
 			// 心跳定时器
-			heartBeatTimer: null,
-		},
+			heartBeatTimer: null
+		}
 	}),
 	getters: {
 		getSocketConnected(state) {
@@ -33,7 +33,7 @@ export const useStore = defineStore('websocket', {
 
 		getIsConnected() {
 			return this.getSocketConnected;
-		},
+		}
 	},
-	actions: {},
+	actions: {}
 });

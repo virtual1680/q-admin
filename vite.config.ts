@@ -1,37 +1,37 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import { resolve } from 'path';
-import { viteExternalsPlugin } from 'vite-plugin-externals';
-import viteImagemin from 'vite-plugin-imagemin';
-import { visualizer } from 'rollup-plugin-visualizer';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import { resolve } from "path";
+import { viteExternalsPlugin } from "vite-plugin-externals";
+import viteImagemin from "vite-plugin-imagemin";
+import { visualizer } from "rollup-plugin-visualizer";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-	console.log(command, mode, '开始加载配置文件-=-=-=-=-=-=');
+	console.log(command, mode, "开始加载配置文件-=-=-=-=-=-=");
 	return {
-		base: './',
+		base: "./",
 		resolve: {
 			alias: {
-				app: resolve(__dirname, 'src'),
-				assets: resolve(__dirname, 'src/assets'),
-				components: resolve(__dirname, 'src/components'),
-				api: resolve(__dirname, 'src/api'),
-				router: resolve(__dirname, 'src/router'),
-				views: resolve(__dirname, 'src/views'),
-				utils: resolve(__dirname, 'src/utils'),
-			},
+				app: resolve(__dirname, "src"),
+				assets: resolve(__dirname, "src/assets"),
+				components: resolve(__dirname, "src/components"),
+				api: resolve(__dirname, "src/api"),
+				router: resolve(__dirname, "src/router"),
+				views: resolve(__dirname, "src/views"),
+				utils: resolve(__dirname, "src/utils")
+			}
 		},
 		server: {
 			fs: { strict: false },
 			port: 3000,
 			proxy: {
-				'/api': {
+				"/api": {
 					// target: 'http://trace.leliven.com:8080/',
-					target: 'http://10.10.1.152:13002/',
+					target: "http://10.10.1.152:13002/",
 					changeOrigin: true,
-					rewrite: path => path.replace(/^\/api/, '/'),
-				},
-			},
+					rewrite: path => path.replace(/^\/api/, "/")
+				}
+			}
 		},
 		build: {
 			sourcemap: false,
@@ -39,17 +39,17 @@ export default defineConfig(({ command, mode }) => {
 				output: {
 					// 拆分代码
 					manualChunks: {
-						vue: ['vue', 'vue-router'], // 如果打包有BUG请屏蔽
-						'element-plus': ['element-plus'],
-					},
-				},
-			},
+						vue: ["vue", "vue-router"], // 如果打包有BUG请屏蔽
+						"element-plus": ["element-plus"]
+					}
+				}
+			}
 		},
 		plugins: [
 			vue(),
 			//忽略打包
 			viteExternalsPlugin({
-				echarts: 'echarts',
+				echarts: "echarts"
 				// axios: 'axios',
 			}),
 			//图片压缩
@@ -60,18 +60,18 @@ export default defineConfig(({ command, mode }) => {
 				mozjpeg: { quality: 65 },
 				pngquant: { quality: [0.65, 0.9], speed: 4 },
 				svgo: {
-					plugins: [{ removeViewBox: false }, { removeEmptyAttrs: false }],
-				},
+					plugins: [{ removeViewBox: false }, { removeEmptyAttrs: false }]
+				}
 			}),
 			//svg icon
 			createSvgIconsPlugin({
-				iconDirs: [resolve(process.cwd(), 'src/assets/svg')],
+				iconDirs: [resolve(process.cwd(), "src/assets/svg")],
 				svgoOptions: true,
 				// default
-				symbolId: 'icon-[dir]-[name]',
+				symbolId: "icon-[dir]-[name]"
 			}),
 			//依赖分析
-			visualizer(),
-		],
+			visualizer()
+		]
 	};
 });
