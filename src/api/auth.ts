@@ -40,7 +40,7 @@ export const Login = (username: string, password: string, type: string, key: str
  * 登录图片验证码
  * @returns
  */
-export const GetCaptcha = () => axios.get("/blade-auth/oauth/captcha");
+export const GetCaptcha = () => axios.get<never, { key: string; image: string }>("/blade-auth/oauth/captcha");
 
 /**
  * 退出登录

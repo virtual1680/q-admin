@@ -15,7 +15,7 @@ export const piniaPersistConfig = (key: string) => {
 	return persist;
 };
 
-export const useStore = defineStore({
+export const authStore = defineStore({
 	id: "AuthState",
 	state: (): AuthState => ({
 		accessToken: "",
@@ -26,6 +26,10 @@ export const useStore = defineStore({
 		getRefreshToken: state => state.refreshToken
 	},
 	actions: {
+		logout() {
+			this.accessToken = "";
+			this.refreshToken = "";
+		},
 		setToken(token: string) {
 			this.accessToken = token;
 		},

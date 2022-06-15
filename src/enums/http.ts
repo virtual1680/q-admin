@@ -1,5 +1,5 @@
 // * http 响应
-declare enum ResultEnum {
+export enum ResultEnum {
 	SUCCESS = 200,
 	ERROR = 500,
 	OVERDUE = 599,
@@ -8,7 +8,7 @@ declare enum ResultEnum {
 }
 
 // * 请求方法
-declare enum RequestEnum {
+export enum RequestEnum {
 	GET = "GET",
 	POST = "POST",
 	PATCH = "PATCH",
@@ -17,7 +17,7 @@ declare enum RequestEnum {
 }
 
 // *常用的contentTyp类型
-declare enum ContentTypeEnum {
+export enum ContentTypeEnum {
 	// json
 	JSON = "application/json;charset=UTF-8",
 	// text

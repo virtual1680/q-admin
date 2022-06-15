@@ -16,7 +16,7 @@ export default defineConfig(({ command, mode }) => {
 	const env = loadEnv(mode, process.cwd());
 	const viteEnv = wrapperEnv(env);
 	return {
-		base: "./",
+		// base: "./",
 		resolve: {
 			alias: {
 				app: resolve(__dirname, "src"),
@@ -49,7 +49,7 @@ export default defineConfig(({ command, mode }) => {
 			proxy: {
 				"/api": {
 					// target: 'http://trace.leliven.com:8080/',
-					target: "http://10.10.1.152:13002/",
+					target: "http://test.gateway.community.leliven.com/",
 					changeOrigin: true,
 					rewrite: path => path.replace(/^\/api/, "/")
 				}
@@ -67,11 +67,12 @@ export default defineConfig(({ command, mode }) => {
 				output: {
 					// 拆分代码
 					manualChunks: {
-						vue: ["vue", "vue-router"] // 如果打包有BUG请屏蔽
-					},
-					chunkFileNames: "assets/js/[name]-[hash].js",
-					entryFileNames: "assets/js/[name]-[hash].js",
-					assetFileNames: "assets/[ext]/[name]-[hash].[ext]"
+						vue: ["vue", "vue-router"], // 如果打包有BUG请屏蔽
+						"element-plus": ["element-plus"]
+					}
+					// chunkFileNames: "assets/js/[name]-[hash].js",
+					// entryFileNames: "assets/js/[name]-[hash].js",
+					// assetFileNames: "assets/[ext]/[name]-[hash].[ext]"
 				}
 			}
 		},
@@ -92,12 +93,6 @@ export default defineConfig(({ command, mode }) => {
 			importToCDN({
 				modules: [
 					{
-						name: "element-plus",
-						var: "ElementPlus",
-						path: "https://unpkg.com/element-plus",
-						css: "https://unpkg.com/element-plus/dist/index.css"
-					},
-					{
 						name: "echarts",
 						var: "echarts",
 						path: "https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"
@@ -106,7 +101,6 @@ export default defineConfig(({ command, mode }) => {
 			}),
 			// * 忽略打包
 			viteExternalsPlugin({
-				"element-plus": ["element-plus"],
 				echarts: "echarts"
 				// axios: 'axios',
 			}),

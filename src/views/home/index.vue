@@ -1,7 +1,12 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+<script setup lang="ts" name="home">
 import HelloWorld from "components/HelloWorld.vue";
+import { GetCaptcha } from "api/auth";
+import { ref } from "vue";
+const captcha = ref("");
+GetCaptcha().then(res => {
+	console.log(res);
+	captcha.value = res.image;
+});
 </script>
 
 <template>
@@ -12,8 +17,10 @@ import HelloWorld from "components/HelloWorld.vue";
 			<icon-svg name="icon-msg" color="red"></icon-svg>
 		</div>
 	</div>
+	<img :src="captcha" alt="" />
 	<img width="200" alt="Vue logo" src="../../assets/111.jpg" />
 	<HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+	<el-input v-model="captcha"></el-input>
 </template>
 
 <style lang="scss">

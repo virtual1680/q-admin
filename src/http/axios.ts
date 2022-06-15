@@ -3,8 +3,10 @@ import { ElMessage } from "element-plus";
 import { getToken } from "utils/token";
 import router from "router/index";
 import { AxiosCanceler } from "./cancel";
-import { removeToken, removeRefreshToken } from "utils/token";
+import { ResultEnum } from "app/enums/http";
+import { authStore } from "app/store";
 const axiosCanceler = new AxiosCanceler();
+const authState = authStore();
 const config = {
 	baseURL: import.meta.env.VITE_API_URL as string,
 	timeout: ResultEnum.TIMEOUT as number, // 请求超时时间
@@ -55,8 +57,7 @@ class Axios {
 					if (this.lock === 1) return false;
 					this.lock === 0 && ElMessage.error(message);
 					this.lock = 1;
-					removeToken();
-					removeRefreshToken();
+					authState.logout();
 					router.replace({ path: "/login" });
 					return Promise.reject(data);
 				} else if (status !== ResultEnum.SUCCESS) {
@@ -91,7 +92,7 @@ class Axios {
 	}
 
 	// * 请求方法
-	get<T>(url: string, params?: Params, config = {}): Promise<Result<T>> {
+	get<T, R = T>(url: string, params?: Params, config = {}): Promise<R extends T ? Result<T> : R> {
 		return this.instance.get(url, { params, ...config });
 	}
 	post<T>(url: string, params?: Params, config = {}): Promise<Result<T>> {
