@@ -8,7 +8,7 @@ import { authStore } from "app/store";
 const axiosCanceler = new AxiosCanceler();
 const authState = authStore();
 const config = {
-	baseURL: import.meta.env.VITE_API_URL as string,
+	baseURL: import.meta.env.VITE_BASE_URL as string,
 	timeout: ResultEnum.TIMEOUT as number, // 请求超时时间
 	withCredentials: true, // 跨域时候允许携带凭证
 	validateStatus: (status: number) => {

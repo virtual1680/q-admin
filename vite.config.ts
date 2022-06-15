@@ -16,7 +16,7 @@ export default defineConfig(({ command, mode }) => {
 	const env = loadEnv(mode, process.cwd());
 	const viteEnv = wrapperEnv(env);
 	return {
-		// base: "./",
+		base: "./",
 		resolve: {
 			alias: {
 				app: resolve(__dirname, "src"),
@@ -36,8 +36,7 @@ export default defineConfig(({ command, mode }) => {
 			open: viteEnv.VITE_OPEN,
 			proxy: {
 				"/api": {
-					// target: 'http://trace.leliven.com:8080/',
-					target: "http://10.10.1.152:13002/",
+					target: viteEnv.VITE_API_URL,
 					changeOrigin: true,
 					rewrite: path => path.replace(/^\/api/, "/")
 				}
@@ -48,8 +47,7 @@ export default defineConfig(({ command, mode }) => {
 			open: viteEnv.VITE_OPEN,
 			proxy: {
 				"/api": {
-					// target: 'http://trace.leliven.com:8080/',
-					target: "http://test.gateway.community.leliven.com/",
+					target: viteEnv.VITE_API_URL,
 					changeOrigin: true,
 					rewrite: path => path.replace(/^\/api/, "/")
 				}
