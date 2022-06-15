@@ -1,39 +1,42 @@
-import { defineStore } from "pinia";
-interface Socket {
-	isConnected: boolean;
-	message: string;
-	reconnectError: boolean;
-	heartBeatInterval: number;
-	heartBeatTimer: number | null;
+import { defineStore, createPinia } from "pinia";
+import piniaPersisted, { PersistedStateOptions } from "pinia-plugin-persistedstate";
+
+interface AuthState {
+	accessToken: string;
+	refreshToken: string;
 }
-interface State {
-	socket: Socket;
-}
-export const useStore = defineStore("websocket", {
-	state: (): State => ({
-		socket: {
-			// 连接状态
-			isConnected: false,
-			// 消息内容
-			message: "",
-			// 重新连接错误
-			reconnectError: false,
-			// 心跳消息发送时间
-			heartBeatInterval: 50000,
-			// 心跳定时器
-			heartBeatTimer: null
-		}
+
+// pinia持久化参数配置
+export const piniaPersistConfig = (key: string) => {
+	const persist: PersistedStateOptions = {
+		key,
+		storage: window.localStorage
+	};
+	return persist;
+};
+
+export const useStore = defineStore({
+	id: "AuthState",
+	state: (): AuthState => ({
+		accessToken: "",
+		refreshToken: ""
 	}),
 	getters: {
-		getSocketConnected(state) {
-			return state.socket.isConnected;
+		getToken: state => state.accessToken,
+		getRefreshToken: state => state.refreshToken
+	},
+	actions: {
+		setToken(token: string) {
+			this.accessToken = token;
 		},
-
-		getSocketMessage: state => state.socket.message,
-
-		getIsConnected() {
-			return this.getSocketConnected;
+		setRefreshToken(refreshToken: string) {
+			this.refreshToken = refreshToken;
 		}
 	},
-	actions: {}
+	persist: piniaPersistConfig("AuthState")
 });
+
+const pinia = createPinia();
+pinia.use(piniaPersisted);
+
+export default pinia;

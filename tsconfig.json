@@ -21,6 +21,8 @@
 			"assets/*": ["./src/assets/*"],
 			"api/*": ["./src/api/*"],
 			"router/*": ["./src/router/*"],
+			"http/*": ["./src/http/*"],
+			"store/*": ["./src/store/*"],
 			"views/*": ["./src/views/*"],
 			"utils/*": ["./src/utils/*"]
 		}
