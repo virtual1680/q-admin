@@ -1,7 +1,7 @@
 // 测试环境【华为鲲鹏服务器】
 // const huawei_kunpeng = {
-// 	host: "122.9.154.184",
-// 	password: "Leyun123!@#",
+// 	host: "10.10.1.32",
+// 	password: "Leyun@123",
 // 	catalog: "/home/app/pages/park/mp/",
 // 	port: 22,
 // 	username: "root",
@@ -11,7 +11,7 @@
 // 测试环境【本地测试环境】
 const local = {
 	host: "10.10.1.32",
-	password: "Leyun@park24",
+	password: "Leyun@123",
 	catalog: "/usr/share/nginx/html",
 	port: 22,
 	username: "root",
