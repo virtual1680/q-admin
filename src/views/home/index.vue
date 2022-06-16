@@ -4,9 +4,22 @@ import { GetCaptcha } from "api/auth";
 import { ref } from "vue";
 const captcha = ref("");
 GetCaptcha().then(res => {
-	console.log(res);
+	console.log("-=-=-=", res);
 	captcha.value = res.image;
 });
+// GetCaptcha1().then(res => {
+// 	console.log("====", res);
+// 	captcha.value = res.image;
+// });
+
+// GetCaptcha2().then(res => {
+// 	console.log("-=-=-=", res);
+// 	captcha.value = res.image;
+// });
+// GetCaptcha3().then(res => {
+// 	console.log("====", res);
+// 	captcha.value = res.image;
+// });
 </script>
 
 <template>
