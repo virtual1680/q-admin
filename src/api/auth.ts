@@ -1,5 +1,6 @@
 import axios from "http/axios";
 import md5 from "js-md5";
+import request from "http/axios1";
 
 export const info = (domain: string) => {
 	return axios.get("/blade-system/tenant/info", {
@@ -40,7 +41,23 @@ export const Login = (username: string, password: string, type: string, key: str
  * 登录图片验证码
  * @returns
  */
-export const GetCaptcha = () => axios.get<never, { key: string; image: string }>("/blade-auth/oauth/captcha");
+interface ImageCode {
+	key: string;
+	image: string;
+}
+export const GetCaptcha = () => axios.get<never, ImageCode>("/blade-auth/oauth/captcha");
+
+export const GetCaptcha1 = () =>
+	axios.request<ImageCode>({
+		url: "/blade-auth/oauth/captcha?111"
+	});
+
+export const GetCaptcha2 = () => request.get<never, ImageCode>("/blade-auth/oauth/captcha?222");
+
+export const GetCaptcha3 = () =>
+	request.request<ImageCode>({
+		url: "/blade-auth/oauth/captcha?333"
+	});
 
 /**
  * 退出登录

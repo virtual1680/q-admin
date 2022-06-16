@@ -16,6 +16,7 @@ const config = {
 	}
 };
 type Params = Partial<Record<string, unknown>>;
+type Config = Omit<AxiosRequestConfig, "url" | "method">;
 class Axios {
 	//axios 实列
 	private instance: AxiosInstance;
@@ -92,16 +93,19 @@ class Axios {
 	}
 
 	// * 请求方法
-	get<T, R = T>(url: string, params?: Params, config = {}): Promise<R extends T ? Result<T> : R> {
+	request<T = any, R = Result<T>>(config: AxiosRequestConfig): Promise<R> {
+		return this.instance.request(config);
+	}
+	get<T = any, R = Result<T>>(url: string, params?: Params, config?: Config): Promise<R> {
 		return this.instance.get(url, { params, ...config });
 	}
-	post<T>(url: string, params?: Params, config = {}): Promise<Result<T>> {
+	post<T = any, R = Result<T>>(url: string, params?: Params, config?: Config): Promise<R> {
 		return this.instance.post(url, params, config);
 	}
-	put<T>(url: string, params?: Params, config = {}): Promise<Result<T>> {
+	put<T = any, R = Result<T>>(url: string, params?: Params, config?: Config): Promise<R> {
 		return this.instance.put(url, params, config);
 	}
-	delete<T>(url: string, params?: Params, config = {}): Promise<Result<T>> {
+	delete<T = any, R = Result<T>>(url: string, params?: Params, config?: Config): Promise<R> {
 		return this.instance.delete(url, { params, ...config });
 	}
 }
