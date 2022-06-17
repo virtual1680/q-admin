@@ -76,17 +76,19 @@ class Axios {
 				return data;
 			},
 			(error: AxiosError) => {
-				if (error.message.includes("timeout")) {
-					ElMessage.error("请求超时，请刷新网页重试");
-				} else if (error.response) {
-					if (error.response.status === 403) {
-						ElMessage.error("拒绝访问");
-					} else if (error.response.status === 401) {
-						ElMessage.error("未登录");
-					} else {
-						ElMessage.error(error.message);
-					}
-				}
+				console.log(error);
+				// if (error.message.includes("timeout")) {
+				// 	ElMessage.error("请求超时，请刷新网页重试");
+				// } else if (error.response) {
+				// 	if (error.response.status === 403) {
+				// 		ElMessage.error("拒绝访问");
+				// 	} else if (error.response.status === 401) {
+				// 		ElMessage.error("未登录");
+				// 	} else {
+				// 		ElMessage.error(error.message);
+				// 	}
+				// }
+				ElMessage.error(error.message);
 				return Promise.reject(error);
 			}
 		);

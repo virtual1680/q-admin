@@ -2,11 +2,13 @@
 import HelloWorld from "components/HelloWorld.vue";
 import { GetCaptcha } from "api/auth";
 import { ref } from "vue";
+// import { useDownload } from "app/hooks/useDownload";
 const captcha = ref("");
 GetCaptcha().then(res => {
 	console.log("-=-=-=", res);
 	captcha.value = res.image;
 });
+// useDownload(await getExcel({ name: "222" }));
 // GetCaptcha1().then(res => {
 // 	console.log("====", res);
 // 	captcha.value = res.image;

@@ -16,7 +16,7 @@ export enum RequestEnum {
 	DELETE = "DELETE"
 }
 
-// *常用的contentTyp类型
+// *常用的contentType类型
 export enum ContentTypeEnum {
 	// json
 	JSON = "application/json;charset=UTF-8",
@@ -26,4 +26,10 @@ export enum ContentTypeEnum {
 	FORM_URLENCODED = "application/x-www-form-urlencoded;charset=UTF-8",
 	// form-data 上传
 	FORM_DATA = "multipart/form-data;charset=UTF-8"
+}
+
+// * responseType类型
+export enum ResponseTypeEnum {
+	ARRAY_BUFFER = "arraybuffer",
+	BLOB = "blob"
 }

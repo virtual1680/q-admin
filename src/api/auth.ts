@@ -1,6 +1,5 @@
 import axios from "http/axios";
 import md5 from "js-md5";
-import request from "http/axios1";
 
 export const info = (domain: string) => {
 	return axios.get("/blade-system/tenant/info", {
@@ -36,6 +35,14 @@ export const Login = (username: string, password: string, type: string, key: str
 		}
 	);
 };
+export const getExcel = (params: any) => {
+	return axios.request<never, any>({
+		url: `/lecent-mall/report/export`,
+		responseType: "arraybuffer",
+		method: "get",
+		params
+	});
+};
 
 /**
  * 登录图片验证码
@@ -45,18 +52,12 @@ interface ImageCode {
 	key: string;
 	image: string;
 }
+// * 无 ResultData 包裹
 export const GetCaptcha = () => axios.get<never, ImageCode>("/blade-auth/oauth/captcha");
-
+// * 有 ResultData 包裹
 export const GetCaptcha1 = () =>
 	axios.request<ImageCode>({
 		url: "/blade-auth/oauth/captcha?111"
-	});
-
-export const GetCaptcha2 = () => request.get<never, ImageCode>("/blade-auth/oauth/captcha?222");
-
-export const GetCaptcha3 = () =>
-	request.request<ImageCode>({
-		url: "/blade-auth/oauth/captcha?333"
 	});
 
 /**
