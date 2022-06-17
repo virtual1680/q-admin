@@ -6,6 +6,11 @@ const axiosCanceler = new AxiosCanceler();
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: "/",
+		name: "Login",
+		component: () => import(/* webpackChunkName: "Login" */ "views/login/index.vue")
+	},
+	{
+		path: "/",
 		name: "Home",
 		component: () => import(/* webpackChunkName: "home" */ "views/home/index.vue")
 	}

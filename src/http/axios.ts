@@ -38,6 +38,8 @@ class Axios {
 				if (getToken() && !headers?.isToken) {
 					(config.headers as AxiosRequestHeaders)["Blade-Auth"] = "bearer " + getToken();
 				}
+				(config.headers as AxiosRequestHeaders)["Content-Type"] = "application/json;charset=UTF-8";
+
 				return config;
 			},
 			(error: AxiosError) => {

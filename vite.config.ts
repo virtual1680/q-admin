@@ -31,14 +31,19 @@ export default defineConfig(({ command, mode }) => {
 			}
 		},
 		server: {
-			fs: { strict: false },
+			// fs: { strict: false },
 			port: viteEnv.VITE_PORT,
 			open: viteEnv.VITE_OPEN,
+			overlay: {
+				warning: false,
+				error: true
+			},
 			proxy: {
 				"/api": {
 					target: viteEnv.VITE_API_URL,
 					changeOrigin: true,
-					rewrite: path => path.replace(/^\/api/, "/")
+					ws: true,
+					rewrite: path => path.replace(/^\/api/, "")
 				}
 			}
 		},
@@ -49,6 +54,7 @@ export default defineConfig(({ command, mode }) => {
 				"/api": {
 					target: viteEnv.VITE_API_URL,
 					changeOrigin: true,
+					ws: true,
 					rewrite: path => path.replace(/^\/api/, "/")
 				}
 			}

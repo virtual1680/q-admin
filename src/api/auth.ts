@@ -1,5 +1,6 @@
+import { RequestEnum } from "app/enums/http";
 import axios from "http/axios";
-import md5 from "js-md5";
+// import md5 from "js-md5";
 
 export const info = (domain: string) => {
 	return axios.get("/blade-system/tenant/info", {
@@ -7,33 +8,38 @@ export const info = (domain: string) => {
 	});
 };
 interface LoginResult {
-	name: string;
+	access_token: string;
+	user_id: string;
 }
+
 /**
  * 登录
- * @param data {username password}
+ * @param tenantId
+ * @param username
+ * @param password
+ * @param type
+ * @param key
+ * @param code
  */
-export const Login = (username: string, password: string, type: string, key: string, code: string) => {
-	return axios.post<LoginResult>(
-		"/blade-auth/oauth/token",
-		{
-			tenantId: "000000",
+export const login = (tenantId: string, username: string, password: string, type: string, key: string, code: string) => {
+	return axios.request<never, LoginResult>({
+		url: "/blade-auth/oauth/token",
+		method: RequestEnum.POST,
+		params: {
+			tenantId,
 			username,
-			password: md5(password),
+			password,
 			grant_type: "captcha",
 			scope: "all",
 			type
 		},
-		{
-			headers: {
-				"Tenant-Id": "000000",
-				"Dept-Id": "",
-				"Role-Id": "",
-				"Captcha-Key": key,
-				"Captcha-Code": code
-			}
+		headers: {
+			"Tenant-Id": tenantId,
+			"Captcha-Key": key,
+			"Captcha-Code": code,
+			"User-Type": "web_admin"
 		}
-	);
+	});
 };
 export const getExcel = (params: any) => {
 	return axios.request<never, any>({
