@@ -9,3 +9,4 @@ declare module '*.vue' {
 declare module '@smallwei/avue';
 declare module '@smallwei/avue/*';
 declare module 'nprogress';
+declare module 'crypto-js/*';

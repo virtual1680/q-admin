@@ -27,7 +27,14 @@ export const tagsStore = defineStore({
 	getters: {
 		tagList: state => state.tagList,
 		tag: state => state.tag,
-		tagWel: state => state.tagWel
+		tagWel: state => state.tagWel,
+		tagsKeep: state => {
+			return state.tagList
+				.filter(ele => {
+					return (ele.meta || {}).keepAlive;
+				})
+				.map(ele => ele.fullPath);
+		}
 	},
 	actions: {
 		ADD_TAG(action: any) {
