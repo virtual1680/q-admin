@@ -42,7 +42,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 		if (valid) {
 			const loading = ElLoading.service({
 				lock: true,
-				text: '登录中,请稍后。。。',
+				text: '登录中,请稍后...',
 				// spinner: "el-icon-loading",
 				background: 'rgba(0, 0, 0, 0.8)'
 			});
