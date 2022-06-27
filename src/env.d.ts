@@ -6,3 +6,6 @@ declare module '*.vue' {
 	const component: DefineComponent<{}, {}, any>;
 	export default component;
 }
+declare module '@smallwei/avue';
+declare module '@smallwei/avue/*';
+declare module 'nprogress';

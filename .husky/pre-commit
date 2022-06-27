@@ -2,6 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 echo "# 🚀 开始检测代码格式!"
-npm run lint:lint-staged
+# npm run lint:lint-staged
 echo "# ⚡️ 恭喜您，代码写的很规范，没有一个错误，过关！✔ "
 # npm run deploy

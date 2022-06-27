@@ -17,7 +17,9 @@
 		"removeComments": true, //移除注释
 		// "baseUrl": "./",
 		"paths": {
+			"@/*": ["./src/*"],
 			"app/*": ["./src/*"],
+			"config/*": ["./src/config"],
 			"components/*": ["./src/components/*"],
 			"assets/*": ["./src/assets/*"],
 			"api/*": ["./src/api/*"],
@@ -28,7 +30,7 @@
 			"utils/*": ["./src/utils/*"]
 		}
 	},
-	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "./build"],
 	"exclude": ["node_modules"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
