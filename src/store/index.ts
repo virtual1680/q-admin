@@ -1,5 +1,5 @@
-import { defineStore, createPinia } from "pinia";
-import piniaPersisted, { PersistedStateOptions } from "pinia-plugin-persistedstate";
+import { defineStore, createPinia } from 'pinia';
+import piniaPersisted, { PersistedStateOptions } from 'pinia-plugin-persistedstate';
 
 interface AuthState {
 	accessToken: string;
@@ -17,11 +17,11 @@ export const piniaPersistConfig = (key: string) => {
 };
 
 export const authStore = defineStore({
-	id: "AuthState",
+	id: 'AuthState',
 	state: (): AuthState => ({
-		accessToken: "",
-		refreshToken: "",
-		userId: ""
+		accessToken: '',
+		refreshToken: '',
+		userId: ''
 	}),
 	getters: {
 		getToken: state => state.accessToken,
@@ -30,9 +30,9 @@ export const authStore = defineStore({
 	},
 	actions: {
 		logout() {
-			this.accessToken = "";
-			this.refreshToken = "";
-			this.userId = "";
+			this.accessToken = '';
+			this.refreshToken = '';
+			this.userId = '';
 		},
 		setToken(token: string) {
 			this.accessToken = token;
@@ -44,7 +44,7 @@ export const authStore = defineStore({
 			this.refreshToken = refreshToken;
 		}
 	},
-	persist: piniaPersistConfig("AuthState")
+	persist: piniaPersistConfig('AuthState')
 });
 
 const pinia = createPinia();

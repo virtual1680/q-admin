@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 
 defineProps<{ msg: string }>();
 
@@ -35,16 +35,14 @@ const count = ref(0);
 a {
 	color: #42b983;
 }
-
 label {
 	margin: 0 0.5em;
 	font-weight: bold;
 }
-
 code {
-	background-color: #eee;
-	border-radius: 4px;
-	color: #304455;
 	padding: 2px 4px;
+	color: #304455;
+	background-color: #eeeeee;
+	border-radius: 4px;
 }
 </style>

@@ -1,33 +1,33 @@
-import { defineConfig, loadEnv } from "vite";
-import vue from "@vitejs/plugin-vue";
-import { createHtmlPlugin } from "vite-plugin-html";
-import { resolve } from "path";
-import { viteExternalsPlugin } from "vite-plugin-externals";
-import viteImagemin from "vite-plugin-imagemin";
-import { visualizer } from "rollup-plugin-visualizer";
-import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
-import VueSetupExtend from "vite-plugin-vue-setup-extend";
-import vueJsx from "@vitejs/plugin-vue-jsx";
-import { wrapperEnv } from "./src/utils/getEnv";
-import importToCDN from "vite-plugin-cdn-import";
+import { defineConfig, loadEnv } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import { createHtmlPlugin } from 'vite-plugin-html';
+import { resolve } from 'path';
+import { viteExternalsPlugin } from 'vite-plugin-externals';
+import viteImagemin from 'vite-plugin-imagemin';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import VueSetupExtend from 'vite-plugin-vue-setup-extend';
+import vueJsx from '@vitejs/plugin-vue-jsx';
+import { wrapperEnv } from './src/utils/getEnv';
+import importToCDN from 'vite-plugin-cdn-import';
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-	console.log(command, mode, "开始加载配置文件-=-=-=-=-=-=");
+	console.log(command, mode, '开始加载配置文件-=-=-=-=-=-=');
 	const env = loadEnv(mode, process.cwd());
 	const viteEnv = wrapperEnv(env);
 	return {
-		base: "./",
+		base: './',
 		resolve: {
 			alias: {
-				app: resolve(__dirname, "src"),
-				assets: resolve(__dirname, "src/assets"),
-				components: resolve(__dirname, "src/components"),
-				api: resolve(__dirname, "src/api"),
-				router: resolve(__dirname, "src/router"),
-				views: resolve(__dirname, "src/views"),
-				http: resolve(__dirname, "src/http"),
-				store: resolve(__dirname, "src/store"),
-				utils: resolve(__dirname, "src/utils")
+				app: resolve(__dirname, 'src'),
+				assets: resolve(__dirname, 'src/assets'),
+				components: resolve(__dirname, 'src/components'),
+				api: resolve(__dirname, 'src/api'),
+				router: resolve(__dirname, 'src/router'),
+				views: resolve(__dirname, 'src/views'),
+				http: resolve(__dirname, 'src/http'),
+				store: resolve(__dirname, 'src/store'),
+				utils: resolve(__dirname, 'src/utils')
 			}
 		},
 		server: {
@@ -39,11 +39,11 @@ export default defineConfig(({ command, mode }) => {
 				error: true
 			},
 			proxy: {
-				"/api": {
+				'/api': {
 					target: viteEnv.VITE_API_URL,
 					changeOrigin: true,
 					ws: true,
-					rewrite: path => path.replace(/^\/api/, "")
+					rewrite: path => path.replace(/^\/api/, '')
 				}
 			}
 		},
@@ -51,16 +51,16 @@ export default defineConfig(({ command, mode }) => {
 			port: viteEnv.VITE_PORT + 1000,
 			open: viteEnv.VITE_OPEN,
 			proxy: {
-				"/api": {
+				'/api': {
 					target: viteEnv.VITE_API_URL,
 					changeOrigin: true,
 					ws: true,
-					rewrite: path => path.replace(/^\/api/, "/")
+					rewrite: path => path.replace(/^\/api/, '/')
 				}
 			}
 		},
 		esbuild: {
-			pure: viteEnv.VITE_DROP_CONSOLE ? ["console.log", "debugger"] : []
+			pure: viteEnv.VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : []
 		},
 		build: {
 			sourcemap: false,
@@ -71,8 +71,8 @@ export default defineConfig(({ command, mode }) => {
 				output: {
 					// 拆分代码
 					manualChunks: {
-						vue: ["vue", "vue-router"], // 如果打包有BUG请屏蔽
-						"element-plus": ["element-plus"]
+						vue: ['vue', 'vue-router'], // 如果打包有BUG请屏蔽
+						'element-plus': ['element-plus']
 					}
 					// chunkFileNames: "assets/js/[name]-[hash].js",
 					// entryFileNames: "assets/js/[name]-[hash].js",
@@ -97,15 +97,15 @@ export default defineConfig(({ command, mode }) => {
 			importToCDN({
 				modules: [
 					{
-						name: "echarts",
-						var: "echarts",
-						path: "https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"
+						name: 'echarts',
+						var: 'echarts',
+						path: 'https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js'
 					}
 				]
 			}),
 			// * 忽略打包
 			viteExternalsPlugin({
-				echarts: "echarts"
+				echarts: 'echarts'
 				// axios: 'axios',
 			}),
 			// * 图片压缩
@@ -121,10 +121,10 @@ export default defineConfig(({ command, mode }) => {
 			}),
 			// * svg icon
 			createSvgIconsPlugin({
-				iconDirs: [resolve(process.cwd(), "src/assets/svg")],
+				iconDirs: [resolve(process.cwd(), 'src/assets/svg')],
 				svgoOptions: true,
 				// default
-				symbolId: "icon-[dir]-[name]"
+				symbolId: 'icon-[dir]-[name]'
 			}),
 			// * 依赖分析
 			viteEnv.VITE_REPORT && visualizer()

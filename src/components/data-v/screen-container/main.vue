@@ -4,8 +4,8 @@
 	</div>
 </template>
 <script name="ScreenContainer" lang="ts" setup>
-import { Ref, ref, onMounted } from "vue";
-import { useAutoResize } from "app/hooks/useAutoResize";
+import { Ref, ref, onMounted } from 'vue';
+import { useAutoResize } from 'app/hooks/useAutoResize';
 const props = defineProps({
 	width: { type: Number, default: 1920 },
 	height: { type: Number, default: 1080 }

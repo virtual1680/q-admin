@@ -1,6 +1,6 @@
-import type { Axios } from "axios";
+import type { Axios } from 'axios';
 
-declare module "axios" {
+declare module 'axios' {
 	declare interface AxiosInstance extends Axios {
 		request<T = any, R = Result<T>>(config: AxiosRequestConfig): Promise<R>;
 		get<T = any, R = Result<T>>(url: string, config?: AxiosRequestConfig): Promise<R>;

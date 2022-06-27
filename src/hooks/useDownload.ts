@@ -1,5 +1,5 @@
-import { ElNotification } from "element-plus";
-import { rest } from "lodash";
+import { ElNotification } from 'element-plus';
+import { rest } from 'lodash';
 
 type Nav = Navigator & {
 	msSaveOrOpenBlob: (blob: Blob, fileName: string) => void;
@@ -13,23 +13,23 @@ type Nav = Navigator & {
 export const useDownload = async (api: (params: any) => Promise<any>, isNotify: boolean = false) => {
 	if (isNotify) {
 		ElNotification({
-			title: "温馨提示",
-			message: "如果数据庞大会导致下载缓慢哦，请您耐心等待！",
-			type: "info",
+			title: '温馨提示',
+			message: '如果数据庞大会导致下载缓慢哦，请您耐心等待！',
+			type: 'info',
 			duration: 3000
 		});
 	}
 	try {
 		const res = await api.call(this, rest);
-		let blob = new Blob([res.data], { type: "application/octet-stream;charset=utf-8;" });
-		let filename = res.headers["content-disposition"].split(";")[1];
+		let blob = new Blob([res.data], { type: 'application/octet-stream;charset=utf-8;' });
+		let filename = res.headers['content-disposition'].split(';')[1];
 		// 兼容edge不支持createObjectURL方法
-		if ("msSaveOrOpenBlob" in navigator) return (window.navigator as Nav).msSaveOrOpenBlob(blob, filename);
+		if ('msSaveOrOpenBlob' in navigator) return (window.navigator as Nav).msSaveOrOpenBlob(blob, filename);
 
 		let fileUrl = URL.createObjectURL(blob);
-		let a = document.createElement("a");
+		let a = document.createElement('a');
 		document.body.appendChild(a);
-		a.style.display = "none";
+		a.style.display = 'none';
 		a.href = fileUrl;
 		a.download = filename;
 		a.click();

@@ -1,5 +1,5 @@
-import md5 from "js-md5";
-import { Base64 } from "js-base64";
+import md5 from 'js-md5';
+import { Base64 } from 'js-base64';
 
 // * 加密
 export const encryptionPassword = function (userName: string, password: string) {

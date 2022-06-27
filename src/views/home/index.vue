@@ -1,8 +1,8 @@
 <script setup lang="ts" name="homeScreen">
-import { GetCaptcha } from "api/auth";
+import { GetCaptcha } from 'api/auth';
 // import { useDownload } from "app/hooks/useDownload";
 GetCaptcha().then(res => {
-	console.log("-=-=-=", res);
+	console.log('-=-=-=', res);
 });
 </script>
 

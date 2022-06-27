@@ -1,34 +1,34 @@
 <script setup lang="ts" name="login">
-import { ref, reactive, onMounted } from "vue";
-import { GetCaptcha, login } from "api/auth";
-import { ElLoading } from "element-plus";
-import type { FormInstance, FormRules } from "element-plus";
-import { authStore } from "app/store";
-import router from "router/index";
-import { encryptionPassword } from "utils/util";
+import { ref, reactive, onMounted } from 'vue';
+import { GetCaptcha, login } from 'api/auth';
+import { ElLoading } from 'element-plus';
+import type { FormInstance, FormRules } from 'element-plus';
+import { authStore } from 'app/store';
+import router from 'router/index';
+import { encryptionPassword } from 'utils/util';
 
 const authState = authStore();
 
 const ruleFormRef = ref<FormInstance>();
 
 const rules: FormRules = {
-	username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-	password: [{ required: true, message: "请输入密码", trigger: "change" }],
+	username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+	password: [{ required: true, message: '请输入密码', trigger: 'change' }],
 	code: [
-		{ required: true, message: "请输入验证码", trigger: "blur" },
-		{ min: 5, message: "密码长度最少为5位", trigger: "blur" }
+		{ required: true, message: '请输入验证码', trigger: 'blur' },
+		{ min: 5, message: '密码长度最少为5位', trigger: 'blur' }
 	]
 };
 let ruleForm = reactive({
-	tenantId: "000000",
-	username: "",
-	password: "",
-	code: "",
-	type: "account",
+	tenantId: '000000',
+	username: '',
+	password: '',
+	code: '',
+	type: 'account',
 	//验证码的索引
-	key: "",
+	key: '',
 	//预加载白色背景
-	image: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+	image: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 });
 const refreshCode = () => {
 	GetCaptcha().then(res => {
@@ -42,9 +42,9 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 		if (valid) {
 			const loading = ElLoading.service({
 				lock: true,
-				text: "登录中,请稍后。。。",
+				text: '登录中,请稍后。。。',
 				// spinner: "el-icon-loading",
-				background: "rgba(0, 0, 0, 0.8)"
+				background: 'rgba(0, 0, 0, 0.8)'
 			});
 			let pwd = encryptionPassword(ruleForm.username, ruleForm.password);
 			login(ruleForm.tenantId, ruleForm.username, pwd, ruleForm.type, ruleForm.key, ruleForm.code)
@@ -52,7 +52,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 					loading.close();
 					authState.setToken(res.access_token);
 					authState.setUserId(res.user_id);
-					router.push("/nav");
+					router.push('/nav');
 				})
 				.catch(() => {
 					refreshCode();
@@ -60,7 +60,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 				});
 		} else {
 			refreshCode();
-			console.log("error submit!");
+			console.log('error submit!');
 		}
 	});
 };

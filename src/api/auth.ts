@@ -1,9 +1,9 @@
-import { RequestEnum } from "app/enums/http";
-import axios from "http/axios";
+import { RequestEnum } from 'app/enums/http';
+import axios from 'http/axios';
 // import md5 from "js-md5";
 
 export const info = (domain: string) => {
-	return axios.get("/blade-system/tenant/info", {
+	return axios.get('/blade-system/tenant/info', {
 		domain
 	});
 };
@@ -23,29 +23,29 @@ interface LoginResult {
  */
 export const login = (tenantId: string, username: string, password: string, type: string, key: string, code: string) => {
 	return axios.request<never, LoginResult>({
-		url: "/blade-auth/oauth/token",
+		url: '/blade-auth/oauth/token',
 		method: RequestEnum.POST,
 		params: {
 			tenantId,
 			username,
 			password,
-			grant_type: "captcha",
-			scope: "all",
+			grant_type: 'captcha',
+			scope: 'all',
 			type
 		},
 		headers: {
-			"Tenant-Id": tenantId,
-			"Captcha-Key": key,
-			"Captcha-Code": code,
-			"User-Type": "web_admin"
+			'Tenant-Id': tenantId,
+			'Captcha-Key': key,
+			'Captcha-Code': code,
+			'User-Type': 'web_admin'
 		}
 	});
 };
 export const getExcel = (params: any) => {
 	return axios.request<never, any>({
 		url: `/lecent-mall/report/export`,
-		responseType: "arraybuffer",
-		method: "get",
+		responseType: 'arraybuffer',
+		method: 'get',
 		params
 	});
 };
@@ -59,18 +59,18 @@ interface ImageCode {
 	image: string;
 }
 // * 无 ResultData 包裹
-export const GetCaptcha = () => axios.get<never, ImageCode>("/blade-auth/oauth/captcha");
+export const GetCaptcha = () => axios.get<never, ImageCode>('/blade-auth/oauth/captcha');
 // * 有 ResultData 包裹
 export const GetCaptcha1 = () =>
 	axios.request<ImageCode>({
-		url: "/blade-auth/oauth/captcha?111"
+		url: '/blade-auth/oauth/captcha?111'
 	});
 
 /**
  * 退出登录
  * @returns
  */
-export const Logout = () => axios.get("/blade-auth/oauth/logout");
+export const Logout = () => axios.get('/blade-auth/oauth/logout');
 
 /**
  * 刷新token
@@ -80,16 +80,16 @@ export const Logout = () => axios.get("/blade-auth/oauth/logout");
  */
 export const RefreshToken = (refresh_token: string) =>
 	axios.post(
-		"/blade-auth/oauth/token",
+		'/blade-auth/oauth/token',
 		{
-			tenantId: "000000",
+			tenantId: '000000',
 			refresh_token,
-			grant_type: "refresh_token",
-			scope: "all"
+			grant_type: 'refresh_token',
+			scope: 'all'
 		},
 		{
 			headers: {
-				"Tenant-Id": "000000"
+				'Tenant-Id': '000000'
 			}
 		}
 	);
