@@ -16,6 +16,7 @@
 		"commit": "git pull && git add -A && git-cz && git push"
 	},
 	"dependencies": {
+		"@types/js-base64": "^3.3.1",
 		"@types/js-cookie": "^3.0.2",
 		"@types/js-md5": "^0.4.3",
 		"@types/qs": "^6.9.7",
@@ -23,6 +24,7 @@
 		"axios": "0.26.1",
 		"echarts": "^5.3.2",
 		"element-plus": "^2.2.5",
+		"js-base64": "^3.7.2",
 		"js-cookie": "^3.0.1",
 		"js-md5": "^0.7.3",
 		"mitt": "^3.0.0",

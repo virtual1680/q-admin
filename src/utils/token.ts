@@ -1,6 +1,6 @@
-import Cookies from "js-cookie";
-const TokenKey = "saber-access-token";
-const RefreshTokenKey = "saber-refresh-token";
+import Cookies from 'js-cookie';
+const TokenKey = 'saber-access-token';
+const RefreshTokenKey = 'saber-refresh-token';
 export function getToken() {
 	return Cookies.get(TokenKey);
 }
@@ -53,18 +53,18 @@ export const calcDate = (date1: number, date2: number) => {
  * 判断是否为空
  */
 export function validatenull(val: any) {
-	if (typeof val == "boolean") {
+	if (typeof val == 'boolean') {
 		return false;
 	}
-	if (typeof val == "number") {
+	if (typeof val == 'number') {
 		return false;
 	}
 	if (val instanceof Array) {
 		if (val.length == 0) return true;
 	} else if (val instanceof Object) {
-		if (JSON.stringify(val) === "{}") return true;
+		if (JSON.stringify(val) === '{}') return true;
 	} else {
-		if (val == "null" || val == null || val == "undefined" || val == undefined || val == "") return true;
+		if (val == 'null' || val == null || val == 'undefined' || val == undefined || val == '') return true;
 		return false;
 	}
 	return false;

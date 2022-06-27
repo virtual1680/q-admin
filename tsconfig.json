@@ -15,6 +15,7 @@
 		"lib": ["esnext", "dom"],
 		"skipLibCheck": true,
 		"removeComments": true, //移除注释
+		// "baseUrl": "./",
 		"paths": {
 			"app/*": ["./src/*"],
 			"components/*": ["./src/components/*"],

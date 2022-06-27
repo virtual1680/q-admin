@@ -1,10 +1,10 @@
-import axios, { AxiosRequestConfig, Canceler } from "axios";
-import qs from "qs";
+import axios, { AxiosRequestConfig, Canceler } from 'axios';
+import qs from 'qs';
 // * 1.取消重复请求 2.在某个阶段取消所有请求
 
 let pendingMap = new Map<string, Canceler>();
 export const getPendingUrl = (config: AxiosRequestConfig) =>
-	[config.method, config.url, qs.stringify(config.data), qs.stringify(config.params)].join("&");
+	[config.method, config.url, qs.stringify(config.data), qs.stringify(config.params)].join('&');
 
 export class AxiosCanceler {
 	/**

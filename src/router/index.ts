@@ -1,13 +1,18 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 // import { getToken } from "utils/token";
-import { AxiosCanceler } from "http/cancel";
+import { AxiosCanceler } from 'http/cancel';
 // import { removeToken, removeRefreshToken } from "utils/token";
 const axiosCanceler = new AxiosCanceler();
 const routes: Array<RouteRecordRaw> = [
 	{
-		path: "/",
-		name: "Home",
-		component: () => import(/* webpackChunkName: "home" */ "views/home/index.vue")
+		path: '/',
+		name: 'Login',
+		component: () => import(/* webpackChunkName: "Login" */ 'views/login/index.vue')
+	},
+	{
+		path: '/',
+		name: 'Home',
+		component: () => import(/* webpackChunkName: "home" */ 'views/home/index.vue')
 	}
 ];
 
