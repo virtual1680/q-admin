@@ -7,27 +7,45 @@
 	</el-scrollbar>
 </template>
 
-<script>
-import { mapState } from 'pinia';
+<script setup lang="ts" name="sidebar">
 import sidebarItem from './sidebarItem.vue';
-export default {
-	name: 'sidebar',
-	components: { sidebarItem },
-	inject: ['index'],
-	created() {
-		this.index.openMenu();
-	},
-	computed: {
-		...mapState(['isHorizontal', 'setting', 'menu', 'tag', 'isCollapse', 'menuId']),
-		activeMenu() {
-			const route = this.$route;
-			const { meta, path } = route;
-			if (meta.activeMenu) {
-				return meta.activeMenu;
-			}
-			return path;
-		}
+import { userStore } from '@/store/user';
+import { commonStore } from '@/store/common';
+// import { tagsStore } from '@/store/tags';
+import { computed, inject } from 'vue';
+import { useRoute } from 'vue-router';
+import { getScreen } from 'utils/util';
+const route = useRoute();
+const uStore = userStore();
+const cStore = commonStore();
+// const tStore = tagsStore();
+// mixins: [index],
+const isHorizontal = computed(() => {
+	return cStore.getIsHorizontal;
+});
+// const tag = computed(() => {
+// 	return tStore.getTag;
+// });
+const menu = computed(() => {
+	return uStore.getMenu;
+});
+const isCollapse = computed(() => {
+	return cStore.getIsCollapse;
+});
+
+// const menuId = computed(() => {
+// 	return uStore.getMenuId;
+// });
+const setting = computed(() => {
+	return cStore.getSetting;
+});
+const activeMenu = computed(() => {
+	const { meta, path } = route;
+	if (meta.activeMenu) {
+		return meta.activeMenu;
 	}
-};
+	return path;
+});
+(inject('openMenu') as () => void)();
 </script>
 <style lang="scss" scoped></style>

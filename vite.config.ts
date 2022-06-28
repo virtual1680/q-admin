@@ -33,7 +33,7 @@ export default defineConfig(({ command, mode }) => {
 			pure: viteEnv.VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : []
 		},
 		build: {
-			sourcemap: false,
+			sourcemap: true,
 			// minify: "terser",//esbuild // esbuild 打包更快，但是不能去除 console.log
 			rollupOptions: {
 				output: {

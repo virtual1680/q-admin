@@ -1,6 +1,6 @@
 <template>
 	<router-view #="{ Component }">
-		<keep-alive :include="tStore.tagsKeep">
+		<keep-alive :include="tStore.getTagsKeep">
 			<component :is="Component" />
 		</keep-alive>
 	</router-view>

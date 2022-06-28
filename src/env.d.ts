@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
-
+/// <reference types="vue-router" />
+// import { Router } from '';
 declare module '*.vue' {
 	import type { DefineComponent } from 'vue';
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
@@ -10,10 +11,3 @@ declare module '@smallwei/avue';
 declare module '@smallwei/avue/*';
 declare module 'nprogress';
 declare module 'crypto-js/*';
-
-declare interface AVueRouter extends Router {
-	avueRouter?: {
-		generateTitle: (tag: string) => string;
-		setTitle: (title?: string) => string;
-	};
-}

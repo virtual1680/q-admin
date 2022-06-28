@@ -1,5 +1,5 @@
 <template>
-	<template v-for="item in menu">
+	<template v-for="item in props.menu">
 		<el-menu-item v-if="validatenull(item[childrenKey]) && validRoles(item)" :index="getPath(item)" @click="open(item)" :key="item[labelKey]">
 			<i :class="item[iconKey]"></i>
 			<template #title>
@@ -23,56 +23,51 @@
 		</el-sub-menu>
 	</template>
 </template>
-<script>
-import { mapState } from 'pinia';
+<script setup lang="ts" name="sidebarItem">
 import { validatenull } from 'utils/validate';
 import website from '@/config/website';
-export default {
-	name: 'sidebarItem',
-	data() {
-		return {
-			props: website.menu
-		};
-	},
-	props: {
-		menu: Array
-	},
-	computed: {
-		...mapState(['roles']),
-		labelKey() {
-			return this.props.label;
-		},
-		pathKey() {
-			return this.props.path;
-		},
-		queryKey() {
-			return this.props.query;
-		},
-		iconKey() {
-			return this.props.icon;
-		},
-		childrenKey() {
-			return this.props.children;
-		}
-	},
-	methods: {
-		validatenull,
-		getPath(item) {
-			return item[this.pathKey];
-		},
-		getTitle(item) {
-			return this.$router.$avueRouter.generateTitle(item, this.props);
-		},
-		validRoles(item) {
-			item.meta = item.meta || {};
-			return item.meta.roles ? item.meta.roles.includes(this.roles) : true;
-		},
-		open(item) {
-			this.$router.push({
-				path: item[this.pathKey],
-				query: item[this.queryKey]
-			});
-		}
-	}
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { AVueRouter } from '../../../router/index';
+import { userStore } from '../../../store/user';
+const router = useRouter() as AVueRouter;
+const uStore = userStore();
+const props = defineProps({
+	menu: Array
+});
+const labelKey = computed(() => {
+	return website.menu.label;
+});
+const pathKey = computed(() => {
+	return website.menu.path;
+});
+const queryKey = computed(() => {
+	return website.menu.query;
+});
+const iconKey = computed(() => {
+	return website.menu.icon;
+});
+const childrenKey = computed(() => {
+	return website.menu.children;
+});
+const roles = computed(() => {
+	return uStore.getRoles;
+});
+
+const getPath = (item: any) => {
+	return item[pathKey.value];
+};
+const getTitle = (item: any) => {
+	return router.avueRouter?.generateTitle(item, website.menu);
+};
+const validRoles = (item: any) => {
+	item.meta = item.meta || {};
+	return item.meta.roles ? item.meta.roles.includes(roles) : true;
+};
+const open = (item: any) => {
+	router.push({
+		path: item[pathKey.value],
+		query: item[queryKey.value]
+	});
 };
 </script>

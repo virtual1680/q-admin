@@ -1,13 +1,17 @@
-import router from './router/';
+import router, { AVueRouter } from './router/';
 import { userStore } from 'store/user';
 import { commonStore } from 'store/common';
-
+import { AxiosCanceler } from 'http/cancel';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
 import { tagsStore } from 'store/tags';
 NProgress.configure({ showSpinner: false });
+
+const axiosCanceler = new AxiosCanceler();
 const lockPage = '/lock'; //锁屏页
 router.beforeEach((to, from, next) => {
+	//路由切换时取消所有正在执行的请求
+	axiosCanceler.removeAllPending();
 	const uStore = userStore();
 	const cStore = commonStore();
 	const tStore = tagsStore();
@@ -24,16 +28,17 @@ router.beforeEach((to, from, next) => {
 		} else {
 			//如果用户信息为空则获取用户信息，获取用户信息失败，跳转到登录页
 			if (uStore.roles.length === 0) {
-				// store
-				// 	.dispatch('GetUserInfo')
-				// 	.then(() => {
-				// 		next({ ...to, replace: true });
-				// 	})
-				// 	.catch(() => {
-				// 		store.dispatch('FedLogOut').then(() => {
-				// 			next({ path: '/login' });
-				// 		});
-				// 	});
+				uStore
+					.GetUserInfo()
+					.then(() => {
+						next({ ...to, replace: true });
+					})
+					.catch((erorr: Error) => {
+						console.log('-=-=-=-=-=-=', erorr);
+						uStore.FedLogOut().then(() => {
+							next({ path: '/login' });
+						});
+					});
 			} else {
 				const meta = to.meta || {};
 				const query: any = to.query || {};
@@ -68,7 +73,8 @@ router.beforeEach((to, from, next) => {
 router.afterEach(to => {
 	const cStore = commonStore();
 	NProgress.done();
-	// let title = router.$avueRouter.generateTitle(to);
-	// router.$avueRouter.setTitle(title);
+	console.log(to);
+	let title = (router as AVueRouter).avueRouter?.generateTitle(to as unknown as Menu);
+	(router as AVueRouter).avueRouter?.setTitle(title);
 	cStore.SET_IS_SEARCH(false);
 });

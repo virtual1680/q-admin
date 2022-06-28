@@ -39,20 +39,14 @@
 	</basic-container>
 </template>
 
-<script>
-import { mapState } from 'pinia';
+<script lang="ts" setup>
 import dashboard from './dashboard.vue';
-export default {
-	name: 'wel',
-	components: {
-		dashboard
-	},
-	computed: {
-		...mapState(['userInfo'])
-	},
-	created() {},
-	methods: {}
-};
+import { userStore } from '../../store/user';
+import { computed } from 'vue';
+const uStore = userStore();
+const userInfo = computed(() => {
+	return uStore.getUserInfo;
+});
 </script>
 
 <style scoped="scoped" lang="scss">

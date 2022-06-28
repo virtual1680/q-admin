@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { PersistedStateOptions } from 'pinia-plugin-persistedstate';
-import website, { Setting, Website } from 'app/config/website';
+import website from 'app/config/website';
 
 interface CommonStore {
 	language: string;

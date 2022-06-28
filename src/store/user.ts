@@ -1,5 +1,5 @@
 import { getMenu, getTopMenu, getUserInfo, loginByUsername, logout, refeshToken } from '@/api/user';
-import { formatPath } from '@/router/avue-router1';
+import { formatPath } from '@/router/avue-router';
 import { deepClone, encryption } from '@/utils/util';
 import { defineStore } from 'pinia';
 import { PersistedStateOptions } from 'pinia-plugin-persistedstate';
@@ -55,7 +55,8 @@ export const userStore = defineStore({
 
 			return new Promise((resolve: (value?: unknown) => void) => {
 				loginByUsername(user.username, user.password, userInfo.code, userInfo.redomStr).then(res => {
-					const data = res.data.data;
+					const data = res.data;
+					console.log(data);
 					this.SET_TOKEN(data);
 					// this.DEL_ALL_TAG([]);
 					// this.CLEAR_LOCK();
@@ -79,7 +80,7 @@ export const userStore = defineStore({
 			return new Promise((resolve, reject) => {
 				getUserInfo()
 					.then(res => {
-						const data = res.data.data;
+						const data = res.data;
 						this.SET_USERIFNO(data.userInfo);
 						this.SET_ROLES(data.roles);
 						this.SET_PERMISSION(data.permission);
@@ -96,7 +97,7 @@ export const userStore = defineStore({
 				// state.refeshToken
 				refeshToken()
 					.then(res => {
-						const data = res.data.data;
+						const data = res.data;
 						this.SET_TOKEN(data);
 						resolve(data);
 					})
@@ -146,7 +147,7 @@ export const userStore = defineStore({
 			});
 		},
 		//获取系统菜单
-		GetMenu(parentId: string) {
+		GetMenu(parentId: string): Promise<any[]> {
 			return new Promise(resolve => {
 				getMenu(parentId).then(res => {
 					const data = res.data.data;
@@ -160,7 +161,9 @@ export const userStore = defineStore({
 		},
 
 		SET_TOKEN(token: string) {
+			console.log(this.token, token);
 			this.token = token;
+			console.log(this.token, token);
 		},
 		SET_MENUID(menuId: string) {
 			this.menuId = menuId;
