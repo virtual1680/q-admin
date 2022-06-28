@@ -1,5 +1,6 @@
 <template>
-	<div class="login-container" @keyup.enter="handleLogin">
+	<!-- @keyup.enter="handleLogin" -->
+	<div class="login-container">
 		<div class="login-time">
 			{{ time }}
 		</div>
@@ -28,56 +29,43 @@
 		</div>
 	</div>
 </template>
-<script lang="ts">
+<script lang="ts" setup name="Login">
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { ElLoading } from 'element-plus';
+import website from 'app/config/website';
+import dayjs from 'dayjs';
 import userLogin from './userlogin.vue';
 import codeLogin from './codelogin.vue';
 import thirdLogin from './thirdlogin.vue';
 import faceLogin from './facelogin.vue';
 import { validatenull } from 'utils/validate';
 import topLang from 'app/page/index/top/top-lang.vue';
-export default {
-	name: 'Login',
-	components: {
-		userLogin,
-		codeLogin,
-		thirdLogin,
-		faceLogin,
-		topLang
-	},
-	data() {
-		return {
-			time: '',
-			activeName: 'user'
-		};
-	},
-	watch: {
-		$route() {
-			const params = this.$route.query;
-			this.socialForm = params;
-			if (!validatenull(this.socialForm.state)) {
-				const loading = this.$loading({
-					lock: true,
-					text: `${this.socialForm.state === 'WX' ? '微信' : 'QQ'}登录中,请稍后。。。`,
-					spinner: 'el-icon-loading'
-				});
-				setTimeout(() => {
-					loading.close();
-				}, 2000);
-			}
-		}
-	},
-	created() {
-		this.getTime();
-		setInterval(() => {
-			this.getTime();
-		}, 1000);
-	},
-	mounted() {},
-	props: [],
-	methods: {
-		getTime() {
-			this.time = this.$dayjs().format('YYYY年MM月DD日 HH:mm:ss');
+
+const route = useRoute();
+const time = ref('');
+const activeName = ref('user');
+const getTime = () => {
+	time.value = dayjs().format('YYYY年MM月DD日 HH:mm:ss');
+};
+getTime();
+setInterval(() => {
+	getTime();
+}, 1000);
+watch(
+	() => route,
+	() => {
+		const params = route.query as any;
+		if (!validatenull(params?.state)) {
+			const loading = ElLoading.service({
+				lock: true,
+				text: `${params.state === 'WX' ? '微信' : 'QQ'}登录中,请稍后。。。`,
+				spinner: 'el-icon-loading'
+			});
+			setTimeout(() => {
+				loading.close();
+			}, 2000);
 		}
 	}
-};
+);
 </script>

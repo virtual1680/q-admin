@@ -77,4 +77,4 @@ export default {
 		href: 'href',
 		meta: 'meta'
 	}
-};
+} as Website;

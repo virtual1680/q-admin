@@ -31,7 +31,7 @@
 <script>
 import index from '@/mixins/index';
 import { validatenull } from 'utils/validate';
-import { mapGetters } from 'vuex';
+import { mapState } from 'pinia';
 import tags from './tags.vue';
 import search from './search.vue';
 import logo from './logo.vue';
@@ -53,7 +53,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapGetters(['isHorizontal', 'isRefresh', 'isLock', 'isCollapse', 'isSearch', 'menu', 'setting']),
+		...mapState(['isHorizontal', 'isRefresh', 'isLock', 'isCollapse', 'isSearch', 'menu', 'setting']),
 		validSidebar() {
 			return !((this.$route.meta || {}).menu == false || (this.$route.query || {}).menu == 'false');
 		}

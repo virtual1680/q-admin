@@ -25,10 +25,10 @@ export const tagsStore = defineStore({
 		tagWel: tagWel
 	}),
 	getters: {
-		tagList: state => state.tagList,
-		tag: state => state.tag,
-		tagWel: state => state.tagWel,
-		tagsKeep: state => {
+		getTagList: state => state.tagList,
+		getTag: state => state.tag,
+		getTagWel: state => state.tagWel,
+		getTagsKeep: state => {
 			return state.tagList
 				.filter(ele => {
 					return (ele.meta || {}).keepAlive;

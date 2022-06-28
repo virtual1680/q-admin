@@ -1,5 +1,8 @@
 import website, { Menu } from 'app/config/website';
 import { Router } from 'vue-router';
+// import { userStore } from 'store/user';
+import { commonStore } from 'store/common';
+import { tagsStore } from 'store/tags';
 
 const modules = import.meta.glob('../**/**/*.vue');
 function isURL(s: string) {
@@ -7,14 +10,8 @@ function isURL(s: string) {
 }
 export default class RouterPlugin {
 	public $router;
-	public userStore;
-	public commonStore;
-	public tagsStore;
 	constructor(option: any) {
 		this.$router = option.router as Router & { $avueRouter: any };
-		this.userStore = option.userStore;
-		this.commonStore = option.commonStore;
-		this.tagsStore = option.tagsStore;
 		let i18n = option.i18n.global;
 		this.$router.$avueRouter = this.init(i18n);
 		return this;
@@ -29,11 +26,12 @@ export default class RouterPlugin {
 				document.title = title;
 			},
 			closeTag(value: string) {
-				let tag = value || this.self.tagsStore.tag;
+				const tStore = tagsStore();
+				let tag = value || tStore.tag;
 				if (typeof value === 'string') {
-					tag = this.self.tagsStore.tagList.find((ele: any) => ele.fullPath === value);
+					tag = tStore.tagList.find((ele: any) => ele.fullPath === value);
 				}
-				this.self.tagsStore.DEL_TAG(tag);
+				tStore.DEL_TAG(tag);
 			},
 			generateTitle: (item: Menu, props: Partial<Menu>) => {
 				let query = item[props.query || 'query'] || {};
@@ -48,6 +46,7 @@ export default class RouterPlugin {
 			},
 			//动态路由
 			formatRoutes: function (aMenu: any[] = [], first: boolean = false) {
+				const cStore = commonStore();
 				const aRouter = [];
 				const propsDefault = website.menu;
 				if (aMenu && aMenu.length === 0) return;
@@ -70,7 +69,7 @@ export default class RouterPlugin {
 						component: (() => {
 							// 判断是否为首路由
 							if (first) {
-								return modules[this.self.commonStore.isMacOs ? '../page/index/layout.vue' : '../page/index/index.vue'];
+								return modules[cStore.getIsMacOs ? '../page/index/layout.vue' : '../page/index/index.vue'];
 								// 判断是否为多层路由
 							} else if (isChild && !first) {
 								return modules['../page/index/layout.vue'];

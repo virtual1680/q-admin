@@ -41,18 +41,18 @@ export const commonStore = defineStore({
 		setting: website.setting
 	}),
 	getters: {
-		language: state => state.language,
-		setting: state => state.setting,
-		themeName: state => state.themeName,
-		isMacOs: state => state.themeName == 'mac-os',
-		isRefresh: state => state.isRefresh,
-		isSearch: state => state.isSearch,
-		isHorizontal: state => state.setting.sidebar === 'horizontal',
-		isCollapse: state => state.isCollapse,
-		isLock: state => state.isLock,
-		isFullScren: state => state.isFullScren,
-		isMenu: state => state.isMenu,
-		lockPasswd: state => state.lockPasswd
+		getLanguage: state => state.language,
+		getSetting: state => state.setting,
+		getThemeName: state => state.themeName,
+		getIsMacOs: state => state.themeName == 'mac-os',
+		getIsRefresh: state => state.isRefresh,
+		getIsSearch: state => state.isSearch,
+		getIsHorizontal: state => state.setting.sidebar === 'horizontal',
+		getIsCollapse: state => state.isCollapse,
+		getIsLock: state => state.isLock,
+		getIsFullScren: state => state.isFullScren,
+		getIsMenu: state => state.isMenu,
+		getLockPasswd: state => state.lockPasswd
 	},
 	actions: {
 		SET_LANGUAGE(language: string) {

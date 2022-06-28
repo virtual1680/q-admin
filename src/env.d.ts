@@ -10,3 +10,10 @@ declare module '@smallwei/avue';
 declare module '@smallwei/avue/*';
 declare module 'nprogress';
 declare module 'crypto-js/*';
+
+declare interface AVueRouter extends Router {
+	avueRouter?: {
+		generateTitle: (tag: string) => string;
+		setTitle: (title?: string) => string;
+	};
+}

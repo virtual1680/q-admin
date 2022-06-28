@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from 'vite';
 import { resolve } from 'path';
 import { wrapperEnv } from './src/utils/getEnv';
 import { pluginList } from './build/plugins-config';
+
 // import { server, preview } from './build/server-config';
 
 // https://vitejs.dev/config/

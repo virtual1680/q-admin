@@ -4,7 +4,7 @@ export default [
 	{
 		path: '/login',
 		name: '登录页',
-		component: () => (commonStore().isMacOs ? import('app/mac/login.vue') : import('app/page/login/index.vue')),
+		component: () => (commonStore().getIsMacOs ? import('app/mac/login.vue') : import('app/page/login/index.vue')),
 		meta: {
 			keepAlive: true,
 			isTab: false,
@@ -14,7 +14,7 @@ export default [
 	{
 		path: '/lock',
 		name: '锁屏页',
-		component: () => (commonStore().isMacOs ? import('app/mac/lock.vue') : import('app/page/lock/index.vue')),
+		component: () => (commonStore().getIsMacOs ? import('app/mac/lock.vue') : import('app/page/lock/index.vue')),
 		meta: {
 			keepAlive: true,
 			isTab: false,

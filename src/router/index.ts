@@ -44,27 +44,21 @@
 
 import { createRouter, createWebHistory } from 'vue-router';
 import PageRouter from './page/index';
-import ViewsRouter from './views/index';
-import AvueRouter from './avue-router1';
-import i18n from 'app/lang/index';
-import { userStore } from 'store/user';
-import { commonStore } from 'store/common';
-import { tagsStore } from 'store/tags';
+// import ViewsRouter from './views/index';
+// import AvueRouter from './avue-router1';
+// import i18n from 'app/lang/index';
 
 //创建路由
 const Router = createRouter({
 	history: createWebHistory(),
-	routes: [...PageRouter, ...ViewsRouter]
+	routes: [...PageRouter] //, ...ViewsRouter
 });
 
-const avueRouter = new AvueRouter({
-	userStore: userStore(),
-	commonStore: commonStore(),
-	tagsStore: tagsStore(),
-	router: Router,
-	i18n: i18n
-});
+// const avueRouter = new AvueRouter({
+// 	router: Router,
+// 	i18n: i18n
+// });
 
-avueRouter.$router.$avueRouter.formatRoutes(userStore().menuAll, true);
+// avueRouter.$router.$avueRouter.formatRoutes(userStore().menuAll, true);
 
-export default avueRouter.$router;
+export default Router;

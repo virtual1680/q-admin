@@ -28,7 +28,7 @@
 	</div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState } from 'pinia';
 export default {
 	name: 'lock',
 	data() {

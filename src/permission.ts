@@ -15,7 +15,7 @@ router.beforeEach((to, from, next) => {
 	const isMenu = meta.menu === undefined ? to.query.menu : meta.menu;
 	cStore.SET_IS_MENU(isMenu === undefined);
 	if (uStore.token) {
-		if (cStore.isLock && to.path != lockPage) {
+		if (cStore.getIsLock && to.path != lockPage) {
 			//如果系统激活锁屏，全部跳转到锁屏页
 			next({ path: lockPage });
 		} else if (to.path === '/login') {
@@ -54,6 +54,8 @@ router.beforeEach((to, from, next) => {
 			}
 		}
 	} else {
+		console.log(to.path);
+
 		//判断是否需要认证，没有登录访问去登录页
 		if (meta.isAuth === false) {
 			next();
@@ -66,7 +68,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach(to => {
 	const cStore = commonStore();
 	NProgress.done();
-	let title = router.$avueRouter.generateTitle(to);
-	router.$avueRouter.setTitle(title);
+	// let title = router.$avueRouter.generateTitle(to);
+	// router.$avueRouter.setTitle(title);
 	cStore.SET_IS_SEARCH(false);
 });

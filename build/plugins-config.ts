@@ -10,6 +10,7 @@ import importToCDN from 'vite-plugin-cdn-import';
 import { viteMockServe } from 'vite-plugin-mock';
 import { resolve } from 'path';
 import { PluginOption } from 'vite';
+import website from '../src/config/website';
 export const pluginList = (viteEnv: ViteEnv) =>
 	[
 		vue(),
@@ -21,7 +22,7 @@ export const pluginList = (viteEnv: ViteEnv) =>
 		createHtmlPlugin({
 			inject: {
 				data: {
-					title: viteEnv.VITE_GLOB_APP_TITLE
+					title: website.indexTitle
 				}
 			}
 		}),

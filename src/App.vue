@@ -8,7 +8,9 @@
 import { messages } from 'app/lang/';
 import { computed } from 'vue';
 import { commonStore } from 'store/common';
+import { provideI18n } from 'app/lang/index';
 let store = commonStore();
+provideI18n();
 const locale = computed(() => {
 	let languageType = store.language;
 	return messages[languageType];

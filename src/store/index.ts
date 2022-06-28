@@ -1,5 +1,5 @@
-import { defineStore, createPinia } from 'pinia';
-import piniaPersisted, { PersistedStateOptions } from 'pinia-plugin-persistedstate';
+import { defineStore } from 'pinia';
+import { PersistedStateOptions } from 'pinia-plugin-persistedstate';
 
 interface AuthState {
 	accessToken: string;
@@ -46,8 +46,3 @@ export const authStore = defineStore({
 	},
 	persist: piniaPersistConfig('AuthState')
 });
-
-const pinia = createPinia();
-pinia.use(piniaPersisted);
-
-export default pinia;
