@@ -1,11 +1,10 @@
-// import { useCommonStore } from 'store/common';
+import { useCommonStore } from 'store/common';
 import { RouteRecordRaw } from 'vue-router';
 export default [
 	{
 		path: '/login',
 		name: '登录页',
-		// useCommonStore().getIsMacOs ? import('app/mac/login.vue') :
-		component: () => import('app/page/login/index.vue'),
+		component: () => (useCommonStore().getIsMacOs ? import('app/mac/login.vue') : import('app/page/login/index.vue')),
 		meta: {
 			keepAlive: true,
 			isTab: false,
@@ -15,8 +14,7 @@ export default [
 	{
 		path: '/lock',
 		name: '锁屏页',
-		// useCommonStore().getIsMacOs ? import('app/mac/lock.vue') :
-		component: () => import('app/page/lock/index.vue'),
+		component: () => (useCommonStore().getIsMacOs ? import('app/mac/lock.vue') : import('app/page/lock/index.vue')),
 		meta: {
 			keepAlive: true,
 			isTab: false,

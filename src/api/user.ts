@@ -28,7 +28,7 @@ export const refeshToken = () =>
 	});
 
 export const getMenu = (type: string | number = 0) =>
-	axios.request({
+	axios.request<RouterMenu[]>({
 		url: baseUrl + '/user/getMenu',
 		method: 'get',
 		params: {

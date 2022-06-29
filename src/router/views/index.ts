@@ -1,11 +1,11 @@
 import Layout from 'app/page/index/index.vue';
-// import { useCommonStore } from 'store/common';
+import { useCommonStore } from 'store/common';
 import { RouteRecordRaw } from 'vue-router';
 export default [
 	{
 		path: '/wel',
-		// useCommonStore().getIsMacOs ? import('@/mac/index.vue') :
-		component: () => import('@/page/index/index.vue'),
+		//
+		component: () => (useCommonStore().getIsMacOs ? import('@/mac/index.vue') : import('@/page/index/index.vue')),
 		redirect: '/wel/index',
 		children: [
 			{

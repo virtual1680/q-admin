@@ -43,18 +43,21 @@ declare interface Menu {
 	meta: string; //TODO { keepAlive?: boolean; isTab?: boolean; isAuth?: boolean }
 	name: string;
 }
+
 declare interface RouterMenu {
 	parentId: string;
 	iconDefault: string;
 	label: string;
 	path: string;
 	icon: string;
-	children: string;
+	iconBgColor: string;
+	children: RouterMenu[];
 	query: LocationQueryRaw;
 	href: string;
 	fullPath: string;
-	meta: { keepAlive?: boolean; isTab?: boolean; isAuth?: boolean };
+	meta: { keepAlive?: boolean; isTab?: boolean; isAuth?: boolean; i18n?: string };
 	name: string;
+	component: string;
 }
 declare interface Website {
 	title: string;

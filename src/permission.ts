@@ -3,6 +3,7 @@ import { useUserStore, useCommonStore, useTagsStore } from 'store/index';
 import { AxiosCanceler } from 'http/cancel';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
+import { RouteLocationNormalized } from 'vue-router';
 NProgress.configure({ showSpinner: false });
 
 const axiosCanceler = new AxiosCanceler();
@@ -67,12 +68,13 @@ router.beforeEach((to, from, next) => {
 		}
 	}
 });
-
+// TODO
+type RMenu = RouterMenu & RouteLocationNormalized;
 router.afterEach(to => {
 	const cStore = useCommonStore();
 	NProgress.done();
 	console.log(to);
-	let title = (router as AVueRouter).avueRouter?.generateTitle(to as unknown as Menu);
+	let title = (router as AVueRouter).avueRouter?.generateTitle(to as RMenu);
 	(router as AVueRouter).avueRouter?.setTitle(title);
 	cStore.SET_IS_SEARCH(false);
 });

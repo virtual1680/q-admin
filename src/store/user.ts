@@ -10,7 +10,7 @@ interface UserStore {
 	roles: any[];
 	menuId: any;
 	menu: RouterMenu[];
-	menuAll: any[];
+	menuAll: RouterMenu[];
 	token: string;
 	refreshToken: string;
 }
@@ -155,7 +155,7 @@ export const useUserStore = defineStore({
 				getMenu(parentId).then(res => {
 					const data = res.data;
 					let menu = deepClone(data);
-					menu.forEach((ele: any) => formatPath(ele, true));
+					menu.forEach((ele: RouterMenu) => formatPath(ele, true));
 					this.SET_MENUALL(menu);
 					this.SET_MENU(menu);
 					resolve(menu);

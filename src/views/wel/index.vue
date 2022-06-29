@@ -41,7 +41,7 @@
 
 <script lang="ts" setup>
 import dashboard from './dashboard.vue';
-import { useUserStore } from '../../store/user';
+import { useUserStore } from 'store/index';
 import { computed } from 'vue';
 const uStore = useUserStore();
 const userInfo = computed(() => {

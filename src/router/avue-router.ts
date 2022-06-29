@@ -1,64 +1,69 @@
+import { Router, RouteRecordRaw } from 'vue-router';
 import { ARouter, AVueRouter } from 'router/index';
 import website from 'app/config/website';
-// import { useCommonStore } from 'store/common';
 import { useTagsStore } from 'store/tags';
+import { I18n } from 'vue-i18n';
 
 const modules = import.meta.glob('../**/**/*.vue');
 function isURL(s: string) {
 	return /^http[s]?:\/\/.*/.test(s);
 }
+
 export default class RouterPlugin {
 	public $router;
-	constructor(option: any) {
+	public i18n;
+	constructor(option: { router: Router; i18n: I18n<{ en: any; 'zh-cn': any }, unknown, unknown, true> }) {
 		this.$router = option.router as AVueRouter;
-		let i18n = option.i18n.global;
-		this.$router.avueRouter = this.init(i18n) as ARouter;
+		this.i18n = option.i18n.global;
+		this.$router.avueRouter = this.init() as ARouter;
 		return this;
 	}
-	init(i18n: any) {
+	init() {
 		return {
 			self: this,
 			// 设置标题
 			setTitle: (title: string) => {
-				const defaultTitle = i18n.t('title');
+				const defaultTitle = this.i18n.t('title');
 				title = title ? `${title} | ${defaultTitle}` : defaultTitle;
 				document.title = title;
 			},
-			closeTag(value: string) {
+			closeTag(value?: string) {
 				const tStore = useTagsStore();
 				let tag = value || tStore.tag;
 				if (typeof value === 'string') {
+					// TODO
+					console.log('-=-=-=-=', tStore.tagList[0]);
 					tag = tStore.tagList.find((ele: any) => ele.fullPath === value);
 				}
 				tStore.DEL_TAG(tag);
 			},
-			generateTitle: (item: Menu, props?: Partial<Menu>) => {
+			generateTitle: (item: RouterMenu, props?: Partial<Menu>) => {
 				let query = item[props?.query || 'query'] || {};
 				let title = query.name || item[props?.label || 'label'];
 				let meta = item[props?.meta || 'meta'] || {};
 				let key = meta.i18n;
 				if (key) {
-					const hasKey = i18n.te('route.' + key);
-					if (hasKey) return i18n.t('route.' + key);
+					const hasKey = this.i18n.te('route.' + key);
+					if (hasKey) return this.i18n.t('route.' + key);
 				}
 				return title;
 			},
 			//动态路由
-			formatRoutes: function (aMenu: any[] = [], first: boolean = false) {
+			formatRoutes: function (aMenu: RouterMenu[] = [], first: boolean = false): RouteRecordRaw[] | undefined {
 				// const cStore = useCommonStore();
 				const aRouter = [];
 				const propsDefault = website.menu;
 				if (aMenu && aMenu.length === 0) return;
 				for (let i = 0; i < aMenu.length; i++) {
-					const oMenu = aMenu[i] as any;
+					const oMenu = aMenu[i];
 					let path = oMenu[propsDefault.path],
 						component = oMenu.component,
 						name = oMenu[propsDefault.label],
 						icon = oMenu[propsDefault.icon],
-						children = oMenu[propsDefault.children] as any[],
+						children = oMenu[propsDefault.children],
 						query = oMenu[propsDefault.query],
 						meta = oMenu[propsDefault.meta];
-					// TODO 是否直接在meta中设置
+					// 去除在option中设置keepAlive
 					// if (option.keepAlive) {
 					// 	meta.keepAlive = option.keepAlive;
 					// }
@@ -67,10 +72,13 @@ export default class RouterPlugin {
 						path: path,
 						component: (() => {
 							// 判断是否为首路由
-							// console.log(path, first);
 							if (first) {
-								// TODO cStore.getIsMacOs
-								return modules[false ? '../page/index/layout.vue' : '../page/index/index.vue'];
+								const commonStore = window.localStorage.getItem('CommonStore');
+								let isMacOs = false;
+								if (commonStore) {
+									isMacOs = JSON.parse(commonStore).isMacOs;
+								}
+								return modules[isMacOs ? '../page/index/layout.vue' : '../page/index/index.vue'];
 								// 判断是否为多层路由
 							} else if (isChild && !first) {
 								return modules['../page/index/layout.vue'];
@@ -109,13 +117,12 @@ export default class RouterPlugin {
 									}
 									return [];
 							  })()
-							: ((): any => {
+							: ((): RouteRecordRaw[] | undefined => {
 									return this.formatRoutes(children, false);
 							  })()
 					};
 					if (!isURL(path)) aRouter.push(oRouter);
 				}
-				// console.log(aRouter);
 				if (first) {
 					aRouter.forEach(ele => this.self.$router.addRoute(ele));
 				} else {
@@ -126,7 +133,7 @@ export default class RouterPlugin {
 	}
 }
 
-export const formatPath = (ele: any, first: boolean = false) => {
+export const formatPath = (ele: RouterMenu, first: boolean = false) => {
 	const propsDefault = website.menu;
 	const icon = ele[propsDefault.icon];
 	ele[propsDefault.icon] = !icon ? propsDefault.iconDefault : icon;
@@ -145,7 +152,7 @@ export const formatPath = (ele: any, first: boolean = false) => {
 		}
 	} else {
 		ele[propsDefault.children] &&
-			ele[propsDefault.children].forEach((child: any) => {
+			ele[propsDefault.children].forEach((child: RouterMenu) => {
 				if (isURL(child[propsDefault.href])) {
 					let href = child[propsDefault.href];
 					child.component = iframeComponent;
