@@ -16,22 +16,28 @@
 		"commit": "git pull && git add -A && git-cz && git push"
 	},
 	"dependencies": {
+		"@smallwei/avue": "^3.0.17",
 		"@types/js-base64": "^3.3.1",
 		"@types/js-cookie": "^3.0.2",
 		"@types/js-md5": "^0.4.3",
+		"@types/mockjs": "^1.0.6",
 		"@types/qs": "^6.9.7",
 		"@types/vue-router": "^2.0.0",
 		"axios": "0.26.1",
+		"crypto-js": "^4.1.1",
 		"echarts": "^5.3.2",
 		"element-plus": "^2.2.5",
 		"js-base64": "^3.7.2",
 		"js-cookie": "^3.0.1",
 		"js-md5": "^0.7.3",
 		"mitt": "^3.0.0",
+		"mockjs": "^1.1.0",
+		"nprogress": "^0.2.0",
 		"pinia": "^2.0.14",
 		"pinia-plugin-persistedstate": "^1.6.1",
 		"qs": "^6.10.5",
 		"vue": "^3.2.25",
+		"vue-i18n": "^9.1.10",
 		"vue-router": "^4.0.16"
 	},
 	"devDependencies": {
@@ -88,6 +94,7 @@
 		"vite-plugin-externals": "^0.5.0",
 		"vite-plugin-html": "^3.2.0",
 		"vite-plugin-imagemin": "^0.6.1",
+		"vite-plugin-mock": "^2.9.6",
 		"vite-plugin-svg-icons": "^2.0.1",
 		"vite-plugin-vue-setup-extend": "^0.4.0",
 		"vue-tsc": "^0.34.7"
