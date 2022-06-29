@@ -10,12 +10,8 @@
 	</basic-container>
 </template>
 
-<script>
-export default {
-	data() {
-		return {
-			value: ''
-		};
-	}
-};
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const value = ref('');
 </script>

@@ -1,5 +1,5 @@
 <template>
-	<div class="avue-tags" v-if="setting.tag" @click="contextmenuFlag = false">
+	<div class="avue-tags" ref="tagsRef" v-if="setting.tag" @click="contextmenuFlag = false">
 		<!-- tag盒子 -->
 		<div v-if="contextmenuFlag" class="avue-tags__contentmenu" :style="{ left: contentmenuX + 'px', top: contentmenuY + 'px' }">
 			<div class="item" @click="closeOthersTags">{{ $t('tagsView.closeOthers') }}</div>
@@ -33,7 +33,7 @@
 	</div>
 </template>
 <script lang="ts" setup name="tags">
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTagsStore, useCommonStore } from 'store/index';
 import { AVueRouter } from '../../router/index';
@@ -42,10 +42,10 @@ const commonStore = useCommonStore();
 const tagsStore = useTagsStore();
 const refresh = ref(false);
 const active = ref('');
-const contentmenuX = ref('');
-const contentmenuY = ref('');
+const contentmenuX = ref(0);
+const contentmenuY = ref(0);
 const contextmenuFlag = ref(false);
-
+const tagsRef: Ref<HTMLDivElement | undefined> = ref();
 const tagWel = computed(() => {
 	return tagsStore.getTagWel;
 });
@@ -96,39 +96,42 @@ const generateTitle = (item: RouterMenu) => {
 		}
 	});
 };
-const watchContextmenu = (event: Event) => {
-	if (!this.$el.contains(event.target) || event.button !== 0) {
+// TODO
+const watchContextmenu = (event: any) => {
+	if (!tagsRef.value?.contains(event.target as Node) || event.button !== 0) {
 		contextmenuFlag.value = false;
 	}
 	window.removeEventListener('mousedown', watchContextmenu);
 };
-const handleContextmenu = (event: Event) => {
-	let target = event.target;
+const handleContextmenu = (event: MouseEvent) => {
+	//TODO
+	let target: Element | null = event.target as Element;
 	let flag = false;
-	if (target.className.indexOf('el-tabs__item') > -1) flag = true;
-	else if (target.parentNode.className.indexOf('el-tabs__item') > -1) {
-		target = target.parentNode;
+	if (target?.className.indexOf('el-tabs__item') > -1) {
+		flag = true;
+	} else if ((target.parentNode as Element)?.className.indexOf('el-tabs__item') > -1) {
+		target = target.parentNode as Element;
 		flag = true;
 	}
 	if (flag) {
 		event.preventDefault();
 		event.stopPropagation();
-		this.contentmenuX = event.clientX;
-		this.contentmenuY = event.clientY;
-		this.tagName = target.getAttribute('aria-controls').slice(5);
-		this.contextmenuFlag = true;
+		contentmenuX.value = event.clientX;
+		contentmenuY.value = event.clientY;
+		// tagName.value = target.getAttribute('aria-controls')?.slice(5);
+		contextmenuFlag.value = true;
 	}
 };
 // TODO type
 const menuTag = (value: any, action: string) => {
 	if (action === 'remove') {
-		let { tag, key } = findTag(value);
-		tagsStore.DEL_TAG(tag);
-		if (tag.fullPath === this.tag.fullPath) {
-			tag = tagList.value[key - 1];
+		let { tag: t, key } = findTag(value);
+		tagsStore.DEL_TAG(t);
+		if (t.fullPath === tag.value.fullPath) {
+			t = tagList.value[key - 1];
 			router.push({
-				path: tag.path,
-				query: tag.query
+				path: t.path,
+				query: t.query
 			});
 		}
 	}

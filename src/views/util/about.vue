@@ -1,3 +1,4 @@
+import { reactive, computed } from 'vue';
 <template>
 	<basic-container>
 		<h2>项目介绍</h2>
@@ -42,25 +43,17 @@
 	</basic-container>
 </template>
 
-<script>
-export default {
-	data() {
-		return {
-			dependencies: {}
-		};
-	},
-	created() {
-		const modules = import.meta.glob('/**.json');
-		modules['/package.json']().then(mode => {
-			this.dependencies = mode.dependencies;
-		});
-	},
-	computed: {
-		list() {
-			return Object.keys(this.dependencies);
-		}
-	}
-};
+<script lang="ts" setup>
+import { computed, reactive } from 'vue';
+
+let dependencies = reactive({});
+const modules = import.meta.glob('/**.json');
+modules['/package.json']().then(mode => {
+	dependencies = mode.dependencies;
+});
+const list = computed(() => {
+	return Object.keys(dependencies);
+});
 </script>
 
 <style lang="scss"></style>

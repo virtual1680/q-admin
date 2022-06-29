@@ -1,5 +1,5 @@
 <template>
-	<template v-for="item in props.menu">
+	<template v-for="item in (props.menu as RouterMenu[])">
 		<el-menu-item v-if="validatenull(item[childrenKey]) && validRoles(item)" :index="getPath(item)" @click="open(item)" :key="item[labelKey]">
 			<i :class="item[iconKey]"></i>
 			<template #title>

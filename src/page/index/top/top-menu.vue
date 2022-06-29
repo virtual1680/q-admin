@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts" name="top-menu">
-import { inject, Ref, ref, computed } from 'vue';
+import { inject, Ref, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { AVueRouter } from '../../../router/index';
 import { useUserStore } from 'store/user';
@@ -20,25 +20,25 @@ import { useUserStore } from 'store/user';
 const router = useRouter() as AVueRouter;
 const uStore = useUserStore();
 const activeIndex = ref('0');
-const items: Ref<Menu[]> = ref([]);
+const items: Ref<RouterMenu[]> = ref([]);
 // ...mapState(['tagCurrent', 'menu'])
-const menu = computed(() => {
-	return uStore.getMenu;
-});
+// const menu = computed(() => {
+// 	return uStore.getMenu;
+// });
 // TODO
 // const tagCurrent = computed(() => {
 // 	return uStore.getTag
 // })
 
-const openMenu = (item: Menu) => {
-	(inject('openMenu') as (item: Menu) => void)(item);
+const openMenu = (item: RouterMenu) => {
+	(inject('openMenu') as (item: RouterMenu) => void)(item);
 };
 const getMenu = () => {
 	uStore.GetTopMenu().then(res => {
 		items.value = res;
 	});
 };
-const generateTitle = (item: Menu) => {
+const generateTitle = (item: RouterMenu) => {
 	return router.avueRouter?.generateTitle(item);
 };
 getMenu();

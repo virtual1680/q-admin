@@ -22,10 +22,6 @@
 	</basic-container>
 </template>
 
-<script>
-export default {};
-</script>
-
 <style lang="scss">
 .affix {
 	position: relative;

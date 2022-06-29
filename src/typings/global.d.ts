@@ -45,6 +45,7 @@ declare interface Menu {
 }
 
 declare interface RouterMenu {
+	id: string;
 	parentId: string;
 	iconDefault: string;
 	label: string;
@@ -58,6 +59,8 @@ declare interface RouterMenu {
 	meta: { keepAlive?: boolean; isTab?: boolean; isAuth?: boolean; i18n?: string };
 	name: string;
 	component: string;
+	iconColor?: string;
+	hideInDesktop?: boolean;
 }
 declare interface Website {
 	title: string;

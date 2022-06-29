@@ -139,40 +139,55 @@ export const listenfullscreen = (callback: () => void) => {
 /**
  * 浏览器判断是否全屏
  */
+type ADocument = Document & {
+	isFullScreen: boolean;
+	mozIsFullScreen: boolean;
+	webkitIsFullScreen: boolean;
+	exitFullScreen: any;
+	webkitCancelFullScreen: any;
+	mozCancelFullScreen: any;
+};
 export const fullscreenEnable = () => {
-	let isFullscreen = document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen;
+	const docum = document as ADocument;
+	let isFullscreen = docum.isFullScreen || docum.mozIsFullScreen || docum.webkitIsFullScreen;
 	return isFullscreen;
 };
 
 /**
  * 浏览器全屏
+ * requestFullscreen(options?: FullscreenOptions): Promise<void>;
  */
+type AHTMLElement = HTMLElement & { requestFullScreen: any; webkitRequestFullScreen: any; mozRequestFullScreen: any };
 export const reqFullScreen = () => {
-	if (document.documentElement.requestFullScreen) {
-		document.documentElement.requestFullScreen();
-	} else if (document.documentElement.webkitRequestFullScreen) {
-		document.documentElement.webkitRequestFullScreen();
-	} else if (document.documentElement.mozRequestFullScreen) {
-		document.documentElement.mozRequestFullScreen();
+	let documentElement = document.documentElement as AHTMLElement;
+	if (documentElement.requestFullScreen) {
+		documentElement.requestFullScreen();
+	} else if (documentElement.webkitRequestFullScreen) {
+		documentElement.webkitRequestFullScreen();
+	} else if (documentElement.mozRequestFullScreen) {
+		documentElement.mozRequestFullScreen();
 	}
 };
 /**
  * 浏览器退出全屏
  */
+
 export const exitFullScreen = () => {
-	if (document.documentElement.requestFullScreen) {
-		document.exitFullScreen();
-	} else if (document.documentElement.webkitRequestFullScreen) {
-		document.webkitCancelFullScreen();
-	} else if (document.documentElement.mozRequestFullScreen) {
-		document.mozCancelFullScreen();
+	const docum = document as ADocument;
+	let documentElement = document.documentElement as AHTMLElement;
+	if (documentElement.requestFullScreen) {
+		docum.exitFullScreen();
+	} else if (documentElement.webkitRequestFullScreen) {
+		docum.webkitCancelFullScreen();
+	} else if (documentElement.mozRequestFullScreen) {
+		docum.mozCancelFullScreen();
 	}
 };
 /**
  * 递归寻找子类的父类
  */
 
-export const findParent = (menu, id) => {
+export const findParent = (menu: RouterMenu[], id: string): RouterMenu | undefined => {
 	for (let i = 0; i < menu.length; i++) {
 		if (menu[i].children.length != 0) {
 			for (let j = 0; j < menu[i].children.length; j++) {
@@ -274,7 +289,7 @@ export const findArray = (dic: any[], value: any) => {
 /**
  * 生成随机len位数字
  */
-export const randomLenNum = (len, date) => {
+export const randomLenNum = (len: number, date: any) => {
 	let random = '';
 	random = Math.ceil(Math.random() * 100000000000000)
 		.toString()
@@ -287,8 +302,8 @@ export const randomLenNum = (len, date) => {
  */
 export const openWindow = (url: string, title: string, w: number, h: number) => {
 	// Fixes dual-screen position                            Most browsers       Firefox
-	const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left;
-	const dualScreenTop = window.screenTop !== undefined ? window.screenTop : screen.top;
+	const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : screen['left'];
+	const dualScreenTop = window.screenTop !== undefined ? window.screenTop : screen['top'];
 
 	const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
 	const height = window.innerHeight
@@ -313,9 +328,8 @@ export const openWindow = (url: string, title: string, w: number, h: number) => 
 	);
 
 	// Puts focus on the newWindow
-	if (window.focus) {
-		newWindow.focus();
-	}
+	//TODO window.focus &&
+	newWindow?.focus();
 };
 
 export const getScreen = (isCollapse: boolean) => {

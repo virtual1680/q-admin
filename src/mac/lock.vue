@@ -1,3 +1,4 @@
+import { getUserInfo } from '../api/user';
 <template>
 	<div class="mac_bg"></div>
 	<div class="login animate__animated" :class="{ animate__bounceOut: pass }">
@@ -14,45 +15,53 @@
 		</div>
 	</div>
 </template>
-<script>
-import { mapState } from 'pinia';
-export default {
-	data() {
-		return {
-			passwdError: false,
-			passwd: '',
-			pass: false
-		};
-	},
-	computed: {
-		...mapState(['userInfo', 'tag', 'lockPasswd'])
-	},
-	methods: {
-		handleLogout() {
-			this.$store.dispatch('LogOut').then(() => {
-				this.$router.push({ path: '/login' });
-			});
-		},
-		handleLogin() {
-			if (this.passwd != this.lockPasswd) {
-				this.passwd = '';
-				this.passwdError = true;
-				setTimeout(() => {
-					this.passwdError = false;
-				}, 1000);
-				return;
-			}
-			this.pass = true;
-			setTimeout(() => {
-				this.$store.commit('CLEAR_LOCK');
-				this.$router.push({
-					path: this.tag.value
-				});
-			}, 1000);
-		}
+<script setup lang="ts">
+import { useCommonStore, useTagsStore, useUserStore } from '@/store';
+import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const passwdError = ref(false);
+const passwd = ref('');
+const pass = ref(false);
+
+const router = useRouter();
+const userStore = useUserStore();
+const tagsStore = useTagsStore();
+const commonStore = useCommonStore();
+
+const userInfo = computed(() => {
+	return userStore.getUserInfo;
+});
+const tag = computed(() => {
+	return tagsStore.getTag;
+});
+const lockPasswd = computed(() => {
+	return commonStore.getLockPasswd;
+});
+
+const handleLogout = () => {
+	userStore.LogOut().then(() => {
+		router.push({ path: '/login' });
+	});
+};
+const handleLogin = () => {
+	if (passwd.value != lockPasswd.value) {
+		passwd.value = '';
+		passwdError.value = true;
+		setTimeout(() => {
+			passwdError.value = false;
+		}, 1000);
+		return;
 	}
+	pass.value = true;
+	setTimeout(() => {
+		commonStore.CLEAR_LOCK();
+		router.push({
+			path: tag.value
+		});
+	}, 1000);
 };
 </script>
 <style scoped>
-@import url('./login.css');
+@import './login.css';
 </style>

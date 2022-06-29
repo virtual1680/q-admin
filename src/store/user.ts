@@ -141,8 +141,8 @@ export const useUserStore = defineStore({
 				resolve();
 			});
 		},
-		GetTopMenu(): Promise<Menu[]> {
-			return new Promise((resolve: (value: Menu[]) => void) => {
+		GetTopMenu(): Promise<RouterMenu[]> {
+			return new Promise((resolve: (value: RouterMenu[]) => void) => {
 				getTopMenu().then(res => {
 					const data = res.data || [];
 					resolve(data);
@@ -150,7 +150,7 @@ export const useUserStore = defineStore({
 			});
 		},
 		//获取系统菜单
-		GetMenu(parentId: string): Promise<any[]> {
+		GetMenu(parentId?: string): Promise<any[]> {
 			return new Promise(resolve => {
 				getMenu(parentId).then(res => {
 					const data = res.data;

@@ -1,3 +1,4 @@
+import { reactive } from 'vue';
 <template>
 	<div class="mac_bg"></div>
 	<div class="login animate__animated" :class="{ animate__bounceOut: pass }">
@@ -16,49 +17,46 @@
 		</div>
 	</div>
 </template>
-<script>
-import { mapState } from 'pinia';
-export default {
-	data() {
-		return {
-			pass: false,
-			isUserNameError: false,
-			isUserPasswordError: false,
-			form: {
-				username: '',
-				password: ''
-			}
-		};
-	},
-	computed: {
-		...mapState(['tagWel'])
-	},
-	methods: {
-		handleLogin() {
-			if (this.form.username == '') {
-				this.isUserNameError = true;
-				setTimeout(() => {
-					this.isUserNameError = false;
-				}, 1000);
-				return;
-				return;
-			} else if (this.form.password == '') {
-				this.isUserPasswordError = true;
-				setTimeout(() => {
-					this.isUserPasswordError = false;
-				}, 1000);
-				return;
-			}
-			this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
-				this.pass = true;
-				setTimeout(() => {
-					this.$router.push(this.tagWel);
-				}, 1000);
-			});
-		}
+<script setup lang="ts">
+import { useTagsStore, useUserStore } from '@/store';
+import { computed, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import {} from '../store/user';
+const router = useRouter();
+const userStore = useUserStore();
+const tagsStore = useTagsStore();
+const pass = ref(false);
+const isUserNameError = ref(false);
+const isUserPasswordError = ref(false);
+let form = reactive({
+	username: '',
+	password: ''
+});
+const tagWel = computed(() => {
+	return tagsStore.getTagWel;
+});
+const handleLogin = () => {
+	if (form.username == '') {
+		isUserNameError.value = true;
+		setTimeout(() => {
+			isUserNameError.value = false;
+		}, 1000);
+		return;
+	} else if (form.password == '') {
+		isUserPasswordError.value = true;
+		setTimeout(() => {
+			isUserPasswordError.value = false;
+		}, 1000);
+		return;
 	}
+	userStore.LoginByUsername(form).then(() => {
+		pass.value = true;
+		setTimeout(() => {
+			router.push(tagWel.value);
+		}, 1000);
+	});
 };
 </script>
 <style scoped>
-@import url('./login.css');
+@import './login.css';
 </style>

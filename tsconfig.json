@@ -4,18 +4,17 @@
 		"useDefineForClassFields": true,
 		"module": "esnext",
 		"moduleResolution": "node",
-		"strict": true, //严格模式
+		"strict": true,
 		"jsx": "preserve",
 		"sourceMap": true,
-		"noImplicitThis": true, //方法内使用this报错问题
-		"suppressImplicitAnyIndexErrors": true, //解决通过下标获取对象值报错问题 obj[xxx]
+		"noImplicitThis": true,
+		"suppressImplicitAnyIndexErrors": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"esModuleInterop": true,
 		"lib": ["esnext", "dom"],
 		"skipLibCheck": true,
-		"removeComments": true, //移除注释
-		// "baseUrl": "./",
+		"removeComments": true,
 		"paths": {
 			"@/*": ["./src/*"],
 			"app/*": ["./src/*"],
@@ -30,7 +29,7 @@
 			"utils/*": ["./src/utils/*"]
 		}
 	},
-	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "./build"],
+	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "build/*.ts"],
 	"exclude": ["node_modules"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
