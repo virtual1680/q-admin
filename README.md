@@ -1,19 +1,34 @@
-# Vue 3 + TypeScript + Vite
+## Q-Admin 中后台管理系统
 
-## 项目功能
+> q-admin 是基于 avue-cli 改造而成一套模板，集 avue-cli 于一身的 ts 版本；
 
-- axios 封装，取消重复请求，路由跳转取消未完成的请求
-- pinia 状态管理器，数据持久化
-- enum 定义常用枚举
-- vue-router 路由跳转
-- mitt 跨组件通信
-- eslint 代码规范检测
-- prettier 代码格式化
-- stylelint 样式检测
-- husky git hooks
-- deploy 代码打包上传服务器
-- 图片打包压缩
-- 项目组件依赖关系图
-- svg 组件引入
-- tsx 语法支持
-- 更新中....
+#### 一、预览地址
+
+- 暂无
+
+#### 二、文档地址
+
+- 暂无
+
+#### 三、仓库地址
+
+- gitee：https://gitee.com/virtual1680/q-admin
+- github：https://github.com/virtual1680/q-admin
+
+#### 四、项目功能
+
+- 一样一样的
+
+#### 五、页面（在 avue copy 的）
+
+###### 登陆
+
+<img src='https://avuejs.com/images/cli/1.png' width="700">
+
+###### 主页
+
+<img src='https://avuejs.com/images/cli/2.png' width="700">
+
+#### 参考项目
+
+- Avue-cli：https://gitee.com/smallweigit/avue-cli
