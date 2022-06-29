@@ -5,7 +5,7 @@
 <script>
 import { mapState } from 'pinia';
 import basicVideo from '@/components/basic-video/main.vue';
-import { tagsStore } from '../../store/tags';
+import { useTagsStore } from '../../store/tags';
 export default {
 	components: {
 		basicVideo
@@ -24,7 +24,7 @@ export default {
 		}, 6000);
 	},
 	computed: {
-		...mapState(tagsStore(), ['tagWel'])
+		...mapState(useTagsStore(), ['tagWel'])
 	},
 	methods: {
 		handleLogin() {

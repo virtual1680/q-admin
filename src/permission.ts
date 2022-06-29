@@ -1,10 +1,8 @@
 import router, { AVueRouter } from './router/';
-import { userStore } from 'store/user';
-import { commonStore } from 'store/common';
+import { useUserStore, useCommonStore, useTagsStore } from 'store/index';
 import { AxiosCanceler } from 'http/cancel';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
-import { tagsStore } from 'store/tags';
 NProgress.configure({ showSpinner: false });
 
 const axiosCanceler = new AxiosCanceler();
@@ -12,9 +10,9 @@ const lockPage = '/lock'; //锁屏页
 router.beforeEach((to, from, next) => {
 	//路由切换时取消所有正在执行的请求
 	axiosCanceler.removeAllPending();
-	const uStore = userStore();
-	const cStore = commonStore();
-	const tStore = tagsStore();
+	const uStore = useUserStore();
+	const cStore = useCommonStore();
+	const tStore = useTagsStore();
 	const meta = to.meta || {};
 	const isMenu = meta.menu === undefined ? to.query.menu : meta.menu;
 	cStore.SET_IS_MENU(isMenu === undefined);
@@ -71,7 +69,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach(to => {
-	const cStore = commonStore();
+	const cStore = useCommonStore();
 	NProgress.done();
 	console.log(to);
 	let title = (router as AVueRouter).avueRouter?.generateTitle(to as unknown as Menu);

@@ -32,116 +32,128 @@
 		</div>
 	</div>
 </template>
-<script>
-import { mapState } from 'pinia';
-export default {
-	name: 'tags',
-	data() {
-		return {
-			refresh: false,
-			active: '',
-			contentmenuX: '',
-			contentmenuY: '',
-			contextmenuFlag: false
-		};
+<script lang="ts" setup name="tags">
+import { ref, watch, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useTagsStore, useCommonStore } from 'store/index';
+import { AVueRouter } from '../../router/index';
+const router = useRouter() as AVueRouter;
+const commonStore = useCommonStore();
+const tagsStore = useTagsStore();
+const refresh = ref(false);
+const active = ref('');
+const contentmenuX = ref('');
+const contentmenuY = ref('');
+const contextmenuFlag = ref(false);
+
+const tagWel = computed(() => {
+	return tagsStore.getTagWel;
+});
+const tagList = computed(() => {
+	return tagsStore.getTagList;
+});
+const tag = computed(() => {
+	return tagsStore.getTag;
+});
+const setting = computed(() => {
+	return commonStore.getSetting;
+});
+const tagLen = computed(() => {
+	return tagList.value.length || 0;
+});
+watch(
+	() => tag.value,
+	val => {
+		active.value = val.fullPath;
 	},
-	watch: {
-		tag: {
-			handler(val) {
-				this.active = val.fullPath;
-			},
-			immediate: true
-		},
-		contextmenuFlag() {
-			window.addEventListener('mousedown', this.watchContextmenu);
+	{ immediate: true }
+);
+watch(
+	() => contextmenuFlag.value,
+	() => {
+		window.addEventListener('mousedown', watchContextmenu);
+	}
+);
+
+const openSearch = () => {
+	commonStore.SET_IS_SEARCH(true);
+};
+const handleRefresh = () => {
+	refresh.value = true;
+	commonStore.SET_IS_SEARCH(false);
+	setTimeout(() => {
+		commonStore.SET_IS_SEARCH(true);
+	}, 100);
+	setTimeout(() => {
+		refresh.value = false;
+	}, 500);
+};
+const generateTitle = (item: RouterMenu) => {
+	return router.avueRouter?.generateTitle({
+		...item,
+		...{
+			label: item.name
 		}
-	},
-	computed: {
-		...mapState(['tagWel', 'tagList', 'tag', 'setting']),
-		tagLen() {
-			return this.tagList.length || 0;
-		}
-	},
-	methods: {
-		openSearch() {
-			this.$store.commit('SET_IS_SEARCH', true);
-		},
-		handleRefresh() {
-			this.refresh = true;
-			this.$store.commit('SET_IS_REFRESH', false);
-			setTimeout(() => {
-				this.$store.commit('SET_IS_REFRESH', true);
-			}, 100);
-			setTimeout(() => {
-				this.refresh = false;
-			}, 500);
-		},
-		generateTitle(item) {
-			return this.$router.$avueRouter.generateTitle({
-				...item,
-				...{
-					label: item.name
-				}
-			});
-		},
-		watchContextmenu(event) {
-			if (!this.$el.contains(event.target) || event.button !== 0) {
-				this.contextmenuFlag = false;
-			}
-			window.removeEventListener('mousedown', this.watchContextmenu);
-		},
-		handleContextmenu(event) {
-			let target = event.target;
-			let flag = false;
-			if (target.className.indexOf('el-tabs__item') > -1) flag = true;
-			else if (target.parentNode.className.indexOf('el-tabs__item') > -1) {
-				target = target.parentNode;
-				flag = true;
-			}
-			if (flag) {
-				event.preventDefault();
-				event.stopPropagation();
-				this.contentmenuX = event.clientX;
-				this.contentmenuY = event.clientY;
-				this.tagName = target.getAttribute('aria-controls').slice(5);
-				this.contextmenuFlag = true;
-			}
-		},
-		menuTag(value, action) {
-			if (action === 'remove') {
-				let { tag, key } = this.findTag(value);
-				this.$store.commit('DEL_TAG', tag);
-				if (tag.fullPath === this.tag.fullPath) {
-					tag = this.tagList[key - 1];
-					this.$router.push({
-						path: tag.path,
-						query: tag.query
-					});
-				}
-			}
-		},
-		openTag(item) {
-			let value = item.props.name;
-			let { tag } = this.findTag(value);
-			this.$router.push({
+	});
+};
+const watchContextmenu = (event: Event) => {
+	if (!this.$el.contains(event.target) || event.button !== 0) {
+		contextmenuFlag.value = false;
+	}
+	window.removeEventListener('mousedown', watchContextmenu);
+};
+const handleContextmenu = (event: Event) => {
+	let target = event.target;
+	let flag = false;
+	if (target.className.indexOf('el-tabs__item') > -1) flag = true;
+	else if (target.parentNode.className.indexOf('el-tabs__item') > -1) {
+		target = target.parentNode;
+		flag = true;
+	}
+	if (flag) {
+		event.preventDefault();
+		event.stopPropagation();
+		this.contentmenuX = event.clientX;
+		this.contentmenuY = event.clientY;
+		this.tagName = target.getAttribute('aria-controls').slice(5);
+		this.contextmenuFlag = true;
+	}
+};
+// TODO type
+const menuTag = (value: any, action: string) => {
+	if (action === 'remove') {
+		let { tag, key } = findTag(value);
+		tagsStore.DEL_TAG(tag);
+		if (tag.fullPath === this.tag.fullPath) {
+			tag = tagList.value[key - 1];
+			router.push({
 				path: tag.path,
 				query: tag.query
 			});
-		},
-		findTag(fullPath) {
-			let tag = this.tagList.find(item => item.fullPath === fullPath);
-			let key = this.tagList.findIndex(item => item.fullPath === fullPath);
-			return { tag, key };
-		},
-		closeOthersTags() {
-			this.contextmenuFlag = false;
-			this.$store.commit('DEL_TAG_OTHER');
-		},
-		closeAllTags() {
-			this.contextmenuFlag = false;
-			this.$store.commit('DEL_ALL_TAG');
-			this.$router.push(this.tagWel);
 		}
 	}
+};
+// TODO type
+const openTag = (item: any) => {
+	let value = item.props.name;
+	let { tag } = findTag(value);
+	router.push({
+		path: tag.path,
+		query: tag.query
+	});
+};
+const findTag = (fullPath: string) => {
+	let tag = tagList.value.find(item => item.fullPath === fullPath);
+	let key = tagList.value.findIndex(item => item.fullPath === fullPath);
+	return { tag, key };
+};
+const closeOthersTags = () => {
+	contextmenuFlag.value = false;
+	tagsStore.DEL_TAG_OTHER();
+};
+const closeAllTags = () => {
+	contextmenuFlag.value = false;
+	tagsStore.DEL_ALL_TAG();
+	router.push(tagWel.value);
 };
 </script>

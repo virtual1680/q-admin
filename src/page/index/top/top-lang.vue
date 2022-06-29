@@ -11,12 +11,12 @@
 </template>
 
 <script setup lang="ts" name="TopLang">
-import { commonStore } from 'store/common';
-import { tagsStore } from 'store/tags';
+import { AVueRouter } from '@/router';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-const cStore = commonStore();
-const tStore = tagsStore();
+import { useCommonStore, useTagsStore } from 'store/index';
+const cStore = useCommonStore();
+const tStore = useTagsStore();
 const router = useRouter() as AVueRouter;
 
 const language = computed(() => {

@@ -9,9 +9,10 @@ interface UserStore {
 	permission: any;
 	roles: any[];
 	menuId: any;
-	menu: any[];
+	menu: RouterMenu[];
 	menuAll: any[];
 	token: string;
+	refreshToken: string;
 }
 
 // pinia持久化参数配置
@@ -23,7 +24,7 @@ export const piniaPersistConfig = (key: string) => {
 	return persist;
 };
 
-export const userStore = defineStore({
+export const useUserStore = defineStore({
 	id: 'UserStore',
 	state: (): UserStore => ({
 		userInfo: {},
@@ -32,11 +33,13 @@ export const userStore = defineStore({
 		menuId: {},
 		menu: [],
 		menuAll: [],
-		token: ''
+		token: '',
+		refreshToken: ''
 	}),
 	getters: {
 		getUserInfo: state => state.userInfo,
 		getToken: state => state.token,
+		getRefreshToken: state => state.refreshToken,
 		getRoles: state => state.roles,
 		getPermission: state => state.permission,
 		getMenuId: state => state.menuId,
@@ -138,10 +141,10 @@ export const userStore = defineStore({
 				resolve();
 			});
 		},
-		GetTopMenu() {
-			return new Promise((resolve: (value?: unknown) => void) => {
+		GetTopMenu(): Promise<Menu[]> {
+			return new Promise((resolve: (value: Menu[]) => void) => {
 				getTopMenu().then(res => {
-					const data = res.data.data || [];
+					const data = res.data || [];
 					resolve(data);
 				});
 			});
@@ -150,7 +153,7 @@ export const userStore = defineStore({
 		GetMenu(parentId: string): Promise<any[]> {
 			return new Promise(resolve => {
 				getMenu(parentId).then(res => {
-					const data = res.data.data;
+					const data = res.data;
 					let menu = deepClone(data);
 					menu.forEach((ele: any) => formatPath(ele, true));
 					this.SET_MENUALL(menu);

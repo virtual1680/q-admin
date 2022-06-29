@@ -25,7 +25,7 @@ export const piniaPersistConfig = (key: string) => {
 	return persist;
 };
 
-export const commonStore = defineStore({
+export const useCommonStore = defineStore({
 	id: 'CommonStore',
 	state: (): CommonStore => ({
 		language: 'zh-cn',

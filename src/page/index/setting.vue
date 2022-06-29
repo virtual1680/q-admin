@@ -29,54 +29,31 @@
 	</el-drawer>
 </template>
 
-<script>
-import { mapState } from 'pinia';
-export default {
-	data() {
-		return {
-			show: false,
-			list1: [
-				{
-					label: '导航标签',
-					value: 'tag'
-				},
-				{
-					label: '菜单折叠',
-					value: 'collapse'
-				},
-				{
-					label: '菜单搜索',
-					value: 'search'
-				},
-				{
-					label: '屏幕全屏',
-					value: 'fullscren'
-				},
-				{
-					label: '主题选择',
-					value: 'theme'
-				},
-				{
-					label: '顶部菜单',
-					value: 'menu'
-				}
-			],
-			list2: [
-				{
-					label: '日志调试',
-					value: 'debug'
-				},
-				{
-					label: '屏幕锁定',
-					value: 'lock'
-				}
-			]
-		};
-	},
-	computed: {
-		...mapState(['isHorizontal', 'setting'])
-	}
-};
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { useCommonStore } from 'store/index';
+
+const cStore = useCommonStore();
+const show = ref(false);
+
+const isHorizontal = computed(() => {
+	return cStore.getIsHorizontal;
+});
+const setting = computed(() => {
+	return cStore.getSetting;
+});
+const list1 = ref([
+	{ label: '导航标签', value: 'tag' },
+	{ label: '菜单折叠', value: 'collapse' },
+	{ label: '菜单搜索', value: 'search' },
+	{ label: '屏幕全屏', value: 'fullscren' },
+	{ label: '主题选择', value: 'theme' },
+	{ label: '顶部菜单', value: 'menu' }
+]);
+const list2 = ref([
+	{ label: '日志调试', value: 'debug' },
+	{ label: '屏幕锁定', value: 'lock' }
+]);
 </script>
 
 <style lang="scss">

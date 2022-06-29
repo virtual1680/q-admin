@@ -9,15 +9,14 @@
 
 <script setup lang="ts" name="sidebar">
 import sidebarItem from './sidebarItem.vue';
-import { userStore } from '@/store/user';
-import { commonStore } from '@/store/common';
 // import { tagsStore } from '@/store/tags';
 import { computed, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import { getScreen } from 'utils/util';
+import { useUserStore, useCommonStore } from 'store/index';
 const route = useRoute();
-const uStore = userStore();
-const cStore = commonStore();
+const uStore = useUserStore();
+const cStore = useCommonStore();
 // const tStore = tagsStore();
 // mixins: [index],
 const isHorizontal = computed(() => {

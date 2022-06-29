@@ -6,6 +6,6 @@
 	</router-view>
 </template>
 <script lang="ts" setup>
-import { tagsStore } from 'store/tags';
-const tStore = tagsStore();
+import { useTagsStore } from 'store/tags';
+const tStore = useTagsStore();
 </script>

@@ -17,7 +17,7 @@ export const piniaPersistConfig = (key: string) => {
 	return persist;
 };
 
-export const tagsStore = defineStore({
+export const useTagsStore = defineStore({
 	id: 'TagsStore',
 	state: (): TagsStore => ({
 		tagList: [],

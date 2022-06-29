@@ -6,7 +6,7 @@
 		:fetch-suggestions="querySearch"
 		:placeholder="$t('search')"
 		@select="handleSelect">
-		<template #="{ item }">
+		<template #default="{ item }">
 			<i :class="[item[iconKey], 'icon']"></i>
 			<div class="name">{{ item[labelKey] }}</div>
 			<div class="addr">{{ item[pathKey] }}</div>
@@ -14,74 +14,72 @@
 	</el-autocomplete>
 </template>
 
-<script>
-import { mapState } from 'pinia';
-export default {
-	data() {
-		return {
-			value: '',
-			menuList: []
-		};
-	},
-	created() {
-		this.getMenuList();
-	},
+<script setup lang="ts">
+import website from '@/config/website';
+import { validatenull } from '@/utils/validate';
+import { computed, Ref, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from 'store/user';
 
-	watch: {
-		menu() {
-			this.getMenuList();
-		}
-	},
-	computed: {
-		labelKey() {
-			return this.website.menu.label;
-		},
-		pathKey() {
-			return this.website.menu.path;
-		},
-		iconKey() {
-			return this.website.menu.icon;
-		},
-		childrenKey() {
-			return this.website.menu.children;
-		},
-		...mapState(['menu'])
-	},
-	methods: {
-		getMenuList() {
-			const findMenu = list => {
-				for (let i = 0; i < list.length; i++) {
-					const ele = Object.assign({}, list[i]);
-					if (this.validatenull(ele[this.childrenKey])) {
-						this.menuList.push(ele);
-					} else {
-						findMenu(ele[this.childrenKey]);
-					}
-				}
-			};
-			this.menuList = [];
-			findMenu(this.menu);
-		},
-		querySearch(queryString, cb) {
-			let restaurants = this.menuList;
-			let results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
-			// 调用 callback 返回建议列表的数据
-			cb(results);
-		},
-		createFilter(queryString) {
-			return restaurant => {
-				return restaurant.label.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
-			};
-		},
-		handleSelect(item) {
-			this.value = '';
-			this.$router.push({
-				path: item[this.pathKey],
-				query: item.query
-			});
-		}
+const uStore = useUserStore();
+const router = useRouter();
+const value = ref('');
+const menuList: Ref<RouterMenu[]> = ref([]);
+const menu = computed(() => {
+	return uStore.getMenu;
+});
+const labelKey = computed(() => {
+	return website.menu.label;
+});
+const pathKey = computed(() => {
+	return website.menu.path;
+});
+const iconKey = computed(() => {
+	return website.menu.icon;
+});
+const childrenKey = computed(() => {
+	return website.menu.children;
+});
+
+watch(
+	() => menu,
+	() => {
+		getMenuList();
 	}
+);
+const getMenuList = () => {
+	const findMenu = (list: RouterMenu[]) => {
+		for (let i = 0; i < list.length; i++) {
+			const ele = Object.assign({}, list[i]);
+			if (validatenull(ele[childrenKey.value])) {
+				menuList.value.push(ele);
+			} else {
+				findMenu(ele[childrenKey.value]);
+			}
+		}
+	};
+	menuList.value = [];
+	findMenu(menu.value);
 };
+const querySearch = (queryString: string, cb: (results: any) => void) => {
+	let restaurants = menuList.value;
+	let results = queryString ? restaurants.filter(createFilter(queryString)) : restaurants;
+	// 调用 callback 返回建议列表的数据
+	cb(results);
+};
+const createFilter = (queryString: string) => {
+	return (restaurant: any) => {
+		return restaurant.label.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
+	};
+};
+const handleSelect = (item: RouterMenu) => {
+	value.value = '';
+	router.push({
+		path: item[pathKey.value],
+		query: item.query
+	});
+};
+getMenuList();
 </script>
 
 <style lang="scss">

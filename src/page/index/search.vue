@@ -27,80 +27,81 @@
 	</div>
 </template>
 
-<script>
-import { mapState } from 'pinia';
-export default {
-	data() {
-		return {
-			value: '',
-			menus: [],
-			menuList: []
-		};
-	},
-	created() {
-		this.getMenuList();
-	},
-	watch: {
-		value() {
-			this.querySearch();
-		},
-		menu() {
-			this.getMenuList();
-		}
-	},
-	computed: {
-		labelKey() {
-			return this.website.menu.label;
-		},
-		pathKey() {
-			return this.website.menu.path;
-		},
-		iconKey() {
-			return this.website.menu.icon;
-		},
-		childrenKey() {
-			return this.website.menu.children;
-		},
-		...mapState(['menu'])
-	},
-	methods: {
-		handleEsc() {
-			this.$store.commit('SET_IS_SEARCH', false);
-		},
-		getMenuList() {
-			const findMenu = list => {
-				for (let i = 0; i < list.length; i++) {
-					const ele = Object.assign({}, list[i]);
-					if (this.validatenull(ele[this.childrenKey])) {
-						this.menuList.push(ele);
-					} else {
-						findMenu(ele[this.childrenKey]);
-					}
-				}
-			};
-			this.menuList = [];
-			findMenu(this.menu);
-			this.menus = this.menuList;
-		},
-		querySearch() {
-			let restaurants = this.menuList;
-			let queryString = this.value;
-			this.menus = queryString ? this.menuList.filter(this.createFilter(queryString)) : restaurants;
-		},
-		createFilter(queryString) {
-			return restaurant => {
-				return restaurant.label.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
-			};
-		},
-		handleSelect(item) {
-			this.value = '';
-			this.$router.push({
-				path: item[this.pathKey],
-				query: item.query
-			});
-		}
+<script setup lang="ts">
+import website from '@/config/website';
+import { validatenull } from '@/utils/validate';
+import { computed, Ref, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore, useCommonStore } from 'store/index';
+const router = useRouter();
+const cStore = useCommonStore();
+const uStore = useUserStore();
+const value = ref('');
+const menus: Ref<RouterMenu[]> = ref([]);
+const menuList: Ref<RouterMenu[]> = ref([]);
+const labelKey = computed(() => {
+	return website.menu.label;
+});
+const pathKey = computed(() => {
+	return website.menu.path;
+});
+const iconKey = computed(() => {
+	return website.menu.icon;
+});
+const childrenKey = computed(() => {
+	return website.menu.children;
+});
+const menu = computed(() => {
+	return uStore.getMenu;
+});
+watch(
+	() => value.value,
+	() => {
+		querySearch();
 	}
+);
+watch(
+	() => menu.value,
+	() => {
+		getMenuList();
+	}
+);
+const handleEsc = () => {
+	cStore.SET_IS_SEARCH(false);
 };
+const getMenuList = () => {
+	const findMenu = (list: RouterMenu[]) => {
+		for (let i = 0; i < list.length; i++) {
+			const ele = Object.assign({}, list[i]);
+			if (validatenull(ele[childrenKey.value])) {
+				menuList.value.push(ele);
+			} else {
+				findMenu(ele[childrenKey.value]);
+			}
+		}
+	};
+	menuList.value = [];
+	findMenu(menu.value);
+	menus.value = menuList.value;
+};
+const querySearch = () => {
+	let restaurants = menuList.value;
+	let queryString = value.value;
+	menus.value = queryString ? menuList.value.filter(createFilter(queryString)) : restaurants;
+};
+const createFilter = (queryString: string) => {
+	return (restaurant: any) => {
+		return restaurant.label.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
+	};
+};
+const handleSelect = (item: RouterMenu) => {
+	value.value = '';
+	router.push({
+		path: item[pathKey.value],
+		query: item.query
+	});
+};
+getMenuList();
 </script>
 
 <style lang="scss" scoped>

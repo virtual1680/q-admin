@@ -17,59 +17,58 @@
 	</span>
 </template>
 
-<script>
-import { mapState } from 'pinia';
-export default {
-	name: 'top-logs',
-	data() {
-		return {
-			box: false
-		};
-	},
-	created() {},
-	mounted() {},
-	computed: {
-		...mapState(['logsList', 'logsFlag', 'logsLen'])
-	},
-	props: [],
-	methods: {
-		handleOpen() {
-			this.box = true;
-		},
-		send() {
-			this.$confirm('确定上传本地日志到服务器?', '提示', {
-				confirmButtonText: '确定',
-				cancelButtonText: '取消',
-				type: 'warning'
-			})
-				.then(() => {
-					this.$store.dispatch('SendLogs').then(() => {
-						this.box = false;
-						this.$message({
-							type: 'success',
-							message: '发送成功!'
-						});
-					});
-				})
-				.catch(() => {});
-		},
-		clear() {
-			this.$confirm('确定清空本地日志记录?', '提示', {
-				confirmButtonText: '确定',
-				cancelButtonText: '取消',
-				type: 'warning'
-			})
-				.then(() => {
-					this.$store.commit('CLEAR_LOGS');
-					this.box = false;
-					this.$message({
-						type: 'success',
-						message: '清空成功!'
-					});
-				})
-				.catch(() => {});
-		}
-	}
+<script lang="ts" setup name="top-logs">
+import { computed, ref } from 'vue';
+import { ElMessageBox, ElMessage } from 'element-plus';
+import { useLogsStore } from 'store/logs';
+
+const logsStore = useLogsStore();
+const box = ref(false);
+
+const handleOpen = () => {
+	box.value = true;
+};
+const logsList = computed(() => {
+	return logsStore.getLogsList;
+});
+const logsFlag = computed(() => {
+	return logsStore.getLogsFlag;
+});
+const logsLen = computed(() => {
+	return logsStore.getLogsLen;
+});
+const send = () => {
+	ElMessageBox.confirm('确定上传本地日志到服务器?', '提示', {
+		confirmButtonText: '确定',
+		cancelButtonText: '取消',
+		type: 'warning'
+	})
+		.then(() => {
+			logsStore.SendLogs().then(() => {
+				box.value = false;
+				ElMessage.success({
+					type: 'success',
+					message: '发送成功!'
+				});
+			});
+		})
+		.catch(() => {});
+};
+const clear = () => {
+	ElMessageBox.confirm('确定清空本地日志记录?', '提示', {
+		confirmButtonText: '确定',
+		cancelButtonText: '取消',
+		type: 'warning'
+	})
+		.then(() => {
+			logsStore.CLEAR_LOGS();
+			box.value = false;
+			ElMessage.success({
+				type: 'success',
+				message: '清空成功!'
+			});
+		})
+		.catch(() => {});
 };
 </script>
 

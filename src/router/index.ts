@@ -6,7 +6,7 @@ import i18n from 'app/lang/index';
 // import { userStore } from '@/store/user';
 
 export interface ARouter {
-	generateTitle: (item: Menu, props?: Partial<Menu>) => string;
+	generateTitle: (item: RouterMenu, props?: Partial<Menu>) => string;
 	setTitle: (title?: string) => string;
 	closeTag: (value: string) => void;
 	formatRoutes: (aMenu: any[], first: boolean) => any;
@@ -26,7 +26,10 @@ const aRouter = new AvueRouter({
 	router: Router,
 	i18n: i18n
 });
+//解决pinia未挂载去调用useUserStore的问题
+const userStore = window.localStorage.getItem('UserStore');
+if (userStore) {
+	aRouter.$router.avueRouter?.formatRoutes(JSON.parse(userStore).menuAll || [], true);
+}
 
-aRouter.$router.avueRouter?.formatRoutes([], true);
-
-export default Router;
+export default aRouter.$router;

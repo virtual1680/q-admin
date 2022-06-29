@@ -1,7 +1,7 @@
 import { ARouter, AVueRouter } from 'router/index';
 import website from 'app/config/website';
-// import { commonStore } from 'store/common';
-import { tagsStore } from 'store/tags';
+// import { useCommonStore } from 'store/common';
+import { useTagsStore } from 'store/tags';
 
 const modules = import.meta.glob('../**/**/*.vue');
 function isURL(s: string) {
@@ -25,7 +25,7 @@ export default class RouterPlugin {
 				document.title = title;
 			},
 			closeTag(value: string) {
-				const tStore = tagsStore();
+				const tStore = useTagsStore();
 				let tag = value || tStore.tag;
 				if (typeof value === 'string') {
 					tag = tStore.tagList.find((ele: any) => ele.fullPath === value);
@@ -45,7 +45,7 @@ export default class RouterPlugin {
 			},
 			//动态路由
 			formatRoutes: function (aMenu: any[] = [], first: boolean = false) {
-				// const cStore = commonStore();
+				// const cStore = useCommonStore();
 				const aRouter = [];
 				const propsDefault = website.menu;
 				if (aMenu && aMenu.length === 0) return;
@@ -67,6 +67,7 @@ export default class RouterPlugin {
 						path: path,
 						component: (() => {
 							// 判断是否为首路由
+							// console.log(path, first);
 							if (first) {
 								// TODO cStore.getIsMacOs
 								return modules[false ? '../page/index/layout.vue' : '../page/index/index.vue'];
@@ -114,6 +115,7 @@ export default class RouterPlugin {
 					};
 					if (!isURL(path)) aRouter.push(oRouter);
 				}
+				// console.log(aRouter);
 				if (first) {
 					aRouter.forEach(ele => this.self.$router.addRoute(ele));
 				} else {

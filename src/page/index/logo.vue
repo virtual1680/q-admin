@@ -15,10 +15,10 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { commonStore } from 'store/common';
+import { useCommonStore } from 'store/common';
 import { getScreen } from 'utils/util';
 
-const cStore = commonStore();
+const cStore = useCommonStore();
 
 const isCollapse = computed(() => {
 	return cStore.isCollapse;

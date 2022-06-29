@@ -42,13 +42,11 @@
 import { reactive, ref } from 'vue';
 import { randomLenNum } from 'utils/util';
 import { FormInstance } from 'element-plus';
-// import { mapState } from 'pinia';
-import { userStore } from '../../store/user';
+import { useUserStore, useTagsStore } from 'store/index';
 import { useRouter } from 'vue-router';
-import { tagsStore } from '../../store/tags';
-const uStore = userStore();
 const router = useRouter();
-const tStore = tagsStore();
+const uStore = useUserStore();
+const tStore = useTagsStore();
 let loginForm = reactive({
 	username: 'admin',
 	password: '123456',

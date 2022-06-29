@@ -31,6 +31,7 @@ declare interface Setting {
 	menu: boolean;
 }
 declare interface Menu {
+	parentId: string;
 	iconDefault: string;
 	label: string;
 	path: string;
@@ -40,6 +41,19 @@ declare interface Menu {
 	href: string;
 	fullPath: string;
 	meta: string; //TODO { keepAlive?: boolean; isTab?: boolean; isAuth?: boolean }
+	name: string;
+}
+declare interface RouterMenu {
+	parentId: string;
+	iconDefault: string;
+	label: string;
+	path: string;
+	icon: string;
+	children: string;
+	query: LocationQueryRaw;
+	href: string;
+	fullPath: string;
+	meta: { keepAlive?: boolean; isTab?: boolean; isAuth?: boolean };
 	name: string;
 }
 declare interface Website {

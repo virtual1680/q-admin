@@ -1,4 +1,4 @@
-// import { commonStore } from 'store/common';
+// import { useCommonStore } from 'store/common';
 import { createI18n } from 'vue-i18n';
 import elementEnLocale from 'element-plus/es/locale/lang/en';
 import elementZhLocale from 'element-plus/es/locale/lang/zh-cn';

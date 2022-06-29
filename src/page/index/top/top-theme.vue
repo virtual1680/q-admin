@@ -16,93 +16,48 @@
 	</div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { setTheme } from 'utils/util';
-import { mapState } from 'pinia';
-export default {
-	data() {
-		return {
-			box: false,
-			text: '',
-			list: [
-				{
-					name: '默认主题',
-					value: 'default'
-				},
-				{
-					name: '白色主题',
-					value: 'theme-white'
-				},
-				{
-					name: '黑色主题',
-					value: 'theme-dark'
-				},
-				{
-					name: 'hey主题',
-					value: 'theme-hey'
-				},
-				{
-					name: '炫彩主题',
-					value: 'theme-star'
-				},
-				{
-					name: 'vip尊贵主题',
-					value: 'theme-vip'
-				},
-				{
-					name: '智能工厂主题',
-					value: 'theme-bule'
-				},
-				{
-					name: 'iview主题',
-					value: 'theme-iview'
-				},
-				{
-					name: 'cool主题',
-					value: 'theme-cool'
-				},
-				{
-					name: 'd2主题',
-					value: 'theme-d2'
-				},
-				{
-					name: 'renren主题',
-					value: 'theme-renren'
-				},
-				{
-					name: 'beautiful主题',
-					value: 'theme-beautiful'
-				},
-				{
-					name: 'Mac OS主题',
-					value: 'mac-os'
-				}
-			]
-		};
-	},
-	watch: {
-		text: function (val) {
-			this.$store.commit('SET_THEME_NAME', val);
-			setTheme(val);
-			if (this.$store.getters.isMacOs) {
-				location.reload();
-			}
-		}
-	},
-	computed: {
-		...mapState(['themeName'])
-	},
-	mounted() {
-		this.text = this.themeName;
-		if (!this.text) {
-			this.text = '';
-		}
-	},
-	methods: {
-		open() {
-			this.box = true;
+import { computed, ref, watch } from 'vue';
+import { useCommonStore } from 'store/common';
+const cStore = useCommonStore();
+const box = ref(false);
+const text = ref('');
+const list = ref([
+	{ name: '默认主题', value: 'default' },
+	{ name: '白色主题', value: 'theme-white' },
+	{ name: '黑色主题', value: 'theme-dark' },
+	{ name: 'hey主题', value: 'theme-hey' },
+	{ name: '炫彩主题', value: 'theme-star' },
+	{ name: 'vip尊贵主题', value: 'theme-vip' },
+	{ name: '智能工厂主题', value: 'theme-bule' },
+	{ name: 'iview主题', value: 'theme-iview' },
+	{ name: 'cool主题', value: 'theme-cool' },
+	{ name: 'd2主题', value: 'theme-d2' },
+	{ name: 'renren主题', value: 'theme-renren' },
+	{ name: 'beautiful主题', value: 'theme-beautiful' },
+	{ name: 'Mac OS主题', value: 'mac-os' }
+]);
+const themeName = computed(() => {
+	return cStore.getThemeName;
+});
+watch(
+	() => text.value,
+	val => {
+		cStore.SET_THEME_NAME(val);
+		setTheme(val);
+		if (cStore.getIsMacOs) {
+			location.reload();
 		}
 	}
+);
+
+text.value = themeName.value;
+if (!text.value) {
+	text.value = '';
+}
+const open = () => {
+	box.value = true;
 };
 </script>
 

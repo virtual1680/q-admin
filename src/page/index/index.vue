@@ -8,10 +8,10 @@
 			</div>
 			<div class="avue-main">
 				<!-- 顶部导航栏 -->
-				<!-- <top ref="top" /> -->
+				<top />
 				<!-- 顶部标签卡 -->
-				<!-- <tags /> -->
-				<!-- <search class="avue-view" v-show="isSearch"></search> -->
+				<tags />
+				<search class="avue-view" v-show="isSearch"></search>
 				<!-- 主体视图层 -->
 				<div id="avue-view" v-show="!isSearch" v-if="isRefresh">
 					<router-view #="{ Component }">
@@ -31,21 +31,19 @@
 <script lang="ts" setup name="index">
 // import index from '@/mixins/index';
 import { validatenull } from 'utils/validate';
-// import tags from './tags.vue';
-// import search from './search.vue';
+import tags from './tags.vue';
+import search from './search.vue';
 import logo from './logo.vue';
-// import top from './top/index.vue';
+import top from './top/index.vue';
 import sidebar from './sidebar/index.vue';
 import { provide, computed } from 'vue';
-import { userStore } from '@/store/user';
-import { commonStore } from '@/store/common';
-import { tagsStore } from '@/store/tags';
 import { useRouter, useRoute } from 'vue-router';
 import { AVueRouter } from '../../router/index';
+import { useUserStore, useCommonStore, useTagsStore } from 'store/index';
 
-const uStore = userStore();
-const cStore = commonStore();
-const tStore = tagsStore();
+const uStore = useUserStore();
+const cStore = useCommonStore();
+const tStore = useTagsStore();
 const router = useRouter() as AVueRouter;
 const route = useRoute();
 // mixins: [index],

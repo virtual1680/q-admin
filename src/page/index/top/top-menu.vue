@@ -11,35 +11,35 @@
 	</el-menu>
 </template>
 
-<script>
-import { mapState } from 'pinia';
-export default {
-	name: 'top-menu',
-	data() {
-		return {
-			activeIndex: '0',
-			items: []
-		};
-	},
-	inject: ['index'],
-	created() {
-		this.getMenu();
-	},
-	computed: {
-		...mapState(['tagCurrent', 'menu'])
-	},
-	methods: {
-		openMenu(item) {
-			this.index.openMenu(item);
-		},
-		getMenu() {
-			this.$store.dispatch('GetTopMenu').then(res => {
-				this.items = res;
-			});
-		},
-		generateTitle(item) {
-			return this.$router.$avueRouter.generateTitle(item);
-		}
-	}
+<script setup lang="ts" name="top-menu">
+import { inject, Ref, ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { AVueRouter } from '../../../router/index';
+import { useUserStore } from 'store/user';
+
+const router = useRouter() as AVueRouter;
+const uStore = useUserStore();
+const activeIndex = ref('0');
+const items: Ref<Menu[]> = ref([]);
+// ...mapState(['tagCurrent', 'menu'])
+const menu = computed(() => {
+	return uStore.getMenu;
+});
+// TODO
+// const tagCurrent = computed(() => {
+// 	return uStore.getTag
+// })
+
+const openMenu = (item: Menu) => {
+	(inject('openMenu') as (item: Menu) => void)(item);
 };
+const getMenu = () => {
+	uStore.GetTopMenu().then(res => {
+		items.value = res;
+	});
+};
+const generateTitle = (item: Menu) => {
+	return router.avueRouter?.generateTitle(item);
+};
+getMenu();
 </script>

@@ -29,9 +29,9 @@ import website from '@/config/website';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { AVueRouter } from '../../../router/index';
-import { userStore } from '../../../store/user';
+import { useUserStore } from 'store/user';
 const router = useRouter() as AVueRouter;
-const uStore = userStore();
+const uStore = useUserStore();
 const props = defineProps({
 	menu: Array
 });

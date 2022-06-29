@@ -7,9 +7,9 @@
 <script lang="ts" setup>
 import { messages } from 'app/lang/';
 import { computed } from 'vue';
-import { commonStore } from 'store/common';
+import { useCommonStore } from 'store/common';
 import { provideI18n } from 'app/lang/index';
-let store = commonStore();
+let store = useCommonStore();
 provideI18n();
 const locale = computed(() => {
 	let languageType = store.language;

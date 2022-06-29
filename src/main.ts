@@ -1,10 +1,6 @@
 import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-const pinia = createPinia();
-import piniaPersisted from 'pinia-plugin-persistedstate';
-pinia.use(piniaPersisted);
 import App from 'app/App.vue';
-
+import store from 'store/index';
 import router from 'router/index';
 import 'virtual:svg-icons-register';
 import IconSvg from 'components/icon-svg/index.vue';
@@ -24,7 +20,7 @@ const app = createApp(App);
 //注册全局容器
 app.component('BasicContainer', basicContainer);
 app.component('BasicBlock', basicBlock);
-app.use(pinia).use(router);
+app.use(store).use(router);
 app.use(i18n);
 app.component('IconSvg', IconSvg);
 app.use(ScreenContainer);

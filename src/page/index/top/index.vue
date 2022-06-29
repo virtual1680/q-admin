@@ -51,8 +51,7 @@
 		</div>
 	</div>
 </template>
-<script>
-import { mapState } from 'pinia';
+<script lang="ts" setup name="top">
 import topLock from './top-lock.vue';
 import topMenu from './top-menu.vue';
 import topSearch from './top-search.vue';
@@ -61,42 +60,61 @@ import topLogs from './top-logs.vue';
 import topLang from './top-lang.vue';
 import topFull from './top-full.vue';
 import topSetting from '../setting.vue';
-export default {
-	components: {
-		topLock,
-		topMenu,
-		topSearch,
-		topTheme,
-		topLogs,
-		topLang,
-		topFull,
-		topSetting
-	},
-	name: 'top',
-	data() {
-		return {};
-	},
-	filters: {},
-	created() {},
-	computed: {
-		...mapState(['setting', 'userInfo', 'tagWel', 'tagList', 'isCollapse', 'tag', 'logsLen', 'logsFlag', 'isHorizontal'])
-	},
-	methods: {
-		setCollapse() {
-			this.$store.commit('SET_COLLAPSE');
-		},
-		logout() {
-			this.$confirm(this.$t('logoutTip'), this.$t('tip'), {
-				confirmButtonText: this.$t('submitText'),
-				cancelButtonText: this.$t('cancelText'),
-				type: 'warning'
-			}).then(() => {
-				this.$store.dispatch('LogOut').then(() => {
-					this.$router.push({ path: '/login' });
-				});
-			});
-		}
-	}
+import { computed } from 'vue';
+import { useI18n } from 'app/lang/index';
+import { ElMessageBox } from 'element-plus';
+import { useRouter } from 'vue-router';
+import { useUserStore, useCommonStore, useTagsStore } from 'store/index';
+const router = useRouter();
+const uStore = useUserStore();
+const cStore = useCommonStore();
+const tStore = useTagsStore();
+const i18n = useI18n();
+
+const isHorizontal = computed(() => {
+	return cStore.getIsHorizontal;
+});
+const userInfo = computed(() => {
+	return uStore.getUserInfo;
+});
+const tagList = computed(() => {
+	return tStore.getTagList;
+});
+const isCollapse = computed(() => {
+	return cStore.getIsCollapse;
+});
+const tagWel = computed(() => {
+	return tStore.getTagWel;
+});
+const menu = computed(() => {
+	return uStore.getMenu;
+});
+const setting = computed(() => {
+	return cStore.getSetting;
+});
+const tag = computed(() => {
+	return tStore.getTagWel;
+});
+const logsLen = computed(() => {
+	return uStore.getMenu;
+});
+const logsFlag = computed(() => {
+	return cStore.getSetting;
+});
+
+const setCollapse = () => {
+	cStore.SET_COLLAPSE();
+};
+const logout = () => {
+	ElMessageBox.confirm(i18n.$t('logoutTip'), i18n.$t('tip'), {
+		confirmButtonText: i18n.$t('submitText'),
+		cancelButtonText: i18n.$t('cancelText'),
+		type: 'warning'
+	}).then(() => {
+		uStore.LogOut().then(() => {
+			router.push({ path: '/login' });
+		});
+	});
 };
 </script>
 

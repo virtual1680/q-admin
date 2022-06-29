@@ -4,7 +4,7 @@ import { getToken } from 'utils/token';
 import router from 'router/index';
 import { AxiosCanceler } from './cancel';
 import { ResultEnum } from 'app/enums/http';
-import { authStore } from 'app/store';
+import { useUserStore } from 'store/index';
 const axiosCanceler = new AxiosCanceler();
 
 const config = {
@@ -46,8 +46,8 @@ instance.interceptors.response.use(
 			if (lock === 1) return false;
 			lock === 0 && ElMessage.error(message);
 			lock = 1;
-			const authState = authStore();
-			authState.logout();
+			const userStore = useUserStore();
+			userStore.LogOut();
 			router.replace({ path: '/login' });
 			return Promise.reject(data);
 		} else if (status !== ResultEnum.SUCCESS) {

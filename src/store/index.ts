@@ -1,48 +1,12 @@
-import { defineStore } from 'pinia';
-import { PersistedStateOptions } from 'pinia-plugin-persistedstate';
+import { createPinia } from 'pinia';
+import { useCommonStore } from './common';
+import { useLogsStore } from './logs';
+import { useTagsStore } from './tags';
+import { useUserStore } from './user';
 
-interface AuthState {
-	accessToken: string;
-	refreshToken: string;
-	userId: string;
-}
+const pinia = createPinia();
+import piniaPersisted from 'pinia-plugin-persistedstate';
+pinia.use(piniaPersisted);
 
-// pinia持久化参数配置
-export const piniaPersistConfig = (key: string) => {
-	const persist: PersistedStateOptions = {
-		key,
-		storage: window.localStorage
-	};
-	return persist;
-};
-
-export const authStore = defineStore({
-	id: 'AuthState',
-	state: (): AuthState => ({
-		accessToken: '',
-		refreshToken: '',
-		userId: ''
-	}),
-	getters: {
-		getToken: state => state.accessToken,
-		getRefreshToken: state => state.refreshToken,
-		getUserId: state => state.userId
-	},
-	actions: {
-		logout() {
-			this.accessToken = '';
-			this.refreshToken = '';
-			this.userId = '';
-		},
-		setToken(token: string) {
-			this.accessToken = token;
-		},
-		setUserId(userId: string) {
-			this.userId = userId;
-		},
-		setRefreshToken(refreshToken: string) {
-			this.refreshToken = refreshToken;
-		}
-	},
-	persist: piniaPersistConfig('AuthState')
-});
+export { useCommonStore, useLogsStore, useTagsStore, useUserStore };
+export default pinia;
