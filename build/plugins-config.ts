@@ -11,7 +11,7 @@ import { viteMockServe } from 'vite-plugin-mock';
 import { resolve } from 'path';
 import { PluginOption } from 'vite';
 import website from '../src/config/website';
-export const pluginList = (viteEnv: ViteEnv) =>
+export const pluginList = (viteEnv: ViteEnv, mode: string) =>
 	[
 		vue(),
 		viteMockServe({
@@ -31,20 +31,27 @@ export const pluginList = (viteEnv: ViteEnv) =>
 		// * name 可以写在 script 标签上
 		VueSetupExtend(),
 		// * cdn 引入
-		importToCDN({
-			modules: [
-				{
-					name: 'echarts',
-					var: 'echarts',
-					path: 'https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js'
-				}
-			]
-		}),
+		mode === 'production' &&
+			importToCDN({
+				modules: [
+					{
+						name: 'echarts',
+						var: 'echarts',
+						path: 'https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js'
+					},
+					{
+						name: 'axios',
+						var: 'axios',
+						path: 'https://unpkg.com/axios@0.26.1/dist/axios.min.js'
+					}
+				]
+			}),
 		// * 忽略打包
-		viteExternalsPlugin({
-			echarts: 'echarts'
-			// axios: 'axios',
-		}),
+		mode === 'production' &&
+			viteExternalsPlugin({
+				echarts: 'echarts',
+				axios: 'axios'
+			}),
 		// * 图片压缩
 		viteImagemin({
 			gifsicle: { optimizationLevel: 7, interlaced: false },

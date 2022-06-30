@@ -11,7 +11,7 @@ export default defineConfig(({ command, mode }) => {
 	const env = loadEnv(mode, process.cwd());
 	const viteEnv = wrapperEnv(env);
 	return {
-		base: './',
+		base: env.VITE_BASE_URL,
 		resolve: {
 			alias: {
 				'@': resolve(__dirname, 'src'),
@@ -48,6 +48,6 @@ export default defineConfig(({ command, mode }) => {
 				}
 			}
 		},
-		plugins: pluginList(viteEnv)
+		plugins: pluginList(viteEnv, mode)
 	};
 });
