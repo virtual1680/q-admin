@@ -1,8 +1,8 @@
 import axios from 'http/axios';
-import { baseUrl } from '@/config/env';
+
 export const loginByUsername = (username: string, password: string, code: string, redomStr: string) =>
 	axios.request({
-		url: baseUrl + '/user/login',
+		url: 'user/login',
 		method: 'post',
 		meta: {
 			isToken: false
@@ -17,19 +17,19 @@ export const loginByUsername = (username: string, password: string, code: string
 
 export const getUserInfo = () =>
 	axios.request({
-		url: baseUrl + '/user/getUserInfo',
+		url: 'user/getUserInfo',
 		method: 'get'
 	});
 
 export const refeshToken = () =>
 	axios.request({
-		url: baseUrl + '/user/refresh',
+		url: '/user/refresh',
 		method: 'post'
 	});
 
 export const getMenu = (type: string | number = 0) =>
 	axios.request<RouterMenu[]>({
-		url: baseUrl + '/user/getMenu',
+		url: 'user/getMenu',
 		method: 'get',
 		params: {
 			type
@@ -38,20 +38,20 @@ export const getMenu = (type: string | number = 0) =>
 
 export const getTopMenu = () =>
 	axios.request({
-		url: baseUrl + '/user/getTopMenu',
+		url: 'user/getTopMenu',
 		method: 'get'
 	});
 
 export const sendLogs = (list: any) =>
 	axios.request({
-		url: baseUrl + '/user/logout',
+		url: '/user/logout',
 		method: 'post',
 		data: list
 	});
 
 export const logout = () =>
 	axios.request({
-		url: baseUrl + '/user/logout',
+		url: '/user/logout',
 		meta: {
 			isToken: false
 		},

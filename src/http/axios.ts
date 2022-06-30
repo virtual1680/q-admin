@@ -6,9 +6,9 @@ import { AxiosCanceler } from './cancel';
 import { ResultEnum } from 'app/enums/http';
 import { useUserStore } from 'store/index';
 const axiosCanceler = new AxiosCanceler();
-
+// import { baseUrl } from '@/config/env';
 const config = {
-	baseURL: import.meta.env.VITE_BASE_URL as string,
+	baseURL: '/',
 	timeout: ResultEnum.TIMEOUT as number, // 请求超时时间
 	withCredentials: true, // 跨域时候允许携带凭证
 	validateStatus: (status: number) => {

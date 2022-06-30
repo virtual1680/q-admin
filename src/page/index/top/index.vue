@@ -6,7 +6,8 @@
 			</div>
 		</div>
 		<div class="top-bar__title">
-			<top-menu ref="topMenu"></top-menu>
+			<!-- ref="topMenu" -->
+			<top-menu></top-menu>
 			<top-search class="top-bar__item" v-if="setting.search"></top-search>
 		</div>
 		<div class="top-bar__right">
@@ -64,11 +65,12 @@ import { computed } from 'vue';
 import { useI18n } from 'app/lang/index';
 import { ElMessageBox } from 'element-plus';
 import { useRouter } from 'vue-router';
-import { useUserStore, useCommonStore, useTagsStore } from 'store/index';
+// useTagsStore
+import { useUserStore, useCommonStore } from 'store/index';
 const router = useRouter();
 const uStore = useUserStore();
 const cStore = useCommonStore();
-const tStore = useTagsStore();
+// const tStore = useTagsStore();
 const i18n = useI18n();
 
 const isHorizontal = computed(() => {
@@ -77,30 +79,30 @@ const isHorizontal = computed(() => {
 const userInfo = computed(() => {
 	return uStore.getUserInfo;
 });
-const tagList = computed(() => {
-	return tStore.getTagList;
-});
+// const tagList = computed(() => {
+// 	return tStore.getTagList;
+// });
 const isCollapse = computed(() => {
 	return cStore.getIsCollapse;
 });
-const tagWel = computed(() => {
-	return tStore.getTagWel;
-});
-const menu = computed(() => {
-	return uStore.getMenu;
-});
+// const tagWel = computed(() => {
+// 	return tStore.getTagWel;
+// });
+// const menu = computed(() => {
+// 	return uStore.getMenu;
+// });
 const setting = computed(() => {
 	return cStore.getSetting;
 });
-const tag = computed(() => {
-	return tStore.getTagWel;
-});
-const logsLen = computed(() => {
-	return uStore.getMenu;
-});
-const logsFlag = computed(() => {
-	return cStore.getSetting;
-});
+// const tag = computed(() => {
+// 	return tStore.getTagWel;
+// });
+// const logsLen = computed(() => {
+// 	return uStore.getMenu;
+// });
+// const logsFlag = computed(() => {
+// 	return cStore.getSetting;
+// });
 
 const setCollapse = () => {
 	cStore.SET_COLLAPSE();

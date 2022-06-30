@@ -25,7 +25,7 @@ const cStore = useCommonStore();
 const router = useRouter();
 const props = defineProps({ text: String });
 const { text } = toRefs(props);
-const elFormRef = ref<FormInstance>();
+const elFormRef = ref<FormInstance | undefined>();
 const box = ref(false);
 let form = reactive({
 	passwd: ''
