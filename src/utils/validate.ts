@@ -231,7 +231,7 @@ export function validatenumord(num: string, type: number) {
 /**
  * 判断是否为空
  */
-export function validatenull(val: string | [] | {}) {
+export function validatenull(val: string | [] | {} | null | undefined) {
 	if (typeof val == 'boolean') {
 		return false;
 	}

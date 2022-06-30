@@ -6,16 +6,10 @@ export default [
 			return {
 				data: {
 					total: 10,
-					data: Array(10).fill(
-						{
-							name: 'small',
-							sex: '男'
-						},
-						{
-							name: 'small',
-							sex: '男'
-						}
-					)
+					data: Array(10).fill({
+						name: 'small',
+						sex: '男'
+					})
 				}
 			};
 		}

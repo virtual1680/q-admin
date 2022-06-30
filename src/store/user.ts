@@ -1,4 +1,5 @@
 import { getMenu, getTopMenu, getUserInfo, loginByUsername, logout, refeshToken } from '@/api/user';
+import { setStore } from '@/hooks/useStorage';
 import { formatPath } from '@/router/avue-router';
 import { deepClone, encryption } from '@/utils/util';
 import { defineStore } from 'pinia';
@@ -59,7 +60,6 @@ export const useUserStore = defineStore({
 			return new Promise((resolve: (value?: unknown) => void) => {
 				loginByUsername(user.username, user.password, userInfo.code, userInfo.redomStr).then(res => {
 					const data = res.data;
-					console.log(data);
 					this.SET_TOKEN(data);
 					// this.DEL_ALL_TAG([]);
 					// this.CLEAR_LOCK();
@@ -95,7 +95,7 @@ export const useUserStore = defineStore({
 			});
 		},
 		//刷新token
-		RefeshToken() {
+		RefreshToken() {
 			return new Promise((resolve, reject) => {
 				// state.refeshToken
 				refeshToken()
@@ -164,9 +164,8 @@ export const useUserStore = defineStore({
 		},
 
 		SET_TOKEN(token: string) {
-			console.log(this.token, token);
 			this.token = token;
-			console.log(this.token, token);
+			setStore({ name: 'token', content: token });
 		},
 		SET_MENUID(menuId: string) {
 			this.menuId = menuId;
@@ -185,12 +184,14 @@ export const useUserStore = defineStore({
 				}
 			});
 			this.menuAll = menu;
+			setStore({ name: 'menuAll', content: this.menuAll });
 		},
 		SET_MENUALL_NULL() {
 			this.menuAll = [];
 		},
 		SET_MENU(menu: any) {
 			this.menu = menu;
+			setStore({ name: 'menu', content: menu });
 		},
 		SET_ROLES(roles: any) {
 			this.roles = roles;

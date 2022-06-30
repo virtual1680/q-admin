@@ -2,16 +2,13 @@ import { reactive, computed } from 'vue';
 <template>
 	<basic-container>
 		<h2>项目介绍</h2>
-		<p style="line-height: 30px">
-			Avue-cli基于 vue3 + vite + element plus + avue3 + vue-router + vuex，适配手机、平板、pc
-			的后台开源免费模板，希望减少工作量，帮助大家实现快速开发。
-		</p>
+		<p style="line-height: 30px">目前项目正常运行，还有些问题有待尝试</p>
 	</basic-container>
 	<basic-container>
 		<el-descriptions title="项目信息" :column="2" border>
 			<el-descriptions-item>
 				<template #label> 项目名称 </template>
-				avue-cli
+				q-admin
 			</el-descriptions-item>
 			<el-descriptions-item>
 				<template #label> 版本 </template>
@@ -19,8 +16,8 @@ import { reactive, computed } from 'vue';
 			</el-descriptions-item>
 			<el-descriptions-item>
 				<template #label> 代码地址 </template>
-				<a href="https://gitee.com/smallweigit/avue-cli" target="_blank">
-					<el-tag>https://gitee.com/smallweigit/avue-cli</el-tag>
+				<a href="https://github.com/virtual1680/q-admin" target="_blank">
+					<el-tag>https://github.com/virtual1680/q-admin</el-tag>
 				</a>
 			</el-descriptions-item>
 			<el-descriptions-item>
@@ -44,15 +41,15 @@ import { reactive, computed } from 'vue';
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive } from 'vue';
+import { computed, ref } from 'vue';
 
-let dependencies = reactive({});
+let dependencies = ref({});
 const modules = import.meta.glob('/**.json');
 modules['/package.json']().then(mode => {
-	dependencies = mode.dependencies;
+	dependencies.value = mode.dependencies;
 });
 const list = computed(() => {
-	return Object.keys(dependencies);
+	return Object.keys(dependencies.value);
 });
 </script>
 

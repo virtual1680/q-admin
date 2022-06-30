@@ -25,7 +25,7 @@ export const add = (data: any) =>
 		},
 		data: data
 	});
-export const update = (id: string, data: any) =>
+export const update = (data: any) =>
 	axios.request({
 		url: baseUrl + '/crud',
 		method: 'put',

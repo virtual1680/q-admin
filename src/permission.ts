@@ -73,7 +73,6 @@ type RMenu = RouterMenu & RouteLocationNormalized;
 router.afterEach(to => {
 	const cStore = useCommonStore();
 	NProgress.done();
-	console.log(to);
 	let title = (router as AVueRouter).avueRouter?.generateTitle(to as RMenu);
 	(router as AVueRouter).avueRouter?.setTitle(title);
 	cStore.SET_IS_SEARCH(false);

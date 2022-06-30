@@ -27,18 +27,18 @@ export default [
 			}
 		]
 	},
-	// {
-	// 	path: '/iframe',
-	// 	component: Layout,
-	// 	redirect: '/iframe',
-	// 	children: [
-	// 		{
-	// 			path: '',
-	// 			name: '',
-	// 			component: () => import(/* webpackChunkName: "views" */ '@/components/iframe/main.vue')
-	// 		}
-	// 	]
-	// },
+	{
+		path: '/iframe',
+		component: Layout,
+		redirect: '/iframe',
+		children: [
+			{
+				path: '',
+				name: '',
+				component: () => import(/* webpackChunkName: "views" */ '@/components/iframe/main.vue')
+			}
+		]
+	},
 	{
 		path: '/info',
 		component: Layout,
@@ -61,49 +61,49 @@ export default [
 				component: () => import(/* webpackChunkName: "views" */ '@/views/user/setting.vue')
 			}
 		]
+	},
+	{
+		path: '/query',
+		component: Layout,
+		children: [
+			{
+				path: ':params',
+				name: '参数传递',
+				meta: {
+					activeMenu: '/params'
+				},
+				component: () => import(/* webpackChunkName: "views" */ '@/views/util/params.vue')
+			}
+		]
+	},
+	{
+		path: '/tabs',
+		component: Layout,
+		children: [
+			{
+				path: 'index',
+				name: '测试页面',
+				meta: {
+					isTab: false
+				},
+				component: () => import(/* webpackChunkName: "views" */ '@/views/util/test.vue')
+			}
+		]
+	},
+	{
+		path: '/detail/create',
+		component: Layout,
+		children: [
+			{
+				path: '',
+				name: (query: any) => {
+					return query.id ? '编辑页面' : '新增页面';
+				},
+				meta: {
+					activeMenu: '/detail'
+				},
+				component: () => import(/* webpackChunkName: "views" */ '@/views/util/detail.vue')
+			}
+		]
 	}
-	// {
-	// 	path: '/query',
-	// 	component: Layout,
-	// 	children: [
-	// 		{
-	// 			path: ':params',
-	// 			name: '参数传递',
-	// 			meta: {
-	// 				activeMenu: '/params'
-	// 			},
-	// 			component: () => import(/* webpackChunkName: "views" */ '@/views/util/params.vue')
-	// 		}
-	// 	]
-	// },
-	// {
-	// 	path: '/tabs',
-	// 	component: Layout,
-	// 	children: [
-	// 		{
-	// 			path: 'index',
-	// 			name: '测试页面',
-	// 			meta: {
-	// 				isTab: false
-	// 			},
-	// 			component: () => import(/* webpackChunkName: "views" */ '@/views/util/test.vue')
-	// 		}
-	// 	]
-	// },
-	// {
-	// 	path: '/detail/create',
-	// 	component: Layout,
-	// 	children: [
-	// 		{
-	// 			path: '',
-	// 			name: (query: any) => {
-	// 				return query.id ? '编辑页面' : '新增页面';
-	// 			},
-	// 			meta: {
-	// 				activeMenu: '/detail'
-	// 			},
-	// 			component: () => import(/* webpackChunkName: "views" */ '@/views/util/detail.vue')
-	// 		}
-	// 	]
-	// }
 ] as RouteRecordRaw[];
