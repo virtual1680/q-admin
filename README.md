@@ -4,7 +4,7 @@
 
 #### 一、预览地址
 
-- https://virtual1680.github.io/login
+- https://virtual1680.github.io
 
 #### 二、文档地址
 
