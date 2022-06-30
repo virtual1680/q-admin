@@ -4,7 +4,15 @@
 		<meta charset="UTF-8" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title><%- title %></title>
+		<!-- <%- title %> -->
+		<title>q-admin</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@3.2.25/dist/vue.global.prod.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/vue-i18n/9.1.10/vue-i18n.global.prod.min.js"></script>
+		<script src="https://unpkg.com/vue-router@4.0.16/dist/vue-router.global.prod.js"></script>
+		<script src="https://unpkg.com/element-plus@2.2.6/dist/index.full.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/vue-demi/0.13.1/index.iife.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/pinia/2.0.14/pinia.iife.prod.min.js"></script>
+		<script src="/avue.js"></script>
 		<style>
 			html,
 			body,
@@ -49,7 +57,7 @@
 				right: 5px;
 				bottom: 5px;
 				left: 5px;
-				content: "";
+				content: '';
 				border: 3px solid transparent;
 				/* COLOR 2 */
 				border-top-color: #ffffff;
@@ -62,7 +70,7 @@
 				right: 15px;
 				bottom: 15px;
 				left: 15px;
-				content: "";
+				content: '';
 				border: 3px solid transparent;
 				border-top-color: #ffffff;
 				border-radius: 50%;
@@ -128,7 +136,7 @@
 				top: 60%;
 				z-index: 9999999999999;
 				width: 100%;
-				font-family: "Open Sans";
+				font-family: 'Open Sans';
 				font-size: 14px;
 				line-height: 30px;
 				color: #ffffff;
@@ -165,6 +173,7 @@
 
 			/* 滚动条优化 end */
 		</style>
+
 		<script>
 			window._CONFIG = {};
 		</script>
@@ -181,12 +190,12 @@
 		<script type="module" src="/src/main.ts"></script>
 		<script>
 			(function () {
-				handleAddListener("load", getTiming);
+				handleAddListener('load', getTiming);
 				function handleAddListener(type, fn) {
 					if (window.addEventListener) {
 						window.addEventListener(type, fn);
 					} else {
-						window.attachEvent("on" + type, fn);
+						window.attachEvent('on' + type, fn);
 					}
 				}
 				function getTiming() {
@@ -200,25 +209,25 @@
 							}, 200);
 							return;
 						}
-						timingObj["重定向时间"] = (time.redirectEnd - time.redirectStart) / 1000;
-						timingObj["DNS解析时间"] = (time.domainLookupEnd - time.domainLookupStart) / 1000;
-						timingObj["TCP完成握手时间"] = (time.connectEnd - time.connectStart) / 1000;
-						timingObj["HTTP请求响应完成时间"] = (time.responseEnd - time.requestStart) / 1000;
-						timingObj["DOM开始加载前所花费时间"] = (time.responseEnd - time.navigationStart) / 1000;
-						timingObj["DOM加载完成时间"] = (time.domComplete - time.domLoading) / 1000;
-						timingObj["DOM结构解析完成时间"] = (time.domInteractive - time.domLoading) / 1000;
-						timingObj["脚本加载时间"] = (time.domContentLoadedEventEnd - time.domContentLoadedEventStart) / 1000;
-						timingObj["onload事件时间"] = (time.loadEventEnd - time.loadEventStart) / 1000;
-						timingObj["页面完全加载时间"] =
-							timingObj["重定向时间"] +
-							timingObj["DNS解析时间"] +
-							timingObj["TCP完成握手时间"] +
-							timingObj["HTTP请求响应完成时间"] +
-							timingObj["DOM结构解析完成时间"] +
-							timingObj["DOM加载完成时间"];
+						timingObj['重定向时间'] = (time.redirectEnd - time.redirectStart) / 1000;
+						timingObj['DNS解析时间'] = (time.domainLookupEnd - time.domainLookupStart) / 1000;
+						timingObj['TCP完成握手时间'] = (time.connectEnd - time.connectStart) / 1000;
+						timingObj['HTTP请求响应完成时间'] = (time.responseEnd - time.requestStart) / 1000;
+						timingObj['DOM开始加载前所花费时间'] = (time.responseEnd - time.navigationStart) / 1000;
+						timingObj['DOM加载完成时间'] = (time.domComplete - time.domLoading) / 1000;
+						timingObj['DOM结构解析完成时间'] = (time.domInteractive - time.domLoading) / 1000;
+						timingObj['脚本加载时间'] = (time.domContentLoadedEventEnd - time.domContentLoadedEventStart) / 1000;
+						timingObj['onload事件时间'] = (time.loadEventEnd - time.loadEventStart) / 1000;
+						timingObj['页面完全加载时间'] =
+							timingObj['重定向时间'] +
+							timingObj['DNS解析时间'] +
+							timingObj['TCP完成握手时间'] +
+							timingObj['HTTP请求响应完成时间'] +
+							timingObj['DOM结构解析完成时间'] +
+							timingObj['DOM加载完成时间'];
 
 						for (item in timingObj) {
-							console.log(item + ":" + timingObj[item] + "毫秒(ms)");
+							console.log(item + ':' + timingObj[item] + '毫秒(ms)');
 						}
 						console.log(performance.timing);
 					} catch (e) {

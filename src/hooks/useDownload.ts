@@ -1,5 +1,5 @@
 import { ElNotification } from 'element-plus';
-import { rest } from 'lodash';
+import { rest } from 'lodash-es';
 
 type Nav = Navigator & {
 	msSaveOrOpenBlob: (blob: Blob, fileName: string) => void;
