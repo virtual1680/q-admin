@@ -1,6 +1,6 @@
 ## Q-Admin 中后台管理系统
 
-> 🎉🎉🎉 q-admin 是基于 vue3、TypeScript、vite2、element-plus、avue3、vue-router 实现的后台管理系统工程化模板；主体模块是由 avue-cli 改造 ts 版本；适配手机、平板、pc 的后台开源免费模板，希望减少工作量，帮助大家实现快速开发。
+> 🎉🎉🎉 q-admin 是基于 vue3、TypeScript、vite2、element-plus、avue3、vue-router 实现的后台管理系统工程化模板；主体模块是由 avue-cli 改造 ts 版本；适配手机、平板、pc 的后台开源免费模板，希望减少工作量，帮助大家实现快速开发。有问题欢迎大家一起交流（如果对您有帮助,请动动鼠标在右上角给一颗星）
 
 #### 一、预览地址
 
