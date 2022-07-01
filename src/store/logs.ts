@@ -36,7 +36,7 @@ export const useLogsStore = defineStore({
 					});
 			});
 		},
-		ADD_LOGS({ type, message, stack, info }: any) {
+		ADD_LOGS({ type, message, stack, info }: Record<string, string>) {
 			this.logsList.push(
 				Object.assign(
 					{

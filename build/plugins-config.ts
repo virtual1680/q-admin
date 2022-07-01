@@ -10,62 +10,62 @@ import { viteMockServe } from 'vite-plugin-mock';
 import { resolve } from 'path';
 import { PluginOption } from 'vite';
 import website from '../src/config/website';
-export const pluginList = (env: Record<string, string>, mode: string) =>
+export const pluginList = (env: Record<string, string>) =>
 	[
 		vue(),
 		// * cdn 引入
-		mode === 'production' &&
-			importToCDN({
-				modules: [
-					{
-						name: 'vue',
-						var: 'Vue',
-						path: 'https://cdn.jsdelivr.net/npm/vue@3.2.25/dist/vue.global.prod.js'
-					},
-					{
-						name: 'vue-i18n',
-						var: 'VueI18n',
-						path: 'https://cdn.bootcdn.net/ajax/libs/vue-i18n/9.1.10/vue-i18n.global.prod.min.js'
-					},
-					{
-						name: 'vue-router',
-						var: 'VueRouter',
-						path: 'https://unpkg.com/vue-router@4.0.16/dist/vue-router.global.prod.js'
-					},
+		importToCDN({
+			modules: [
+				{
+					name: 'vue',
+					var: 'Vue',
+					path: 'https://cdn.jsdelivr.net/npm/vue@3.2.25/dist/vue.global.prod.js'
+				},
+				{
+					name: 'vue-i18n',
+					var: 'VueI18n',
+					path: 'https://cdn.bootcdn.net/ajax/libs/vue-i18n/9.1.10/vue-i18n.global.prod.min.js'
+				},
+				{
+					name: 'vue-router',
+					var: 'VueRouter',
+					path: 'https://unpkg.com/vue-router@4.0.16/dist/vue-router.global.prod.js'
+				},
 
-					{
-						name: 'element-plus',
-						var: 'ElementPlus',
-						path: `https://unpkg.com/element-plus@2.2.6/dist/index.full.js`,
-						css: 'https://unpkg.com/element-plus/dist/index.css'
-					},
-					{
-						name: 'vue-demi',
-						var: 'VueDemi',
-						path: 'https://cdn.bootcdn.net/ajax/libs/vue-demi/0.13.1/index.iife.js'
-					},
-					{
-						name: 'pinia',
-						var: 'Pinia',
-						path: 'https://cdn.bootcdn.net/ajax/libs/pinia/2.0.14/pinia.iife.prod.min.js'
-					},
-					{
-						name: '@smallwei/avue',
-						var: 'AVUE',
-						path: 'https://cdn.jsdelivr.net/npm/@smallwei/avue@3.0.17'
-					},
-					{
-						name: 'echarts',
-						var: 'echarts',
-						path: 'https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js'
-					}
-					// {
-					// 	name: 'axios',
-					// 	var: 'axios',
-					// 	path: 'https://unpkg.com/axios@0.26.1/dist/axios.min.js'
-					// }
-				]
-			}),
+				{
+					name: 'element-plus',
+					var: 'ElementPlus',
+					path: `https://unpkg.com/element-plus@2.2.6/dist/index.full.js`,
+					css: 'https://unpkg.com/element-plus@2.2.6/dist/index.css'
+				},
+				{
+					name: 'vue-demi',
+					var: 'VueDemi',
+					path: 'https://cdn.bootcdn.net/ajax/libs/vue-demi/0.13.1/index.iife.js'
+				},
+				{
+					name: 'pinia',
+					var: 'Pinia',
+					path: 'https://cdn.bootcdn.net/ajax/libs/pinia/2.0.14/pinia.iife.prod.min.js'
+				},
+				{
+					name: '@smallwei/avue',
+					var: 'AVUE',
+					path: 'https://cdn.jsdelivr.net/npm/@smallwei/avue@3.0.17',
+					css: 'https://cdn.jsdelivr.net/npm/@smallwei/avue@3.0.17/lib/index.css'
+				},
+				{
+					name: 'echarts',
+					var: 'echarts',
+					path: 'https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js'
+				}
+				// {
+				// 	name: 'axios',
+				// 	var: 'axios',
+				// 	path: 'https://unpkg.com/axios@0.26.1/dist/axios.min.js'
+				// }
+			]
+		}),
 		viteMockServe({
 			mockPath: 'mock',
 			prodEnabled: true,

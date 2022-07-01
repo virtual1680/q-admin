@@ -25,7 +25,7 @@ export default defineConfig(({ command, mode }) => {
 				utils: resolve(__dirname, 'src/utils')
 			}
 		},
-		plugins: pluginList(env, mode),
+		plugins: pluginList(env),
 		// server: server(env),
 		// preview: preview(env),
 		esbuild: {

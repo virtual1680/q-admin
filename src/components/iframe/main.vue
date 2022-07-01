@@ -1,6 +1,6 @@
 <template>
 	<basic-container>
-		<iframe :src="src" class="iframe" ref="iframe" />
+		<iframe :src="src" class="iframe" ref="iframeRef"></iframe>
 	</basic-container>
 </template>
 
@@ -10,7 +10,7 @@ import 'nprogress/nprogress.css'; // progress bar style
 import { computed, ref, Ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
-const iframe: Ref<HTMLIFrameElement | undefined> = ref();
+const iframeRef: Ref<HTMLIFrameElement | undefined> = ref();
 NProgress.configure({ showSpinner: false });
 const src = computed(() => {
 	return (route.query.url as string).replace(/#/g, '&');
@@ -48,8 +48,8 @@ const load = () => {
 //iframe窗口初始化
 const iframeInit = () => {
 	const clientHeight = document.documentElement.clientHeight - 150;
-	if (!iframe.value) return;
-	iframe.value.style.height = `${clientHeight}px`;
+	if (!iframeRef.value) return;
+	iframeRef.value.style.height = `${clientHeight}px`;
 	// TODO
 	// if (iframe.value.attachEvent) {
 	// 	iframe.value.attachEvent('onload', () => {
@@ -60,7 +60,7 @@ const iframeInit = () => {
 	// 		hide();
 	// 	};
 	// }
-	iframe.value.onload = () => {
+	iframeRef.value.onload = () => {
 		hide();
 	};
 };

@@ -1,4 +1,3 @@
-import { computed } from 'vue';
 <template>
 	<div class="basic-container" :style="styleName" :class="{ 'basic-container--block': block }">
 		<el-card class="basic-container__card">
