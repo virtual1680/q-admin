@@ -1,15 +1,15 @@
-export const server = (viteEnv: ViteEnv) => {
+export const server = (env: Record<string, string>) => {
 	return {
 		// fs: { strict: false },
-		port: viteEnv.VITE_PORT,
-		open: viteEnv.VITE_OPEN,
+		port: env.VITE_PORT,
+		open: env.VITE_OPEN,
 		overlay: {
 			warning: false,
 			error: true
 		},
 		proxy: {
 			'/api': {
-				target: viteEnv.VITE_API_URL,
+				target: env.VITE_API_URL,
 				changeOrigin: true,
 				ws: true,
 				rewrite: (path: string) => path.replace(/^\/api/, '')
@@ -17,13 +17,13 @@ export const server = (viteEnv: ViteEnv) => {
 		}
 	};
 };
-export const preview = (viteEnv: ViteEnv) => {
+export const preview = (env: Record<string, string>) => {
 	return {
-		port: viteEnv.VITE_PORT + 1000,
-		open: viteEnv.VITE_OPEN,
+		port: env.VITE_PORT + 1000,
+		open: env.VITE_OPEN,
 		proxy: {
 			'/api': {
-				target: viteEnv.VITE_API_URL,
+				target: env.VITE_API_URL,
 				changeOrigin: true,
 				ws: true,
 				rewrite: (path: string) => path.replace(/^\/api/, '/')

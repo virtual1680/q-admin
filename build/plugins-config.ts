@@ -1,6 +1,5 @@
 import vue from '@vitejs/plugin-vue';
 import { createHtmlPlugin } from 'vite-plugin-html';
-// import { viteExternalsPlugin } from 'vite-plugin-externals';
 import viteImagemin from 'vite-plugin-imagemin';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
@@ -11,7 +10,7 @@ import { viteMockServe } from 'vite-plugin-mock';
 import { resolve } from 'path';
 import { PluginOption } from 'vite';
 import website from '../src/config/website';
-export const pluginList = (viteEnv: ViteEnv, mode: string) =>
+export const pluginList = (env: Record<string, string>, mode: string) =>
 	[
 		vue(),
 		// * cdn 引入
@@ -54,7 +53,17 @@ export const pluginList = (viteEnv: ViteEnv, mode: string) =>
 						name: '@smallwei/avue',
 						var: 'AVUE',
 						path: 'https://cdn.jsdelivr.net/npm/@smallwei/avue@3.0.17'
+					},
+					{
+						name: 'echarts',
+						var: 'echarts',
+						path: 'https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js'
 					}
+					// {
+					// 	name: 'axios',
+					// 	var: 'axios',
+					// 	path: 'https://unpkg.com/axios@0.26.1/dist/axios.min.js'
+					// }
 				]
 			}),
 		viteMockServe({
@@ -73,22 +82,6 @@ export const pluginList = (viteEnv: ViteEnv, mode: string) =>
 		vueJsx(),
 		// * name 可以写在 script 标签上
 		VueSetupExtend(),
-
-		// mode === 'production' &&
-		// 	importToCDN({
-		// 		modules: [
-		// 			{
-		// 				name: 'echarts',
-		// 				var: 'echarts',
-		// 				path: 'https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js'
-		// 			},
-		// 			{
-		// 				name: 'axios',
-		// 				var: 'axios',
-		// 				path: 'https://unpkg.com/axios@0.26.1/dist/axios.min.js'
-		// 			}
-		// 		]
-		// 	}),
 		// * 图片压缩
 		viteImagemin({
 			gifsicle: { optimizationLevel: 7, interlaced: false },
@@ -104,9 +97,8 @@ export const pluginList = (viteEnv: ViteEnv, mode: string) =>
 		createSvgIconsPlugin({
 			iconDirs: [resolve(process.cwd(), 'src/assets/svg')],
 			svgoOptions: true,
-			// default
-			symbolId: 'icon-[dir]-[name]'
+			symbolId: 'icon-[dir]-[name]' // default
 		}),
 		// * 依赖分析
-		viteEnv.VITE_REPORT && visualizer()
+		env.VITE_REPORT && visualizer()
 	] as PluginOption[];

@@ -4,14 +4,7 @@
 		<meta charset="UTF-8" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<!-- <%- title %> -->
-		<title>q-admin</title>
-		<script src="https://cdn.jsdelivr.net/npm/vue@3.2.25/dist/vue.global.prod.js"></script>
-		<script src="https://cdn.bootcdn.net/ajax/libs/vue-i18n/9.1.10/vue-i18n.global.prod.min.js"></script>
-		<script src="https://unpkg.com/vue-router@4.0.16/dist/vue-router.global.prod.js"></script>
-		<script src="https://unpkg.com/element-plus@2.2.6/dist/index.full.js"></script>
-		<script src="https://cdn.bootcdn.net/ajax/libs/vue-demi/0.13.1/index.iife.js"></script>
-		<script src="https://cdn.bootcdn.net/ajax/libs/pinia/2.0.14/pinia.iife.prod.min.js"></script>
+		<title><%- title %></title>
 		<style>
 			html,
 			body,
@@ -182,7 +175,7 @@
 				<div id="loader"></div>
 				<div class="loader-section section-left"></div>
 				<div class="loader-section section-right"></div>
-				<div class="load_title">正在加载 停车数据大屏</div>
+				<div class="load_title">正在加载 <%- title %></div>
 			</div>
 		</div>
 		<script type="module" src="/src/main.ts"></script>
