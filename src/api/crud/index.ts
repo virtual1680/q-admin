@@ -2,7 +2,7 @@ import axios from 'http/axios';
 import { baseUrl } from '@/config/env';
 export const list = (data: any) => {
 	return axios.request({
-		url: baseUrl + '/crud/list',
+		url: '/crud/list',
 		method: 'get',
 		meta: {
 			isSerialize: true
@@ -18,7 +18,7 @@ export const del = (id: string) =>
 	});
 export const add = (data: any) =>
 	axios.request({
-		url: baseUrl + '/crud',
+		url: '/crud',
 		method: 'post',
 		meta: {
 			isSerialize: true
@@ -27,7 +27,7 @@ export const add = (data: any) =>
 	});
 export const update = (data: any) =>
 	axios.request({
-		url: baseUrl + '/crud',
+		url: '/crud',
 		method: 'put',
 		meta: {
 			isSerialize: true

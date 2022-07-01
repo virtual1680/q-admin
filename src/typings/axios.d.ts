@@ -1,5 +1,10 @@
 import type { Axios, AxiosRequestConfig } from 'axios';
-
+// * http
+declare interface Result<T = any> {
+	code: number;
+	msg: string;
+	data: T;
+}
 type Params = Partial<Record<string, unknown>>;
 type Config = Omit<AxiosRequestConfig, 'url' | 'method'>;
 type RequestConfig = AxiosRequestConfig & { meta?: { isToken?: boolean; isSerialize?: boolean } };

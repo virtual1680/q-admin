@@ -44,7 +44,8 @@ export default [
 					userInfo: {
 						username: 'admin',
 						name: 'avue',
-						avatar: 'https://gitee.com/uploads/61/632261_smallweigit.jpg'
+						avatar:
+							'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/656c960dca2e4a9796d8d341297efcbd~tplv-k3u1fbpfcp-no-mark:180:180:180:180.awebp?'
 					},
 					roles: 'admin',
 					permission: [

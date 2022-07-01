@@ -1,6 +1,6 @@
 export default {
 	tip: '提示',
-	title: 'Avue 通用管理 系统快速开发框架',
+	title: 'Avue 管理后台快速开发框架',
 	logoutTip: '退出系统, 是否继续?',
 	submitText: '确定',
 	cancelText: '取消',
@@ -9,8 +9,8 @@ export default {
 	feedback: '意见反馈',
 	submit: '提交',
 	wel: {
-		info: '早安，Smallwei，Avue一款超乎你想象的框架！',
-		dept: '我是avue团队下的一个部门-哈皮部门-哈皮职位',
+		info: 'Hello, Virtual1680, Avue一款超乎你想象的框架！',
+		dept: '我是avue框架爱好者,为了满足avue-cli TS 版本的需求，特意改写了avue-cli，希望能给大家带来帮助，有问题可以一起交流',
 		team: '团队内排名',
 		project: '项目访问',
 		count: '项目数',
