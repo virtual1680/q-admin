@@ -9,7 +9,7 @@ interface UserStore {
 	userInfo: any;
 	permission: any;
 	roles: any[];
-	menuId: any;
+	menuId: string;
 	menu: RouterMenu[];
 	menuAll: RouterMenu[];
 	token: string;
@@ -31,7 +31,7 @@ export const useUserStore = defineStore({
 		userInfo: {},
 		permission: {},
 		roles: [],
-		menuId: {},
+		menuId: '0',
 		menu: [],
 		menuAll: [],
 		token: '',

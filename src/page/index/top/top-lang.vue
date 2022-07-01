@@ -15,15 +15,16 @@ import { AVueRouter } from '@/router';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCommonStore, useTagsStore } from 'store/index';
+import { useI18n } from '@/lang';
 const cStore = useCommonStore();
 const tStore = useTagsStore();
 const router = useRouter() as AVueRouter;
-
+const i18n = useI18n();
 const language = computed(() => {
 	return cStore.getLanguage;
 });
 const handleSetLanguage = (lang: string) => {
-	//TODO this.$i18n.locale = lang;
+	i18n.locale = lang;
 	cStore.SET_LANGUAGE(lang);
 	let tag = tStore.getTag;
 	let title = router.avueRouter?.generateTitle(tag);

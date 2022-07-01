@@ -108,9 +108,9 @@ const setCollapse = () => {
 	cStore.SET_COLLAPSE();
 };
 const logout = () => {
-	ElMessageBox.confirm(i18n.$t('logoutTip'), i18n.$t('tip'), {
-		confirmButtonText: i18n.$t('submitText'),
-		cancelButtonText: i18n.$t('cancelText'),
+	ElMessageBox.confirm(i18n.t('logoutTip'), i18n.t('tip'), {
+		confirmButtonText: i18n.t('submitText'),
+		cancelButtonText: i18n.t('cancelText'),
 		type: 'warning'
 	}).then(() => {
 		uStore.LogOut().then(() => {
@@ -118,7 +118,6 @@ const logout = () => {
 		});
 	});
 };
-// console.log('-=--=', inject('openMenu'));
 </script>
 
 <style lang="scss" scoped></style>

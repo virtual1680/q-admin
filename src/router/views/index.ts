@@ -82,7 +82,7 @@ export default [
 		children: [
 			{
 				path: 'index',
-				name: '测试页面',
+				name: '测试页面1',
 				meta: {
 					isTab: false
 				},

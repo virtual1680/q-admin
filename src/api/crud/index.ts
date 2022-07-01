@@ -1,5 +1,4 @@
 import axios from 'http/axios';
-import { baseUrl } from '@/config/env';
 export const list = (data: any) => {
 	return axios.request({
 		url: '/crud/list',
@@ -11,7 +10,7 @@ export const list = (data: any) => {
 	});
 };
 export const del = (id: string) =>
-	axios.delete(baseUrl + '/crud', {
+	axios.delete('/crud', {
 		params: {
 			id
 		}

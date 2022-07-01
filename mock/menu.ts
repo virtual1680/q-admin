@@ -14,7 +14,7 @@ const top = [
 	{
 		label: '测试',
 		icon: 'el-icon-document',
-		path: '/test',
+		path: '/system',
 		meta: {
 			i18n: 'test'
 		},
@@ -253,14 +253,57 @@ const first = [
 ];
 const second = [
 	{
-		label: '测试页面',
-		path: '/test',
-		component: 'views/util/test',
+		label: '系统管理',
+		path: '/system',
+		// component: 'views/util/test',
 		icon: 'icon-caidan',
 		meta: {
-			i18n: 'test'
+			// i18n: 'test'
 		},
-		children: []
+		children: [
+			{
+				label: '用户管理',
+				path: '/user',
+				component: 'views/util/test',
+				iconBgColor: randomColor(),
+				icon: 'icon-caidan',
+				meta: {
+					// i18n: 'test'
+				},
+				children: []
+			},
+			{
+				label: '菜单管理',
+				path: 'menu/index',
+				component: 'views/system/menu/index',
+				icon: 'icon-caidan',
+				iconBgColor: randomColor(),
+				meta: {
+					// i18n: 'test'
+				},
+				children: []
+			},
+			{
+				label: '角色管理',
+				path: 'rule',
+				component: 'views/util/test',
+				icon: 'icon-caidan',
+				meta: {
+					// i18n: 'test'
+				},
+				children: []
+			},
+			{
+				label: '机构管理',
+				path: 'dept',
+				component: 'views/util/test',
+				icon: 'icon-caidan',
+				meta: {
+					// i18n: 'test'
+				},
+				children: []
+			}
+		]
 	}
 ];
 let menu = [first, second];

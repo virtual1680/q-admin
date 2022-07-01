@@ -1,5 +1,5 @@
 <template>
-	<el-menu class="top-menu" :default-active="activeIndex" mode="horizontal" text-color="#333">
+	<el-menu class="top-menu" :default-active="tagCurrent" mode="horizontal" text-color="#333">
 		<template v-for="(item, index) in items" :key="index">
 			<el-menu-item :index="item.parentId + ''" @click="openMenu(item)">
 				<template #title>
@@ -12,26 +12,24 @@
 </template>
 
 <script setup lang="ts" name="top-menu">
-import { inject, Ref, ref } from 'vue';
+import { computed, inject, Ref, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { AVueRouter } from '../../../router/index';
 import { useUserStore } from 'store/user';
 
 const router = useRouter() as AVueRouter;
 const uStore = useUserStore();
-const activeIndex = ref('0');
 const items: Ref<RouterMenu[]> = ref([]);
-// ...mapState(['tagCurrent', 'menu'])
-// const menu = computed(() => {
-// 	return uStore.getMenu;
-// });
-// TODO
-// const tagCurrent = computed(() => {
-// 	return uStore.getTag
-// })
-const injectOpenMenu = inject<(item: RouterMenu) => void>('openMenu');
-const openMenu = (item: RouterMenu) => {
-	injectOpenMenu?.(item);
+
+// 当前选中的top-menu
+const tagCurrent = computed(() => {
+	return uStore.menuId.toString();
+});
+
+const injectOpenMenu = inject<(item: Partial<RouterMenu>, isInit: boolean) => void>('openMenu');
+
+const openMenu = (item: Partial<RouterMenu>) => {
+	injectOpenMenu?.(item, false);
 };
 const getMenu = () => {
 	uStore.GetTopMenu().then(res => {

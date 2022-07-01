@@ -9,7 +9,6 @@
 
 <script setup lang="ts" name="sidebar">
 import sidebarItem from './sidebarItem.vue';
-// import { tagsStore } from '@/store/tags';
 import { computed, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import { getScreen } from 'utils/util';
@@ -32,9 +31,9 @@ const isCollapse = computed(() => {
 	return cStore.getIsCollapse;
 });
 
-// const menuId = computed(() => {
-// 	return uStore.getMenuId;
-// });
+const menuId = computed(() => {
+	return uStore.getMenuId;
+});
 const setting = computed(() => {
 	return cStore.getSetting;
 });
@@ -45,6 +44,9 @@ const activeMenu = computed(() => {
 	}
 	return path;
 });
-(inject('openMenu') as () => void)();
+// 通过 menuId 去加载菜单列表
+const injectOpenMenu = inject<(item: Partial<RouterMenu>, isInit: boolean) => void>('openMenu');
+
+injectOpenMenu?.({ parentId: menuId.value }, true);
 </script>
 <style lang="scss" scoped></style>

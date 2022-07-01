@@ -29,8 +29,6 @@
 </template>
 
 <script lang="ts" setup name="index">
-// import index from '@/mixins/index';
-import { validatenull } from 'utils/validate';
 import tags from './tags.vue';
 import search from './search.vue';
 import logo from './logo.vue';
@@ -46,16 +44,19 @@ const cStore = useCommonStore();
 const tStore = useTagsStore();
 const router = useRouter() as AVueRouter;
 const route = useRoute();
-// mixins: [index],
+
 const isHorizontal = computed(() => {
 	return cStore.getIsHorizontal;
 });
 const isRefresh = computed(() => {
 	return cStore.getIsRefresh;
 });
-const isLock = computed(() => {
-	return cStore.getIsLock;
-});
+// const isLock = computed(() => {
+// 	return cStore.getIsLock;
+// });
+// const setting = computed(() => {
+// 	return cStore.getSetting;
+// });
 const isCollapse = computed(() => {
 	return cStore.getIsCollapse;
 });
@@ -65,36 +66,40 @@ const isSearch = computed(() => {
 const menu = computed(() => {
 	return uStore.getMenu;
 });
-const setting = computed(() => {
-	return cStore.getSetting;
-});
+
 const validSidebar = computed(() => {
 	return !((route.meta || {}).menu == false || (route.query || {}).menu == 'false');
 });
-//打开菜单
-const openMenu = (item: any = {}) => {
+
+/**
+ * 1.在 sidebar/index.vue 中初始化菜单； 2. top/top-menu中点击加载对应菜单
+ * @item item 菜单
+ * @isInit 是否是自动加载
+ */
+const openMenu = (item: Partial<RouterMenu>, isInit: boolean) => {
 	uStore.GetMenu(item.parentId).then((data: any[]) => {
 		if (data.length !== 0) {
 			router.avueRouter?.formatRoutes(data, true);
 		}
 		//当点击顶部菜单做的事件
-		if (!validatenull(item)) {
-			let itemActive = {} as { [key: string]: string },
+		if (!isInit) {
+			let itemActive: Partial<RouterMenu>,
 				childItemActive = 0;
 			//vue-router路由
 			if (item.path) {
 				itemActive = item;
 			} else {
-				if (menu[childItemActive].length == 0) {
-					itemActive = menu[childItemActive];
+				// 选中第一个item，有child选child
+				if (menu.value.length && menu.value[childItemActive].children.length === 0) {
+					itemActive = menu.value[childItemActive];
 				} else {
-					itemActive = menu[childItemActive].children[childItemActive];
+					itemActive = menu.value[childItemActive].children[childItemActive];
 				}
 			}
-			uStore.SET_MENUID(item);
-
+			// 保存top menu菜单id ，刷新后加载对应菜单列表
+			uStore.SET_MENUID(item?.parentId || '0');
 			router.push({
-				path: itemActive.path
+				path: itemActive.path!
 			});
 		}
 	});
