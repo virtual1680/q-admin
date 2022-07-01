@@ -2,17 +2,17 @@ import { defineConfig, loadEnv } from 'vite';
 import { resolve } from 'path';
 import { pluginList } from './build/plugins-config';
 // import commonjs from 'rollup-plugin-commonjs';
-import externalGlobals from 'rollup-plugin-external-globals';
+// import externalGlobals from 'rollup-plugin-external-globals';
 // import { server, preview } from './build/server-config';
-let globals = externalGlobals({
-	vue: 'Vue',
-	'vue-i18n': 'VueI18n',
-	'vue-router': 'VueRouter',
-	'element-plus': 'ElementPlus',
-	// axios: 'axios',
-	pinia: 'Pinia',
-	'@smallwei/avue': 'AVUE'
-});
+// let globals = externalGlobals({
+// vue: 'Vue',
+// 'vue-i18n': 'VueI18n',
+// 'vue-router': 'VueRouter',
+// 'element-plus': 'ElementPlus',
+// // axios: 'axios',
+// pinia: 'Pinia',
+// '@smallwei/avue': 'AVUE'
+// });
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
 	console.log(command, mode, '开始加载配置文件-=-=-=-=-=-=');
@@ -46,13 +46,14 @@ export default defineConfig(({ command, mode }) => {
 			sourcemap: true,
 			minify: 'terser', //esbuild // esbuild 打包更快，但是不能去除 console.log
 			rollupOptions: {
-				external: ['vue', 'vue-i18n', 'pinia', 'vue-router', 'element-plus', '@smallwei/avue'],
+				// 'vue', 'vue-i18n', 'pinia', 'vue-router', 'element-plus',
+				// external: ['@smallwei/avue'],
 				// output: {
 				// 	globals: {
 				// 		vue: 'Vue'
 				// 	}
 				// },
-				plugins: [globals],
+				// plugins: [globals],
 				output: {
 					// format: 'es',
 					// globals: {
