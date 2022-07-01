@@ -29,9 +29,9 @@ const items: Ref<RouterMenu[]> = ref([]);
 // const tagCurrent = computed(() => {
 // 	return uStore.getTag
 // })
-
+const injectOpenMenu = inject<(item: RouterMenu) => void>('openMenu');
 const openMenu = (item: RouterMenu) => {
-	(inject('openMenu') as (item: RouterMenu) => void)(item);
+	injectOpenMenu?.(item);
 };
 const getMenu = () => {
 	uStore.GetTopMenu().then(res => {

@@ -118,6 +118,7 @@ const logout = () => {
 		});
 	});
 };
+// console.log('-=--=', inject('openMenu'));
 </script>
 
 <style lang="scss" scoped></style>
