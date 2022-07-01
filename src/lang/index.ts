@@ -21,14 +21,12 @@ export const messages = {
 };
 
 const i18n = createI18n({
-	locale: getStore({ name: 'language' }), //cStore?.language
+	locale: getStore({ name: 'language' }),
 	messages
 });
 
 const i18nSymbol = Symbol('i18n');
 export function provideI18n() {
-	console.log('-=0=0=0', i18n);
-
 	provide(i18nSymbol, i18n.global);
 }
 
