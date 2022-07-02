@@ -1,10 +1,11 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosRequestHeaders } from 'axios';
+import axios, { AxiosError, AxiosResponse, AxiosRequestHeaders } from 'axios';
 import { ElMessage } from 'element-plus';
 import { getToken } from 'utils/token';
 import router from 'router/index';
 import { AxiosCanceler } from './cancel';
 import { ResultEnum } from 'app/enums/http';
 import { useUserStore } from 'store/index';
+import { RequestConfig } from '@/typings/axios';
 const axiosCanceler = new AxiosCanceler();
 // import { baseUrl } from '@/config/env';
 const config = {
@@ -15,7 +16,7 @@ const config = {
 		return status >= 200 && status <= 500;
 	}
 };
-type RequestConfig = AxiosRequestConfig & { meta?: { isToken?: boolean; isSerialize?: boolean } };
+
 let lock: number = 0;
 const instance = axios.create(config);
 instance.interceptors.request.use(
@@ -37,7 +38,8 @@ instance.interceptors.request.use(
 );
 instance.interceptors.response.use(
 	(response: AxiosResponse) => {
-		const { config, status: code, data } = response;
+		const { status: code, data } = response;
+		const config: RequestConfig = response.config;
 		//移除已执行完的请求（也就是当前请求）
 		axiosCanceler.removePending(config);
 		const status = data.code || code;
@@ -62,7 +64,11 @@ instance.interceptors.response.use(
 			ElMessage.error(message);
 			return Promise.reject(data);
 		}
-		return data;
+		if (config.meta?.returnType === 'response') {
+			return response;
+		} else {
+			return data;
+		}
 	},
 	(error: AxiosError) => {
 		console.log(error);

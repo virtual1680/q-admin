@@ -3,36 +3,45 @@ import website from '@/config/website';
 
 const keyName = website.key + '-';
 /**
- * 存储localStorage
+ * 存储 localStorage or sessionStorage
  */
-export const setStore = (params: { name?: string; content?: string; type?: string }) => {
+interface _BaseStorage {
+	readonly datetime: number;
+	readonly dataType: string;
+}
+export interface StorageParams {
+	name: string;
+	content: string | number | symbol | boolean | unknown[];
+	type?: 'local' | 'session';
+	debug?: boolean;
+}
+
+export const setStore = (params: Pick<StorageParams, 'name' | 'content' | 'type'>) => {
 	let { name, content, type } = params;
 	name = keyName + name;
 	let obj = {
 		dataType: typeof content,
 		content: content,
-		type: type,
+		type: type || 'local',
 		datetime: new Date().getTime()
 	};
-	if (type) window.sessionStorage.setItem(name, JSON.stringify(obj));
-	else window.localStorage.setItem(name, JSON.stringify(obj));
+	window[`${type || 'local'}Storage`].setItem(name, JSON.stringify(obj));
 };
 /**
- * 获取localStorage
+ * 获取 Storage
  */
-
-export const getStore = (params: { name?: string; debug?: string; type?: string }) => {
-	let { name, debug } = params;
+type ResultData = StorageParams & _BaseStorage;
+export const getStore = (params: Pick<StorageParams, 'name' | 'debug' | 'type'>): ResultData | null => {
+	let { name, debug, type } = params;
 	name = keyName + name;
-	let obj = {} as any,
-		content;
-	obj = window.sessionStorage.getItem(name);
-	if (validatenull(obj)) obj = window.localStorage.getItem(name);
-	if (validatenull(obj)) return;
+	let obj: ResultData, strJson: string | null, content;
+	strJson = window[`${type || 'local'}Storage`].getItem(name);
+	if (validatenull(strJson)) return null;
 	try {
-		obj = JSON.parse(obj);
+		obj = JSON.parse(strJson!);
 	} catch {
-		return obj;
+		`${name} getItem error`;
+		return null;
 	}
 	if (debug) {
 		return obj;
@@ -42,37 +51,33 @@ export const getStore = (params: { name?: string; debug?: string; type?: string 
 	} else if (obj.dataType == 'number') {
 		content = Number(obj.content);
 	} else if (obj.dataType == 'boolean') {
-		content = eval(obj.content);
+		content = eval(obj.content as string);
 	} else if (obj.dataType == 'object') {
 		content = obj.content;
 	}
 	return content;
 };
 /**
- * 删除localStorage
+ * 删除 Storage
  */
-export const removeStore = (params: { name?: string; debug?: string; type?: string }) => {
+export const removeStore = (params: Pick<StorageParams, 'name' | 'type'>) => {
 	let { name, type } = params;
 	name = keyName + name;
-	if (type) {
-		window.sessionStorage.removeItem(name);
-	} else {
-		window.localStorage.removeItem(name);
-	}
+	window[`${type || 'local'}Storage`].removeItem(name);
 };
 
 /**
- * 获取全部localStorage
+ * 获取全部 Storage
  */
-export const getAllStore = (params: { name?: string; debug?: string; type?: string }) => {
+export const getAllStore = (params: Pick<StorageParams, 'type'>) => {
 	let list = [];
 	let { type } = params;
-	if (type) {
+	if (type === 'session') {
 		for (let i = 0; i <= window.sessionStorage.length; i++) {
 			list.push({
 				name: window.sessionStorage.key(i),
 				content: getStore({
-					name: window.sessionStorage.key(i) || '',
+					name: window.sessionStorage.key(i)!,
 					type: 'session'
 				})
 			});
@@ -82,7 +87,7 @@ export const getAllStore = (params: { name?: string; debug?: string; type?: stri
 			list.push({
 				name: window.localStorage.key(i),
 				content: getStore({
-					name: window.localStorage.key(i) || ''
+					name: window.localStorage.key(i)!
 				})
 			});
 		}
@@ -91,13 +96,9 @@ export const getAllStore = (params: { name?: string; debug?: string; type?: stri
 };
 
 /**
- * 清空全部localStorage
+ * 清空全部 Storage
  */
-export const clearStore = (params: { name?: string; debug?: string; type?: string }) => {
+export const clearStore = (params: Pick<StorageParams, 'type'>) => {
 	let { type } = params;
-	if (type) {
-		window.sessionStorage.clear();
-	} else {
-		window.localStorage.clear();
-	}
+	window[`${type || 'local'}Storage`].clear();
 };

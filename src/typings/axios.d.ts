@@ -7,7 +7,7 @@ declare interface Result<T = any> {
 }
 type Params = Partial<Record<string, unknown>>;
 type Config = Omit<AxiosRequestConfig, 'url' | 'method'>;
-type RequestConfig = AxiosRequestConfig & { meta?: { isToken?: boolean; isSerialize?: boolean } };
+type RequestConfig = AxiosRequestConfig & { meta?: { isToken?: boolean; isSerialize?: boolean; returnType?: 'response' | 'data' } };
 declare module 'axios' {
 	declare interface AxiosInstance extends Axios {
 		request<T = any, R = Result<T>>(config: RequestConfig): Promise<R>;

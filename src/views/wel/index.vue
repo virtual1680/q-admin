@@ -42,91 +42,94 @@
 <script lang="ts" setup>
 import dashboard from './dashboard.vue';
 import { useUserStore } from 'store/index';
-import { computed } from 'vue';
+import { computed, getCurrentInstance } from 'vue';
+
 const uStore = useUserStore();
+
 const userInfo = computed(() => {
 	return uStore.getUserInfo;
 });
+console.log(getCurrentInstance());
 </script>
 
 <style scoped="scoped" lang="scss">
 .wel {
 	&__header {
-		padding: 25px 40px;
-		border-bottom: 1px solid #e8e8e8;
-		background-color: #fff;
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
+		justify-content: space-between;
+		padding: 25px 40px;
+		background-color: #ffffff;
+		border-bottom: 1px solid #e8e8e8;
 	}
 	&__info {
 		display: flex;
 		align-items: center;
 		&-img {
-			border-radius: 72px;
 			display: block;
 			width: 72px;
 			height: 72px;
+			border-radius: 72px;
 			img {
+				display: block;
 				width: 100%;
 				height: 100%;
-				display: block;
 			}
 		}
 		&-content {
 			position: relative;
 			margin-left: 24px;
-			color: rgba(0, 0, 0, 0.45);
 			line-height: 22px;
+			color: rgb(0 0 0 / 45%);
 		}
 		&-title {
-			font-size: 20px;
-			line-height: 28px;
-			font-weight: 500;
-			color: rgba(0, 0, 0, 0.85);
 			margin-bottom: 12px;
+			font-size: 20px;
+			font-weight: 500;
+			line-height: 28px;
+			color: rgb(0 0 0 / 85%);
 		}
 		&-subtitle {
 			position: relative;
 			font-size: 14px;
-			color: rgba(0, 0, 0, 0.45);
 			line-height: 22px;
+			color: rgb(0 0 0 / 45%);
 		}
 	}
 	&__extra {
 		&-item {
 			position: relative;
-			padding: 0 32px;
 			display: inline-block;
+			padding: 0 32px;
 			&:last-child {
 				&::after {
 					display: none;
 				}
 			}
-			&:after {
-				background-color: #e8e8e8;
+			&::after {
 				position: absolute;
 				top: 30px;
 				right: 0;
 				width: 1px;
 				height: 40px;
 				content: '';
+				background-color: #e8e8e8;
 			}
 		}
 		&-title {
-			color: rgba(0, 0, 0, 0.45);
+			margin-bottom: 4px;
 			font-size: 14px;
 			line-height: 22px;
-			margin-bottom: 4px;
+			color: rgb(0 0 0 / 45%);
 		}
 		&-subtitle {
-			color: rgba(0, 0, 0, 0.85);
+			margin: 0;
 			font-size: 30px;
 			line-height: 38px;
-			margin: 0;
+			color: rgb(0 0 0 / 85%);
 			span {
-				color: rgba(0, 0, 0, 0.45);
 				font-size: 20px;
+				color: rgb(0 0 0 / 45%);
 			}
 		}
 	}

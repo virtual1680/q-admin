@@ -304,6 +304,13 @@ const second = [
 				children: []
 			}
 		]
+	},
+	{
+		label: '批量导入',
+		path: '/import-excel',
+		component: 'views/util/import-dialog',
+		icon: 'icon-caidan',
+		children: []
 	}
 ];
 let menu = [first, second];
