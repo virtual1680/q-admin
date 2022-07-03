@@ -31,7 +31,7 @@
 import { setStore, getStore, removeStore, clearStore, getAllStore } from 'utils/store';
 import { ElMessage } from 'element-plus';
 
-const setItem = (params: { name?: string; value?: string; type?: string }) => {
+const setItem = (params: { name: string; value?: string; type?: 'session' | 'local' }) => {
 	const { name, value, type } = params;
 	setStore({
 		name: name,
@@ -40,7 +40,7 @@ const setItem = (params: { name?: string; value?: string; type?: string }) => {
 	});
 	ElMessage.success(`设置数据 ${name} = ${value}`);
 };
-const getItem = (params: { name?: string; value?: string; type?: string }) => {
+const getItem = (params: { name: string; value?: string; type?: 'session' | 'local' }) => {
 	const { name, type } = params;
 	const content = getStore({
 		name: name,
@@ -48,7 +48,7 @@ const getItem = (params: { name?: string; value?: string; type?: string }) => {
 	});
 	ElMessage.success(`获取数据 ${name} = ${content}`);
 };
-const delItem = (params: { name?: string; value?: string; type?: string }) => {
+const delItem = (params: { name: string; value?: string; type?: 'session' | 'local' }) => {
 	const { name, type } = params;
 	removeStore({ name, type });
 	ElMessage.success(`删除数据 ${name}`);

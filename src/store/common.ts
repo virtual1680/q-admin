@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { PersistedStateOptions } from 'pinia-plugin-persistedstate';
 import website from 'app/config/website';
-import { setStore } from '@/hooks/useStorage';
+import { setStore } from 'utils/store';
 
 interface CommonStore {
 	language: string;
@@ -58,7 +58,7 @@ export const useCommonStore = defineStore({
 	actions: {
 		SET_LANGUAGE(language: string) {
 			this.language = language;
-			setStore({
+			setStore<string>({
 				name: 'language',
 				content: language
 			});

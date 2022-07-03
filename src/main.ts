@@ -13,10 +13,9 @@ import error from './error';
 import './styles/common.scss';
 
 const app = createApp(App);
-
+app.use(i18n);
 app.use(store);
 app.use(router);
-app.use(i18n);
 app.use(componentList);
 app.use(error);
 app.use(ElementPlus);

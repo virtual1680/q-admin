@@ -1,13 +1,13 @@
 export default class RecordVideo {
-	video: any;
-	mediaRecorder: any;
-	chunks: any[];
+	video: HTMLVideoElement;
+	mediaRecorder: MediaRecorder | null;
+	chunks: unknown[];
 	/**
 	 * 构造函数
 	 *
 	 * @param  {Object}   videoObj 视频对象
 	 */
-	constructor(videoObj: any) {
+	constructor(videoObj: HTMLVideoElement) {
 		this.video = videoObj;
 		this.mediaRecorder = null;
 		this.chunks = [];
@@ -48,7 +48,7 @@ export default class RecordVideo {
 					});
 					this.mediaRecorder = new MediaRecorder(stream);
 					// TODO
-					this.mediaRecorder.addEventListener('dataavailable', (e: Event & { data: any }) => {
+					this.mediaRecorder.addEventListener('dataavailable', (e: Event & { data: unknown }) => {
 						this.chunks.push(e.data);
 					});
 					resolve();
@@ -64,7 +64,7 @@ export default class RecordVideo {
 	 * 视频开始录制
 	 */
 	startRecord() {
-		if (this.mediaRecorder.state === 'inactive') {
+		if (this.mediaRecorder?.state === 'inactive') {
 			this.mediaRecorder.start();
 		}
 	}
@@ -73,7 +73,7 @@ export default class RecordVideo {
 	 * 视频结束录制
 	 */
 	stopRecord() {
-		if (this.mediaRecorder.state === 'recording') {
+		if (this.mediaRecorder?.state === 'recording') {
 			this.mediaRecorder.stop();
 		}
 	}

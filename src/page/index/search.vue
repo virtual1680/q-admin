@@ -90,7 +90,7 @@ const querySearch = () => {
 	menus.value = queryString ? menuList.value.filter(createFilter(queryString)) : restaurants;
 };
 const createFilter = (queryString: string) => {
-	return (restaurant: any) => {
+	return (restaurant: RouterMenu) => {
 		return restaurant.label.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
 	};
 };
@@ -106,22 +106,22 @@ getMenuList();
 
 <style lang="scss" scoped>
 .avue-searchs {
-	padding-top: 50px;
+	z-index: 1024;
 	width: 100%;
 	height: 100%;
-	background-color: #fff;
-	z-index: 1024;
+	padding-top: 50px;
+	background-color: #ffffff;
 	&__title {
 		margin-bottom: 60px;
-		text-align: center;
 		font-size: 42px;
 		font-weight: bold;
-		letter-spacing: 2px;
+		text-align: center;
 		text-indent: 2px;
+		letter-spacing: 2px;
 	}
 	&__form {
-		margin: 0 auto 50px auto;
 		width: 50%;
+		margin: 0 auto 50px;
 		text-align: center;
 		p {
 			margin-top: 20px;
@@ -132,20 +132,20 @@ getMenuList();
 	}
 	&__list {
 		box-sizing: border-box;
+		width: 70%;
 		padding: 20px 30px;
 		margin: 0 auto;
-		width: 70%;
-		border-radius: 4px;
-		border: 1px solid #ebeef5;
-		background-color: #fff;
 		overflow: hidden;
 		color: #303133;
+		background-color: #ffffff;
+		border: 1px solid #ebeef5;
+		border-radius: 4px;
+		box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
 		transition: 0.3s;
-		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 	}
 	&__item {
 		padding: 5px 0;
-		border-bottom: 1px dashed #eee;
+		border-bottom: 1px dashed #eeeeee;
 		&-icon {
 			margin-right: 5px;
 			font-size: 18px;
@@ -153,11 +153,11 @@ getMenuList();
 		&-title {
 			font-size: 20px;
 			font-weight: 500;
-			color: #333;
+			color: #333333;
 		}
 		&-path {
 			line-height: 30px;
-			color: #666;
+			color: #666666;
 		}
 	}
 }

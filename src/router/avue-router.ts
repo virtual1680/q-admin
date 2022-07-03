@@ -2,7 +2,7 @@ import { Router, RouteRecordRaw } from 'vue-router';
 import { ARouter, AVueRouter } from 'router/index';
 import website from 'app/config/website';
 import { useTagsStore } from 'store/tags';
-import { I18n } from 'vue-i18n';
+import { VueI18n } from 'vue-i18n';
 
 const modules = import.meta.glob('../**/**/*.vue');
 function isURL(s: string) {
@@ -11,46 +11,44 @@ function isURL(s: string) {
 
 export default class RouterPlugin {
 	public $router;
-	public i18n;
-	constructor(option: { router: Router; i18n: I18n<{ en: any; 'zh-cn': any }, unknown, unknown, true> }) {
+	public $i18n;
+	constructor(option: { router: Router; i18n: VueI18n }) {
 		this.$router = option.router as AVueRouter;
-		this.i18n = option.i18n.global;
+		this.$i18n = option.i18n;
 		this.$router.avueRouter = this.init() as ARouter;
 		return this;
 	}
 	init() {
+		const router = this.$router;
+		const i18n = this.$i18n;
 		return {
-			self: this,
 			// 设置标题
 			setTitle: (title: string) => {
-				const defaultTitle = this.i18n.t('title');
+				const defaultTitle = i18n.t('title');
 				title = title ? `${title} | ${defaultTitle}` : defaultTitle;
 				document.title = title;
 			},
 			closeTag(value?: string) {
 				const tStore = useTagsStore();
-				let tag = value || tStore.tag;
-				if (typeof value === 'string') {
-					// TODO
-					console.log('-=-=-=-=', tStore.tagList[0]);
-					tag = tStore.tagList.find((ele: any) => ele.fullPath === value);
-				}
-				tStore.DEL_TAG(tag);
+				let fullPath = value || tStore.tag.fullPath;
+				// if (typeof value === 'string') {
+				// 	tag = tStore.tagList.find((ele: RouterMenu) => ele.fullPath === fullPath);
+				// }
+				tStore.DEL_TAG(fullPath);
 			},
-			generateTitle: (item: RouterMenu, props?: Partial<Menu>) => {
+			generateTitle: (item: RouterTag, props?: Partial<Menu>) => {
 				let query = item[props?.query || 'query'] || {};
 				let title = query.name || item[props?.label || 'label'];
 				let meta = item[props?.meta || 'meta'] || {};
 				let key = meta.i18n;
 				if (key) {
-					const hasKey = this.i18n.te('route.' + key);
-					if (hasKey) return this.i18n.t('route.' + key);
+					const hasKey = i18n.te('route.' + key);
+					if (hasKey) return i18n.t('route.' + key);
 				}
 				return title;
 			},
 			//动态路由
 			formatRoutes: function (aMenu: RouterMenu[] = [], first: boolean = false): RouteRecordRaw[] | undefined {
-				// const cStore = useCommonStore();
 				const aRouter = [];
 				const propsDefault = website.menu;
 				if (aMenu && aMenu.length === 0) return;
@@ -124,7 +122,7 @@ export default class RouterPlugin {
 					if (!isURL(path)) aRouter.push(oRouter);
 				}
 				if (first) {
-					aRouter.forEach(ele => this.self.$router.addRoute(ele));
+					aRouter.forEach(ele => router.addRoute(ele));
 				} else {
 					return aRouter;
 				}

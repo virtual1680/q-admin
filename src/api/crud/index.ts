@@ -1,5 +1,5 @@
 import axios from 'http/axios';
-export const list = (data: any) => {
+export const list = (data: unknown) => {
 	return axios.request({
 		url: '/crud/list',
 		method: 'get',
@@ -15,7 +15,7 @@ export const del = (id: string) =>
 			id
 		}
 	});
-export const add = (data: any) =>
+export const add = (data: unknown) =>
 	axios.request({
 		url: '/crud',
 		method: 'post',
@@ -24,7 +24,7 @@ export const add = (data: any) =>
 		},
 		data: data
 	});
-export const update = (data: any) =>
+export const update = (data: unknown) =>
 	axios.request({
 		url: '/crud',
 		method: 'put',

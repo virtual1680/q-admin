@@ -35,10 +35,9 @@ import { useCommonStore } from 'store/index';
 
 const cStore = useCommonStore();
 const show = ref(false);
-
-const isHorizontal = computed(() => {
-	return cStore.getIsHorizontal;
-});
+// const isHorizontal = computed(() => {
+// 	return cStore.getIsHorizontal;
+// });
 const setting = computed(() => {
 	return cStore.getSetting;
 });
@@ -59,67 +58,70 @@ const list2 = ref([
 <style lang="scss">
 .setting {
 	&-icon {
-		color: #666;
 		position: fixed;
-		bottom: 200px;
 		right: 20px;
+		bottom: 200px;
 		z-index: 2048;
+		color: #666666;
+		i {
+			margin-left: 0;
+		}
 	}
 	&-item {
 		display: flex;
 		justify-content: space-between;
-		font-size: 14px;
 		margin-bottom: 8px;
+		font-size: 14px;
 	}
 	&-checkbox {
 		&--check {
 			position: absolute;
-			color: #409eff;
-			left: 50%;
 			top: 50%;
+			left: 50%;
+			color: #409eff;
 			transform: translate(-50%, -50%);
 		}
 		&-item {
-			display: inline-block;
 			position: relative;
+			display: inline-block;
 			width: 44px;
 			height: 36px;
 			margin-right: 16px;
 			overflow: hidden;
+			cursor: pointer;
 			background-color: #f0f2f5;
 			border-radius: 4px;
-			box-shadow: 0 1px 2.5px 0 rgba(0, 0, 0, 0.18);
-			cursor: pointer;
-			&:before {
+			box-shadow: 0 1px 2.5px 0 rgb(0 0 0 / 18%);
+			&::before {
 				position: absolute;
 				top: 0;
 				left: 0;
 				width: 33%;
 				height: 100%;
-				background-color: #fff;
 				content: '';
+				background-color: #ffffff;
 			}
-			&:after {
+			&::after {
 				position: absolute;
 				top: 0;
 				left: 0;
 				width: 100%;
 				height: 25%;
-				background-color: #fff;
 				content: '';
+				background-color: #ffffff;
 			}
 			&--side {
-				&:before {
+				&::before {
 					z-index: 1;
-					background-color: #001529;
 					content: '';
+					background-color: #001529;
 				}
-				&:after {
-					background-color: #fff;
+				&::after {
+					background-color: #ffffff;
 				}
 			}
 			&--top {
-				&:after {
+				&::after {
 					background-color: #001529;
 				}
 			}

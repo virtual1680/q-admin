@@ -1,6 +1,6 @@
 import Layout from 'app/page/index/index.vue';
 import { useCommonStore } from 'store/common';
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw, LocationQuery } from 'vue-router';
 export default [
 	{
 		path: '/wel',
@@ -96,7 +96,7 @@ export default [
 		children: [
 			{
 				path: '',
-				name: (query: any) => {
+				name: (query: LocationQuery) => {
 					return query.id ? '编辑页面' : '新增页面';
 				},
 				meta: {

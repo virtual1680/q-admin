@@ -15,7 +15,7 @@
 				<!-- 主体视图层 -->
 				<div id="avue-view" v-show="!isSearch" v-if="isRefresh">
 					<router-view #="{ Component }">
-						<keep-alive :include="tStore.getTagsKeep">
+						<keep-alive :include="getTagsKeep">
 							<component :is="Component" />
 						</keep-alive>
 					</router-view>
@@ -51,9 +51,9 @@ const isHorizontal = computed(() => {
 const isRefresh = computed(() => {
 	return cStore.getIsRefresh;
 });
-// const isLock = computed(() => {
-// 	return cStore.getIsLock;
-// });
+const getTagsKeep = computed(() => {
+	return tStore.getTagsKeep as string[];
+});
 // const setting = computed(() => {
 // 	return cStore.getSetting;
 // });
@@ -77,7 +77,7 @@ const validSidebar = computed(() => {
  * @isInit 是否是自动加载
  */
 const openMenu = (item: Partial<RouterMenu>, isInit: boolean) => {
-	uStore.GetMenu(item.parentId).then((data: any[]) => {
+	uStore.GetMenu(item.parentId).then((data: RouterMenu[]) => {
 		if (data.length !== 0) {
 			router.avueRouter?.formatRoutes(data, true);
 		}

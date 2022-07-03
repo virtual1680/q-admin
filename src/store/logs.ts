@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { PersistedStateOptions } from 'pinia-plugin-persistedstate';
 import { sendLogs } from '@/api/user';
 interface LogsStore {
-	logsList: any[];
+	logsList: unknown[];
 }
 
 // pinia持久化参数配置

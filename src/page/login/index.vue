@@ -31,7 +31,7 @@
 </template>
 <script lang="ts" setup name="Login">
 import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, LocationQuery } from 'vue-router';
 import { ElLoading } from 'element-plus';
 import website from 'app/config/website';
 import dayjs from 'dayjs';
@@ -55,7 +55,7 @@ setInterval(() => {
 watch(
 	() => route,
 	() => {
-		const params = route.query as any;
+		const params = route.query as LocationQuery;
 		if (!validatenull(params?.state)) {
 			const loading = ElLoading.service({
 				lock: true,

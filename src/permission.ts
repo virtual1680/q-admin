@@ -3,7 +3,7 @@ import { useUserStore, useCommonStore, useTagsStore } from 'store/index';
 import { AxiosCanceler } from 'http/cancel';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
-import { RouteLocationNormalized } from 'vue-router';
+import { LocationQuery } from 'vue-router';
 NProgress.configure({ showSpinner: false });
 
 const axiosCanceler = new AxiosCanceler();
@@ -32,21 +32,21 @@ router.beforeEach((to, from, next) => {
 					.then(() => {
 						next({ ...to, replace: true });
 					})
-					.catch((erorr: Error) => {
-						console.log('-=-=-=-=-=-=', erorr);
+					.catch(() => {
 						uStore.FedLogOut().then(() => {
 							next({ path: '/login' });
 						});
 					});
 			} else {
 				const meta = to.meta || {};
-				const query: any = to.query || {};
+				const query: LocationQuery = to.query;
 				if (meta.target) {
-					window.open(query.url.replace(/#/g, '&'));
+					window.open((query.url as string).replace(/#/g, '&'));
 					return;
 				} else if (meta.isTab !== false) {
+					const name: any = query.name ? query.name : to.name;
 					tStore.ADD_TAG({
-						name: query.name || to.name,
+						name: name,
 						path: to.path,
 						fullPath: to.fullPath,
 						params: to.params,
@@ -58,8 +58,6 @@ router.beforeEach((to, from, next) => {
 			}
 		}
 	} else {
-		console.log(to.path);
-
 		//判断是否需要认证，没有登录访问去登录页
 		if (meta.isAuth === false) {
 			next();
@@ -68,12 +66,11 @@ router.beforeEach((to, from, next) => {
 		}
 	}
 });
-// TODO
-type RMenu = RouterMenu & RouteLocationNormalized;
+
 router.afterEach(to => {
 	const cStore = useCommonStore();
 	NProgress.done();
-	let title = (router as AVueRouter).avueRouter?.generateTitle(to as RMenu);
+	let title = (router as AVueRouter).avueRouter?.generateTitle(to as RouterTag);
 	(router as AVueRouter).avueRouter?.setTitle(title);
 	cStore.SET_IS_SEARCH(false);
 });

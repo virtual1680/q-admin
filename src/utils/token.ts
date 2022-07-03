@@ -52,7 +52,7 @@ export const calcDate = (date1: number, date2: number) => {
 /**
  * 判断是否为空
  */
-export function validatenull(val: any) {
+export function validatenull(val: unknown) {
 	if (typeof val == 'boolean') {
 		return false;
 	}

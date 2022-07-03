@@ -3,7 +3,7 @@ import { validatenull } from '@/utils/validate';
 import dayjs from 'dayjs';
 import { ref, onBeforeMount, onUnmounted, Ref } from 'vue';
 import { useUserStore } from 'store/index';
-import { getStore } from 'app/hooks/useStorage';
+import { getStore } from 'utils/store';
 
 /**
  * 刷新token
@@ -14,8 +14,7 @@ export const useRefreshToken = () => {
 	const userStore = useUserStore();
 	const refreshToken = () => {
 		refreshTime.value = setInterval(() => {
-			userStore.getToken;
-			const token = getStore({ name: 'token', debug: true });
+			const token = getStore<string>({ name: 'token' });
 			let date1 = dayjs(token?.datetime);
 			let date2 = dayjs();
 			const date = date1.diff(date2, 'month');

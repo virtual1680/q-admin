@@ -30,7 +30,7 @@ import { computed, reactive, ref } from 'vue';
 import { FormInstance } from 'element-plus';
 // import { useRouter } from 'vue-router';
 // import { userStore } from '../../store/user';
-import { useI18n } from 'app/lang/index';
+import { useI18n } from 'vue-i18n';
 // const tStore = tagsStore();
 // const router = useRouter();
 // const uStore = userStore();
@@ -64,9 +64,8 @@ const loginRules = {
 
 const config = computed(() => {
 	return {
-		//TODO $t 已注册在全局，此取法有待优化
-		MSGINIT: i18n.$t('login.msgText'),
-		MSGSCUCCESS: i18n.$t('login.msgSuccess'),
+		MSGINIT: i18n.t('login.msgText'),
+		MSGSCUCCESS: i18n.t('login.msgSuccess'),
 		MSGTIME: 60
 	};
 });
@@ -111,6 +110,6 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
 	cursor: pointer;
 }
 .msg-text.display {
-	color: #ccc;
+	color: #cccccc;
 }
 </style>

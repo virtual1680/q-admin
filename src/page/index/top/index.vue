@@ -62,7 +62,7 @@ import topLang from './top-lang.vue';
 import topFull from './top-full.vue';
 import topSetting from '../setting.vue';
 import { computed } from 'vue';
-import { useI18n } from 'app/lang/index';
+import { useI18n } from 'vue-i18n';
 import { ElMessageBox } from 'element-plus';
 import { useRouter } from 'vue-router';
 // useTagsStore

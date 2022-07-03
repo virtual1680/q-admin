@@ -42,7 +42,7 @@ export const getTopMenu = () =>
 		method: 'get'
 	});
 
-export const sendLogs = (list: any) =>
+export const sendLogs = (list: unknown) =>
 	axios.request({
 		url: '/user/logout',
 		method: 'post',

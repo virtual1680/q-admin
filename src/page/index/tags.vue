@@ -37,11 +37,12 @@ import { ref, watch, computed, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTagsStore, useCommonStore } from 'store/index';
 import { AVueRouter } from '../../router/index';
+import { TabsPaneContext } from 'element-plus';
 const router = useRouter() as AVueRouter;
 const commonStore = useCommonStore();
 const tagsStore = useTagsStore();
 const refresh = ref(false);
-const active = ref('');
+const active: Ref<string | undefined> = ref('');
 const contentmenuX = ref(0);
 const contentmenuY = ref(0);
 const contextmenuFlag = ref(false);
@@ -88,23 +89,20 @@ const handleRefresh = () => {
 		refresh.value = false;
 	}, 500);
 };
-const generateTitle = (item: RouterMenu) => {
+const generateTitle = (item: RouterTag) => {
 	return router.avueRouter?.generateTitle({
 		...item,
-		...{
-			label: item.name
-		}
+		...{ name: item.name }
 	});
 };
-// TODO
-const watchContextmenu = (event: any) => {
+
+const watchContextmenu = (event: MouseEvent) => {
 	if (!tagsRef.value?.contains(event.target as Node) || event.button !== 0) {
 		contextmenuFlag.value = false;
 	}
 	window.removeEventListener('mousedown', watchContextmenu);
 };
 const handleContextmenu = (event: MouseEvent) => {
-	//TODO
 	let target: Element | null = event.target as Element;
 	let flag = false;
 	if (target?.className.indexOf('el-tabs__item') > -1) {
@@ -122,12 +120,12 @@ const handleContextmenu = (event: MouseEvent) => {
 		contextmenuFlag.value = true;
 	}
 };
-// TODO type
-const menuTag = (value: any, action: string) => {
+
+const menuTag = (value: string, action: string) => {
 	if (action === 'remove') {
 		let { tag: t, key } = findTag(value);
-		tagsStore.DEL_TAG(t);
-		if (t.fullPath === tag.value.fullPath) {
+		tagsStore.DEL_TAG(t?.fullPath || '');
+		if (t?.fullPath === tag.value.fullPath) {
 			t = tagList.value[key - 1];
 			router.push({
 				path: t.path,
@@ -136,13 +134,13 @@ const menuTag = (value: any, action: string) => {
 		}
 	}
 };
-// TODO type
-const openTag = (item: any) => {
-	let value = item.props.name;
+
+const openTag = (item: TabsPaneContext) => {
+	let value = item.props.name as string;
 	let { tag } = findTag(value);
 	router.push({
-		path: tag.path,
-		query: tag.query
+		path: tag?.path,
+		query: tag?.query
 	});
 };
 const findTag = (fullPath: string) => {

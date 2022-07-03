@@ -1,5 +1,6 @@
 import { validatenull } from 'utils/validate';
 import website from '@/config/website';
+// import { number } from '@intlify/core-base';
 
 const keyName = website.key + '-';
 /**
@@ -9,14 +10,13 @@ interface _BaseStorage {
 	readonly datetime: number;
 	readonly dataType: string;
 }
-export interface StorageParams {
+export interface StorageParams<T = unknown> {
 	name: string;
-	content: string | number | symbol | boolean | unknown[];
+	content: T;
 	type?: 'local' | 'session';
-	debug?: boolean;
 }
 
-export const setStore = (params: Pick<StorageParams, 'name' | 'content' | 'type'>) => {
+export const setStore = <T = unknown>(params: Pick<StorageParams<T>, 'name' | 'content' | 'type'>) => {
 	let { name, content, type } = params;
 	name = keyName + name;
 	let obj = {
@@ -30,11 +30,12 @@ export const setStore = (params: Pick<StorageParams, 'name' | 'content' | 'type'
 /**
  * 获取 Storage
  */
-type ResultData = StorageParams & _BaseStorage;
-export const getStore = (params: Pick<StorageParams, 'name' | 'debug' | 'type'>): ResultData | null => {
-	let { name, debug, type } = params;
+type ResultData<T = unknown> = StorageParams<T> & _BaseStorage;
+
+export const getStore = <T = unknown>(params: Pick<StorageParams<T>, 'name' | 'type'>): ResultData<T> | null => {
+	let { name, type } = params;
 	name = keyName + name;
-	let obj: ResultData, strJson: string | null, content;
+	let obj: ResultData<T>, strJson: string | null;
 	strJson = window[`${type || 'local'}Storage`].getItem(name);
 	if (validatenull(strJson)) return null;
 	try {
@@ -43,24 +44,20 @@ export const getStore = (params: Pick<StorageParams, 'name' | 'debug' | 'type'>)
 		`${name} getItem error`;
 		return null;
 	}
-	if (debug) {
-		return obj;
-	}
-	if (obj.dataType == 'string') {
-		content = obj.content;
-	} else if (obj.dataType == 'number') {
-		content = Number(obj.content);
-	} else if (obj.dataType == 'boolean') {
-		content = eval(obj.content as string);
-	} else if (obj.dataType == 'object') {
-		content = obj.content;
-	}
-	return content;
+	// if (debug) {
+	// 	return obj;
+	// }
+	// if (T extends number) {
+	// 	obj.content = Number(obj.content);
+	// } else if (obj.dataType == 'boolean') {
+	// 	obj.content = eval(obj.content as string);
+	// }
+	return obj;
 };
 /**
  * 删除 Storage
  */
-export const removeStore = (params: Pick<StorageParams, 'name' | 'type'>) => {
+export const removeStore = <T = unknown>(params: Pick<StorageParams<T>, 'name' | 'type'>) => {
 	let { name, type } = params;
 	name = keyName + name;
 	window[`${type || 'local'}Storage`].removeItem(name);

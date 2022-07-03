@@ -1,10 +1,11 @@
 import website from 'app/config/website';
 import { defineStore } from 'pinia';
 import { PersistedStateOptions } from 'pinia-plugin-persistedstate';
+import { isFunction } from 'lodash-es';
 const tagWel = website.fistPage;
 interface TagsStore {
-	tagList: any[];
-	tag: any;
+	tagList: RouterTag[];
+	tag: RouterTag;
 	tagWel: { name: string; path: string };
 }
 
@@ -21,7 +22,7 @@ export const useTagsStore = defineStore({
 	id: 'TagsStore',
 	state: (): TagsStore => ({
 		tagList: [],
-		tag: {},
+		tag: {} as RouterMenu,
 		tagWel: tagWel
 	}),
 	getters: {
@@ -37,15 +38,15 @@ export const useTagsStore = defineStore({
 		}
 	},
 	actions: {
-		ADD_TAG(action: any) {
-			if (typeof action.name == 'function') action.name = action.name(action.query);
+		ADD_TAG(action: RouterTag) {
+			if (isFunction(action.name)) action.name = action.name(action.query);
 			this.tag = action;
 			if (this.tagList.some(ele => ele.fullPath == action.fullPath)) return;
 			this.tagList.push(action);
 		},
-		DEL_TAG(action: any) {
+		DEL_TAG(fullPath?: string) {
 			this.tagList = this.tagList.filter(item => {
-				return item.fullPath !== action.fullPath;
+				return item?.fullPath !== fullPath;
 			});
 		},
 		DEL_ALL_TAG(tagList = []) {

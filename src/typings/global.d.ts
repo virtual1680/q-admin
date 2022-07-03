@@ -25,7 +25,7 @@ declare interface Menu {
 }
 
 declare interface RouterMenu {
-	id: string;
+	id?: string;
 	parentId: string;
 	iconDefault: string;
 	label: string;
@@ -33,15 +33,19 @@ declare interface RouterMenu {
 	icon: string;
 	iconBgColor: string;
 	children: RouterMenu[];
-	query: LocationQueryRaw;
+	query: Record<string, string | null | (string | null)[]>;
+	params: Record<string, string | string[]>;
 	href: string;
 	fullPath: string;
-	meta: { keepAlive?: boolean; isTab?: boolean; isAuth?: boolean; i18n?: string };
-	name: string;
+	meta: { keepAlive?: boolean; isTab?: boolean; isAuth?: boolean; i18n?: string; roles?: string[] };
+	name?: string | ((query: LocationQueryRaw) => string);
 	component: string;
 	iconColor?: string;
 	hideInDesktop?: boolean;
 }
+
+declare type RouterTag = Pick<RouterMenu, 'fullPath' | 'meta' | 'name' | 'params' | 'query' | 'path'>;
+
 declare interface Website {
 	title: string;
 	logo: string;

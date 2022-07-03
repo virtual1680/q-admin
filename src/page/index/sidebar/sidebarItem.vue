@@ -54,17 +54,17 @@ const roles = computed(() => {
 	return uStore.getRoles;
 });
 
-const getPath = (item: any) => {
+const getPath = (item: RouterMenu) => {
 	return item[pathKey.value];
 };
-const getTitle = (item: any) => {
+const getTitle = (item: RouterMenu) => {
 	return router.avueRouter?.generateTitle(item, website.menu);
 };
-const validRoles = (item: any) => {
+const validRoles = (item: RouterMenu) => {
 	item.meta = item.meta || {};
-	return item.meta.roles ? item.meta.roles.includes(roles) : true;
+	return item.meta.roles ? item.meta.roles.includes(roles.value) : true;
 };
-const open = (item: any) => {
+const open = (item: RouterMenu) => {
 	router.push({
 		path: item[pathKey.value],
 		query: item[queryKey.value]

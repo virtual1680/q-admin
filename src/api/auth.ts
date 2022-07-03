@@ -41,8 +41,8 @@ export const login = (tenantId: string, username: string, password: string, type
 		}
 	});
 };
-export const getExcel = (params: any) => {
-	return axios.request<never, any>({
+export const getExcel = (params: unknown) => {
+	return axios.request<never, unknown>({
 		url: `/lecent-mall/report/export`,
 		responseType: 'arraybuffer',
 		method: 'get',

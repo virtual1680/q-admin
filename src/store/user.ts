@@ -1,14 +1,18 @@
 import { getMenu, getTopMenu, getUserInfo, loginByUsername, logout, refeshToken } from '@/api/user';
-import { setStore } from '@/hooks/useStorage';
+import { setStore } from 'utils/store';
 import { formatPath } from '@/router/avue-router';
 import { deepClone, encryption } from '@/utils/util';
 import { defineStore } from 'pinia';
 import { PersistedStateOptions } from 'pinia-plugin-persistedstate';
-
+interface UserInfo {
+	avatar: string;
+	username: string;
+	name: string;
+}
 interface UserStore {
-	userInfo: any;
-	permission: any;
-	roles: any[];
+	userInfo: UserInfo;
+	permission: Record<string, boolean>;
+	roles: string;
 	menuId: string;
 	menu: RouterMenu[];
 	menuAll: RouterMenu[];
@@ -28,9 +32,9 @@ export const piniaPersistConfig = (key: string) => {
 export const useUserStore = defineStore({
 	id: 'UserStore',
 	state: (): UserStore => ({
-		userInfo: {},
+		userInfo: {} as UserInfo,
 		permission: {},
-		roles: [],
+		roles: '',
 		menuId: '0',
 		menu: [],
 		menuAll: [],
@@ -117,7 +121,7 @@ export const useUserStore = defineStore({
 						this.SET_TOKEN('');
 						this.SET_MENUALL_NULL();
 						this.SET_MENU([]);
-						this.SET_ROLES([]);
+						this.SET_ROLES('');
 						// commit('DEL_ALL_TAG', []);
 						// commit('CLEAR_LOCK');
 						// removeToken();
@@ -134,7 +138,7 @@ export const useUserStore = defineStore({
 				this.SET_TOKEN('');
 				this.SET_MENUALL_NULL();
 				this.SET_MENU([]);
-				this.SET_ROLES([]);
+				this.SET_ROLES('');
 				// commit('DEL_ALL_TAG', []);
 				// commit('CLEAR_LOCK');
 				// removeToken();
@@ -150,7 +154,7 @@ export const useUserStore = defineStore({
 			});
 		},
 		//获取系统菜单
-		GetMenu(parentId?: string): Promise<any[]> {
+		GetMenu(parentId?: string): Promise<RouterMenu[]> {
 			return new Promise(resolve => {
 				getMenu(parentId).then(res => {
 					const data = res.data;
@@ -165,15 +169,15 @@ export const useUserStore = defineStore({
 
 		SET_TOKEN(token: string) {
 			this.token = token;
-			setStore({ name: 'token', content: token });
+			setStore<string>({ name: 'token', content: token });
 		},
 		SET_MENUID(menuId: string) {
 			this.menuId = menuId;
 		},
-		SET_USERIFNO(userInfo: any) {
+		SET_USERIFNO(userInfo: UserInfo) {
 			this.userInfo = userInfo;
 		},
-		SET_MENUALL(menuAll: any[]) {
+		SET_MENUALL(menuAll: RouterMenu[]) {
 			let menu = this.menuAll;
 			menuAll.forEach(ele => {
 				let index = menu.findIndex(item => item.path == ele.path);
@@ -184,19 +188,19 @@ export const useUserStore = defineStore({
 				}
 			});
 			this.menuAll = menu;
-			setStore({ name: 'menuAll', content: this.menuAll });
+			setStore<RouterMenu[]>({ name: 'menuAll', content: this.menuAll });
 		},
 		SET_MENUALL_NULL() {
 			this.menuAll = [];
 		},
-		SET_MENU(menu: any) {
+		SET_MENU(menu: RouterMenu[]) {
 			this.menu = menu;
-			setStore({ name: 'menu', content: menu });
+			setStore<RouterMenu[]>({ name: 'menu', content: menu });
 		},
-		SET_ROLES(roles: any) {
+		SET_ROLES(roles: string) {
 			this.roles = roles;
 		},
-		SET_PERMISSION(permission: any[]) {
+		SET_PERMISSION(permission: string[]) {
 			this.permission = {};
 			permission.forEach(ele => {
 				this.permission[ele] = true;

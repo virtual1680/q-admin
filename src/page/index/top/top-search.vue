@@ -61,14 +61,14 @@ const getMenuList = () => {
 	menuList.value = [];
 	findMenu(menu.value);
 };
-const querySearch = (queryString: string, cb: (results: any) => void) => {
+const querySearch = (queryString: string, cb: (results: unknown) => void) => {
 	let restaurants = menuList.value;
 	let results = queryString ? restaurants.filter(createFilter(queryString)) : restaurants;
 	// 调用 callback 返回建议列表的数据
 	cb(results);
 };
 const createFilter = (queryString: string) => {
-	return (restaurant: any) => {
+	return (restaurant: RouterMenu) => {
 		return restaurant.label.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
 	};
 };
@@ -85,28 +85,27 @@ getMenuList();
 <style lang="scss">
 .my-autocomplete {
 	li {
-		line-height: normal !important;
 		padding: 7px !important;
+		line-height: normal !important;
 		.icon {
-			margin-right: 5px;
 			display: inline-block;
+			margin-right: 5px;
 			vertical-align: middle;
 		}
 		.name {
 			display: inline-block;
-			text-overflow: ellipsis;
 			overflow: hidden;
+			text-overflow: ellipsis;
 			vertical-align: middle;
 		}
 		.addr {
-			padding-top: 5px;
 			width: 100%;
+			padding-top: 5px;
 			font-size: 12px;
 			color: #b4b4b4;
 		}
-
 		.highlighted .addr {
-			color: #ddd;
+			color: #dddddd;
 		}
 	}
 }

@@ -3,13 +3,14 @@ import PageRouter from './page/index';
 import ViewsRouter from './views/index';
 import AvueRouter from './avue-router';
 import i18n from 'app/lang/index';
+import { getStore } from 'utils/store';
+import { VueI18n } from 'vue-i18n';
 
 export interface ARouter {
-	generateTitle: (item: RouterMenu, props?: Partial<Menu>) => string;
+	generateTitle: (item: RouterTag, props?: Partial<Menu>) => string;
 	setTitle: (title?: string) => string;
 	closeTag: (value?: string) => void;
-	formatRoutes: (aMenu: any[], first: boolean) => RouteRecordRaw[] | undefined;
-	self: any;
+	formatRoutes: (aMenu: RouterMenu[], first: boolean) => RouteRecordRaw[] | undefined;
 }
 export interface AVueRouter extends Router {
 	avueRouter?: ARouter;
@@ -23,12 +24,10 @@ const Router = createRouter({
 
 const aRouter = new AvueRouter({
 	router: Router,
-	i18n: i18n
+	i18n: i18n.global as VueI18n
 });
 //解决pinia未挂载去调用useUserStore的问题
-const userStore = window.localStorage.getItem('UserStore');
-if (userStore) {
-	aRouter.$router.avueRouter?.formatRoutes(JSON.parse(userStore).menuAll || [], true);
-}
+const menuAll = getStore<RouterMenu[]>({ name: 'menuAll' });
+aRouter.$router.avueRouter?.formatRoutes(menuAll?.content || [], true);
 
 export default aRouter.$router;

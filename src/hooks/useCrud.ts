@@ -5,8 +5,6 @@ import { isFunction } from 'lodash-es';
 interface CrudOption {
 	rowKey?: string;
 	sourcePath: string;
-	// api: any;
-	// option: any;
 
 	list?: string;
 	add?: string;
@@ -29,10 +27,6 @@ interface CrudOption {
 }
 let optionObj = import.meta.glob(`../option/**/**`);
 let apiObj = import.meta.glob(`../api/**/**`);
-// let optionO = optionObj[`../option/${option.sourcePath}.ts`];
-// let apiO = apiObj[`../api/${option.sourcePath}.ts`];
-// import * as api from '@/api/crud/index';
-// import avueOption from '@/option/crud/index';
 
 /**
  * 表单基本逻辑
