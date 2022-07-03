@@ -7,14 +7,14 @@
 			<span :style="borderStyleName"></span>
 		</div>
 		<img :style="imgStyleName" class="basic-video__img" :src="background" />
-		<video class="basic-video__main" ref="main" autoplay muted></video>
+		<video class="basic-video__main" ref="videoRef" autoplay muted></video>
 	</div>
 </template>
 
 <script lang="ts" setup name="basic-video">
-import { computed, Ref, ref } from 'vue';
+import { computed, Ref, ref, onMounted } from 'vue';
 import RecordVideo from './plugin';
-const main: Ref<HTMLAudioElement | undefined> = ref();
+const videoRef: Ref<HTMLVideoElement | null> = ref(null);
 const emit = defineEmits<{ (e: 'data-change', value: string | ArrayBuffer | null): void }>();
 const props = defineProps({
 	background: {
@@ -42,12 +42,12 @@ const borderStyleName = computed(() => {
 		borderWidth: `${5}px`
 	};
 });
-const videoObj = ref();
+const videoObj: Ref<RecordVideo | null> = ref(null);
 const init = () => {
-	videoObj.value = new RecordVideo(main.value);
+	videoObj.value = new RecordVideo(videoRef.value!);
 	const videoPromise = videoObj.value.init();
 	videoPromise.then(() => {
-		videoObj.value.mediaRecorder.addEventListener('stop', getData, false);
+		videoObj.value?.mediaRecorder?.addEventListener('stop', getData, false);
 	});
 };
 // const startRecord = () => {
@@ -57,7 +57,7 @@ const init = () => {
 // 	videoObj.value.stopRecord();
 // };
 const getData = () => {
-	const blob = new Blob(videoObj.value.chunks, {
+	const blob = new Blob(videoObj.value?.chunks, {
 		type: 'video/mp4'
 	});
 	const reader = new FileReader();
@@ -67,8 +67,9 @@ const getData = () => {
 		emit('data-change', video_base64);
 	});
 };
-
-init();
+onMounted(() => {
+	init();
+});
 </script>
 <style lang="scss" scoped>
 .basic-video {

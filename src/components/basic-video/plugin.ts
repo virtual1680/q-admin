@@ -1,7 +1,7 @@
 export default class RecordVideo {
 	video: HTMLVideoElement;
 	mediaRecorder: MediaRecorder | null;
-	chunks: unknown[];
+	chunks: BlobPart[];
 	/**
 	 * 构造函数
 	 *
@@ -48,7 +48,7 @@ export default class RecordVideo {
 					});
 					this.mediaRecorder = new MediaRecorder(stream);
 					// TODO
-					this.mediaRecorder.addEventListener('dataavailable', (e: Event & { data: unknown }) => {
+					this.mediaRecorder.addEventListener('dataavailable', (e: Event & { data: BlobPart }) => {
 						this.chunks.push(e.data);
 					});
 					resolve();

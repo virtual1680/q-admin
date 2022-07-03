@@ -1,4 +1,3 @@
-import { getUserInfo } from '../api/user';
 <template>
 	<div class="mac_bg"></div>
 	<div class="login animate__animated" :class="{ animate__bounceOut: pass }">
@@ -19,7 +18,6 @@ import { getUserInfo } from '../api/user';
 import { useCommonStore, useTagsStore, useUserStore } from '@/store';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
-
 const passwdError = ref(false);
 const passwd = ref('');
 const pass = ref(false);
@@ -57,7 +55,7 @@ const handleLogin = () => {
 	setTimeout(() => {
 		commonStore.CLEAR_LOCK();
 		router.push({
-			path: tag.value
+			path: tag.value.path
 		});
 	}, 1000);
 };
