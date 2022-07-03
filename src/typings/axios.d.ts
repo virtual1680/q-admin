@@ -20,3 +20,11 @@ declare module 'axios' {
 		patch<T = any, R = Result<T>>(url: string, data?: any, config?: AxiosRequestConfig): Promise<R>;
 	}
 }
+declare interface DataPage<T> {
+	current: number;
+	pages: number;
+	size: number;
+	total: number;
+	record: T[];
+}
+// type DataPage<T = any, R = {}> = BaseDataPage<T> & R;

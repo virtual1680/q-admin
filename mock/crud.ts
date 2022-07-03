@@ -4,11 +4,14 @@ export default [
 		method: 'get',
 		response: () => {
 			return {
+				msg: '操作成功',
+				success: true,
 				data: {
-					total: 10,
-					data: Array(10).fill({
+					total: 50,
+					record: Array(50).fill({
 						name: 'small',
-						sex: '男'
+						sex: 1,
+						status: 0
 					})
 				}
 			};

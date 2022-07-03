@@ -24,14 +24,15 @@ interface ImportOption {
 type DialogForm = HTMLElement & { show: (option: Record<string, unknown>) => void };
 const dialogFormRef: Ref<DialogForm | null> = ref(null);
 const getOption = (ops: Partial<ImportOption>) => {
-	const getExcel = () => {
+	const getExcel = (params: unknown) => {
 		return axios.request<never, AxiosResponse<ArrayBuffer>>({
 			url: ops.downloadUrl,
 			responseType: 'arraybuffer',
 			method: 'get',
 			meta: {
 				returnType: 'response'
-			}
+			},
+			params
 		});
 	};
 	return {

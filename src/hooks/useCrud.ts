@@ -1,25 +1,34 @@
 import { ref, Ref, reactive, computed } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { isFunction } from 'lodash-es';
-
-interface CrudOption {
+import { DataPage, Result } from '@/typings/axios';
+type BaseParams = string | number | boolean | symbol;
+type SearchParams = Record<string, BaseParams | BaseParams[]>;
+interface CrudOption<T> {
+	/** 唯一值 key */
 	rowKey?: string;
-	sourcePath: string;
+	/** api 接口文件路径  */
+	apiPath: string;
+	// option 配置文件路径
+	optionPath: string;
+	// api 接口名称
+	apiName?: {
+		list?: string;
+		add?: string;
+		update?: string;
+		del?: string;
+	};
+	// res?: (data: Result<DataPage<T>>) => T[];
+	// 对搜索的参数进行改造
+	searchParams?: (params: SearchParams) => SearchParams;
 
-	list?: string;
-	add?: string;
-	update?: string;
-	del?: string;
-
-	res?: (data: any) => any;
-
-	listAfter?: (data: any[]) => void;
+	listAfter?: (data: DataPage<T>) => void;
 	listBefore?: () => void;
-	addAfter?: (data?: any[]) => void;
+	addAfter?: (data?: Result) => void;
 	addBefore?: () => void;
-	updateAfter?: (data?: any[]) => void;
+	updateAfter?: (data?: Result) => void;
 	updateBefore?: () => void;
-	delAfter?: (data: any, row: any, index: number) => void;
+	delAfter?: (data: Result, row: unknown, index: number) => void;
 	delBefore?: () => void;
 
 	totalKey?: string;
@@ -31,9 +40,9 @@ let apiObj = import.meta.glob(`../api/**/**`);
 /**
  * 表单基本逻辑
  */
-export const useCrud = (option: CrudOption) => {
-	let optionO = optionObj[`../option/${option.sourcePath}.ts`];
-	let apiO = apiObj[`../api/${option.sourcePath}.ts`];
+export const useCrud = <T = any>(option: CrudOption<T>) => {
+	let optionO = optionObj[`../option/${option.apiPath}.ts`];
+	let apiO = apiObj[`../api/${option.optionPath}.ts`];
 	const list = ref([]);
 	let form = ref({});
 	let params = reactive({});
@@ -46,8 +55,6 @@ export const useCrud = (option: CrudOption) => {
 		size: 20,
 		total: 0
 	});
-
-	console.log(api);
 
 	const bindVal = computed(() => {
 		return {
@@ -85,17 +92,11 @@ export const useCrud = (option: CrudOption) => {
 			loading.value = true;
 			const paramsObj = Object.assign({ current: page.value.current, size: page.value.size }, params);
 			list.value = [];
-			api[option.list || 'list'](paramsObj)
-				.then((res: any) => {
-					loading.value = false;
-					let data;
-					if (option.res) {
-						data = option.res(res.data);
-					} else {
-						data = res.data;
-					}
+			api[option.apiName?.list || 'list'](paramsObj)
+				.then((res: Result<DataPage<T>>) => {
+					const { data } = res;
 					page.value.total = data[option.totalKey || 'total'];
-					const result = data[option.dataKey || 'data'];
+					const result = data[option.dataKey || 'record'];
 					list.value = result;
 					if (isFunction(option.listAfter)) {
 						option.listAfter(data);
@@ -114,8 +115,8 @@ export const useCrud = (option: CrudOption) => {
 	const rowSave = (row: any, done: () => void, loading: () => void) => {
 		const callback = () => {
 			Reflect.deleteProperty(form.value, 'params');
-			api[option.add || 'add'](form.value)
-				.then((data: any) => {
+			api[option.apiName?.add || 'add'](form.value)
+				.then((data: Result) => {
 					getList();
 					if (option.addAfter) {
 						option.addAfter(data);
@@ -133,11 +134,11 @@ export const useCrud = (option: CrudOption) => {
 		}
 		callback();
 	};
-	const rowUpdate = (row: any, index: number, done: () => void, loading: () => void) => {
+	const rowUpdate = (row: unknown, index: number, done: () => void, loading: () => void) => {
 		const callback = () => {
 			Reflect.deleteProperty(form.value, 'params');
-			api[option.update || 'update'](form.value)
-				.then((data: any) => {
+			api[option.apiName?.update || 'update'](form.value)
+				.then((data: Result) => {
 					getList();
 					if (option.updateAfter) {
 						option.updateAfter(data);
@@ -157,7 +158,7 @@ export const useCrud = (option: CrudOption) => {
 	};
 	const rowDel = (row: any, index: number) => {
 		const callback = () => {
-			api[option.del || 'del'](row[rowKey.value], row).then((data: any) => {
+			api[option.apiName?.del || 'del'](row[rowKey.value], row).then((data: Result) => {
 				getList();
 				if (option.delAfter) {
 					option.delAfter(data, row, index);
@@ -179,9 +180,11 @@ export const useCrud = (option: CrudOption) => {
 			});
 		}
 	};
-	const searchChange = (params: any, done: () => void) => {
+	const searchChange = (sep: SearchParams, done: () => void) => {
+		console.log('原参数---', sep);
 		if (done) done();
-		params = params;
+		params = option.searchParams?.(sep) || sep;
+		console.log('改造变后参数---', params);
 		page.value.current = 1;
 		getList();
 	};
@@ -197,7 +200,6 @@ export const useCrud = (option: CrudOption) => {
 		page.value.current = val;
 		getList();
 	};
-	console.log('-=-=-=-=-=', bindVal.value.option);
 
-	return { bindVal, onEvent, rowKey, crud, refreshChange, page, form };
+	return { bindVal, onEvent, rowKey, crud, refreshChange, page, form, params };
 };

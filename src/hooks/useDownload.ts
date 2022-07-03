@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { ElNotification } from 'element-plus';
-// import { rest } from 'lodash-es';
+import { rest } from 'lodash-es';
 
 type Nav = Navigator & {
 	msSaveOrOpenBlob: (blob: Blob, fileName: string) => void;
@@ -11,7 +11,7 @@ type Nav = Navigator & {
  * @param api 导出表格的api接口方法(必传)
  * @param isNotify 是否有导出消息提示(默认为 true)
  * */
-export const useDownload = async (api: () => Promise<AxiosResponse<ArrayBuffer>>, isNotify: boolean = false) => {
+export const useDownload = async (api: (params: unknown) => Promise<AxiosResponse<ArrayBuffer>>, isNotify: boolean = false) => {
 	if (isNotify) {
 		ElNotification({
 			title: '温馨提示',
@@ -21,9 +21,7 @@ export const useDownload = async (api: () => Promise<AxiosResponse<ArrayBuffer>>
 		});
 	}
 	try {
-		// console.log('-=-=-=-=', api.length);
-
-		const res = await api.call(this);
+		const res = await api.call(this, rest);
 		console.log(res);
 		let blob = new Blob([res.data], { type: 'application/octet-stream;charset=utf-8;' });
 		let filename = res.headers['content-disposition'].split(';')[1];

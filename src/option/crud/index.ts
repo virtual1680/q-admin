@@ -14,9 +14,15 @@ export default () => {
 		border: true,
 		stripe: true,
 		column: [
+			{ label: '姓名', prop: 'name', search: true },
 			{
-				label: '姓名',
-				prop: 'name',
+				label: '状态',
+				prop: 'status',
+				type: 'select',
+				dicData: [
+					{ label: '不正常', value: 0 },
+					{ label: '正常', value: 1 }
+				],
 				search: true
 			},
 			{
@@ -24,16 +30,24 @@ export default () => {
 				prop: 'sex',
 				type: 'select',
 				dicData: [
-					{
-						label: '男',
-						value: 0
-					},
-					{
-						label: '女',
-						value: 1
-					}
+					{ label: '男', value: 0 },
+					{ label: '女', value: 1 }
 				],
 				search: true
+			},
+			{
+				label: '创建时间',
+				type: 'datetime',
+				searchRange: true,
+				search: true,
+				startPlaceholder: '开始时间',
+				endPlaceholder: '结束时间',
+				format: 'YYYY-MM-DD HH:mm:ss',
+				valueFormat: 'YYYY-MM-DD HH:mm:ss',
+				prop: 'queryTime',
+				addDisplay: false,
+				editDisplay: false,
+				hide: true
 			}
 		]
 	};
