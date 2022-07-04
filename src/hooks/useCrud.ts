@@ -28,7 +28,7 @@ interface CrudOption<T> {
 	addBefore?: () => void;
 	updateAfter?: (data?: Result) => void;
 	updateBefore?: () => void;
-	delAfter?: (data: Result, row: unknown, index: number) => void;
+	delAfter?: (data: Result, row: Partial<T>, index: number) => void;
 	delBefore?: () => void;
 
 	totalKey?: string;
@@ -134,7 +134,7 @@ export const useCrud = <T = any>(option: CrudOption<T>) => {
 		}
 		callback();
 	};
-	const rowUpdate = (row: unknown, index: number, done: () => void, loading: () => void) => {
+	const rowUpdate = (row: Partial<T>, index: number, done: () => void, loading: () => void) => {
 		const callback = () => {
 			Reflect.deleteProperty(form.value, 'params');
 			api[option.apiName?.update || 'update'](form.value)
@@ -156,7 +156,7 @@ export const useCrud = <T = any>(option: CrudOption<T>) => {
 		}
 		callback();
 	};
-	const rowDel = (row: any, index: number) => {
+	const rowDel = (row: Partial<T>, index: number) => {
 		const callback = () => {
 			api[option.apiName?.del || 'del'](row[rowKey.value], row).then((data: Result) => {
 				getList();

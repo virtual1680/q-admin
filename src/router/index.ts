@@ -7,7 +7,7 @@ import { getStore } from 'utils/store';
 import { VueI18n } from 'vue-i18n';
 
 export interface ARouter {
-	generateTitle: (item: RouterTag, props?: Partial<Menu>) => string;
+	generateTitle: (item: RouterTag, props?: Partial<MenuKey>) => string;
 	setTitle: (title?: string) => string;
 	closeTag: (value?: string) => void;
 	formatRoutes: (aMenu: RouterMenu[], first: boolean) => RouteRecordRaw[] | undefined;

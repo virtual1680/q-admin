@@ -1,29 +1,4 @@
-declare interface Setting {
-	sidebar: string;
-	tag: boolean;
-	debug: boolean;
-	collapse: boolean;
-	search: boolean;
-	lock: boolean;
-	screenshot: boolean;
-	fullscren: boolean;
-	theme: boolean;
-	menu: boolean;
-}
-declare interface Menu {
-	parentId: string;
-	iconDefault: string;
-	label: string;
-	path: string;
-	icon: string;
-	children: string;
-	query: string;
-	href: string;
-	fullPath: string;
-	meta: string;
-	name: string;
-}
-
+// * 路由菜单
 declare interface RouterMenu {
 	id?: string;
 	parentId: string;
@@ -43,9 +18,34 @@ declare interface RouterMenu {
 	iconColor?: string;
 	hideInDesktop?: boolean;
 }
-
+// * 路由 tag 标签
 declare type RouterTag = Pick<RouterMenu, 'fullPath' | 'meta' | 'label' | 'params' | 'query' | 'path'>;
 
+// * 系统设置状态
+declare interface Setting {
+	sidebar: string;
+	tag: boolean;
+	debug: boolean;
+	collapse: boolean;
+	search: boolean;
+	lock: boolean;
+	screenshot: boolean;
+	fullscren: boolean;
+	theme: boolean;
+	menu: boolean;
+}
+// * 加载路由数据的key
+declare interface MenuKey {
+	iconDefault: string;
+	label: string;
+	path: string;
+	icon: string;
+	children: string;
+	query: string;
+	href: string;
+	meta: string;
+}
+// * 站点配置
 declare interface Website {
 	title: string;
 	logo: string;
@@ -62,5 +62,5 @@ declare interface Website {
 		path: string;
 	};
 	//配置菜单的属性
-	menu: Menu;
+	menu: MenuKey;
 }

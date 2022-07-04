@@ -1,4 +1,3 @@
-import { reactive, computed } from 'vue';
 <template>
 	<basic-container>
 		<h2>项目介绍</h2>

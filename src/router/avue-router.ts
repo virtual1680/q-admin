@@ -36,7 +36,7 @@ export default class RouterPlugin {
 				// }
 				tStore.DEL_TAG(fullPath);
 			},
-			generateTitle: (item: RouterTag, props?: Partial<Menu>) => {
+			generateTitle: (item: RouterTag, props?: Partial<MenuKey>) => {
 				let query = item[props?.query || 'query'] || {};
 				// console.log(props?.label, item[props?.label || 'name']);
 

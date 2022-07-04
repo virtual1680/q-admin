@@ -1,4 +1,3 @@
-import { reactive } from 'vue';
 <template>
 	<basic-container>
 		<h3>表单例子</h3>
