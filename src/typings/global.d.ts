@@ -37,14 +37,14 @@ declare interface RouterMenu {
 	params: Record<string, string | string[]>;
 	href: string;
 	fullPath: string;
-	meta: { keepAlive?: boolean; isTab?: boolean; isAuth?: boolean; i18n?: string; roles?: string[] };
+	meta: { keepAlive?: boolean; isTab?: boolean; isAuth?: boolean; i18n?: string; roles?: string[]; parentId?: string };
 	name?: string | ((query: LocationQueryRaw) => string);
 	component: string;
 	iconColor?: string;
 	hideInDesktop?: boolean;
 }
 
-declare type RouterTag = Pick<RouterMenu, 'fullPath' | 'meta' | 'name' | 'params' | 'query' | 'path'>;
+declare type RouterTag = Pick<RouterMenu, 'fullPath' | 'meta' | 'label' | 'params' | 'query' | 'path'>;
 
 declare interface Website {
 	title: string;

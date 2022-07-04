@@ -33,7 +33,7 @@
 	</div>
 </template>
 <script lang="ts" setup name="tags">
-import { ref, watch, computed, Ref } from 'vue';
+import { ref, watch, computed, Ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTagsStore, useCommonStore } from 'store/index';
 import { AVueRouter } from '../../router/index';
@@ -61,6 +61,9 @@ const setting = computed(() => {
 });
 const tagLen = computed(() => {
 	return tagList.value.length || 0;
+});
+const tagIsCascade = computed<boolean>(() => {
+	return tagsStore.getIsCascade;
 });
 watch(
 	() => tag.value,
@@ -90,10 +93,11 @@ const handleRefresh = () => {
 	}, 500);
 };
 const generateTitle = (item: RouterTag) => {
-	return router.avueRouter?.generateTitle({
+	const title = router.avueRouter?.generateTitle({
 		...item,
-		...{ name: item.name }
+		...{ name: 'name' }
 	});
+	return title;
 };
 
 const watchContextmenu = (event: MouseEvent) => {
@@ -134,14 +138,21 @@ const menuTag = (value: string, action: string) => {
 		}
 	}
 };
+const injectOpenMenu = inject<(item: Partial<RouterMenu>, isInit: boolean) => void>('openMenu');
 
 const openTag = (item: TabsPaneContext) => {
 	let value = item.props.name as string;
 	let { tag } = findTag(value);
-	router.push({
-		path: tag?.path,
-		query: tag?.query
-	});
+
+	// 判断是否跳转对应的top-menu 如果该tag是在当前的top-menu下，则不用
+	if (tagIsCascade.value && tag?.meta.parentId !== '' && tag?.meta.parentId !== undefined) {
+		injectOpenMenu?.({ parentId: tag?.meta.parentId, path: tag?.path, query: tag?.query }, false);
+	} else {
+		router.push({
+			path: tag?.path,
+			query: tag?.query
+		});
+	}
 };
 const findTag = (fullPath: string) => {
 	let tag = tagList.value.find(item => item.fullPath === fullPath);

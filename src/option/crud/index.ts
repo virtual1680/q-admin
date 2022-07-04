@@ -14,7 +14,7 @@ export default () => {
 		border: true,
 		stripe: true,
 		column: [
-			{ label: '姓名', prop: 'name', search: true },
+			{ label: '姓名', searchLabel: 'kkk', prop: 'name', search: true },
 			{
 				label: '状态',
 				prop: 'status',

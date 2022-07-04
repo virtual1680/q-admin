@@ -10,6 +10,10 @@
 				<el-tooltip class="item" effect="dark" content="顶部菜单布局" placement="top">
 					<div @click="setting.sidebar = 'horizontal'" class="setting-checkbox-item setting-checkbox-item--top"></div>
 				</el-tooltip>
+				<div class="setting-item" style="margin-top: 10px">
+					导航级联:
+					<el-switch v-model="isCascade" @change="changeValue"> </el-switch>
+				</div>
 			</div>
 			<h5>页面布局</h5>
 			<div class="setting-checkbox">
@@ -31,13 +35,18 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { useCommonStore } from 'store/index';
+import { useCommonStore, useTagsStore } from 'store/index';
 
 const cStore = useCommonStore();
+const tStore = useTagsStore();
 const show = ref(false);
-// const isHorizontal = computed(() => {
-// 	return cStore.getIsHorizontal;
-// });
+const isCascade = computed(() => {
+	return tStore.getIsCascade;
+});
+const changeValue = (item: boolean) => {
+	console.log(item);
+	tStore.SET_IS_CASCADE(item);
+};
 const setting = computed(() => {
 	return cStore.getSetting;
 });

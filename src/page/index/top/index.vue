@@ -6,7 +6,6 @@
 			</div>
 		</div>
 		<div class="top-bar__title">
-			<!-- ref="topMenu" -->
 			<top-menu></top-menu>
 			<top-search class="top-bar__item" v-if="setting.search"></top-search>
 		</div>
@@ -70,7 +69,7 @@ import { useUserStore, useCommonStore } from 'store/index';
 const router = useRouter();
 const uStore = useUserStore();
 const cStore = useCommonStore();
-// const tStore = useTagsStore();
+
 const i18n = useI18n();
 
 const isHorizontal = computed(() => {
@@ -94,6 +93,7 @@ const isCollapse = computed(() => {
 const setting = computed(() => {
 	return cStore.getSetting;
 });
+
 // const tag = computed(() => {
 // 	return tStore.getTagWel;
 // });

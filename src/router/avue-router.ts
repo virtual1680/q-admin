@@ -38,8 +38,10 @@ export default class RouterPlugin {
 			},
 			generateTitle: (item: RouterTag, props?: Partial<Menu>) => {
 				let query = item[props?.query || 'query'] || {};
+				// console.log(props?.label, item[props?.label || 'name']);
+
 				let title = query.name || item[props?.label || 'label'];
-				let meta = item[props?.meta || 'meta'] || {};
+				let meta: RouterTag['meta'] = item[props?.meta || 'meta'] || {};
 				let key = meta.i18n;
 				if (key) {
 					const hasKey = i18n.te('route.' + key);
@@ -65,6 +67,10 @@ export default class RouterPlugin {
 					// if (option.keepAlive) {
 					// 	meta.keepAlive = option.keepAlive;
 					// }
+					// 将parentId 存入meta中，开启导航级联的情况下会根据parentId去选中top-menu
+					if (oMenu.parentId !== '' && oMenu.parentId !== undefined) {
+						meta.parentId = oMenu.parentId;
+					}
 					const isChild = !!(children && children.length !== 0);
 					const oRouter = {
 						path: path,

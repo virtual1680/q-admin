@@ -15,12 +15,11 @@
 import { computed, inject, Ref, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { AVueRouter } from '../../../router/index';
-import { useUserStore } from 'store/user';
+import { useUserStore } from 'store/index';
 
 const router = useRouter() as AVueRouter;
 const uStore = useUserStore();
 const items: Ref<RouterMenu[]> = ref([]);
-
 // 当前选中的top-menu
 const tagCurrent = computed(() => {
 	return uStore.menuId.toString();

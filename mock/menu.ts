@@ -33,6 +33,7 @@ const top = [
 ];
 const first = [
 	{
+		parentId: 0,
 		label: '缓冲',
 		path: '/cache',
 		component: 'views/util/cache',
@@ -45,6 +46,7 @@ const first = [
 		children: []
 	},
 	{
+		parentId: 0,
 		label: '参数',
 		path: '/params',
 		component: 'views/util/params',
@@ -55,6 +57,7 @@ const first = [
 		}
 	},
 	{
+		parentId: 0,
 		label: '详情页',
 		path: '/detail',
 		component: 'views/util/detail',
@@ -65,6 +68,7 @@ const first = [
 		}
 	},
 	{
+		parentId: 0,
 		label: '标签',
 		path: '/tags',
 		component: 'views/util/tags',
@@ -76,6 +80,7 @@ const first = [
 		children: []
 	},
 	{
+		parentId: 0,
 		label: '存储',
 		path: '/store',
 		component: 'views/util/store',
@@ -87,6 +92,7 @@ const first = [
 		children: []
 	},
 	{
+		parentId: 0,
 		label: '日志监控',
 		path: '/logs',
 		component: 'views/util/logs',
@@ -98,6 +104,7 @@ const first = [
 		children: []
 	},
 	{
+		parentId: 0,
 		label: '返回顶部',
 		path: '/top',
 		component: 'views/util/top',
@@ -109,6 +116,7 @@ const first = [
 		children: []
 	},
 	{
+		parentId: 0,
 		label: '图钉',
 		path: '/affix',
 		component: 'views/util/affix',
@@ -120,6 +128,7 @@ const first = [
 		children: []
 	},
 	{
+		parentId: 0,
 		label: '多级菜单',
 		path: '/deep',
 		iconBgColor: randomColor(),
@@ -140,6 +149,7 @@ const first = [
 		]
 	},
 	{
+		parentId: 0,
 		label: '外部页面',
 		path: '/out',
 		icon: 'icon-caidan',
@@ -172,6 +182,7 @@ const first = [
 		]
 	},
 	{
+		parentId: 0,
 		label: '通用模板',
 		path: '/crud',
 		component: 'views/util/crud',
@@ -183,6 +194,7 @@ const first = [
 		children: []
 	},
 	{
+		parentId: 0,
 		label: '表格',
 		path: '/table',
 		component: 'views/util/table',
@@ -194,6 +206,7 @@ const first = [
 		children: []
 	},
 	{
+		parentId: 0,
 		label: '表单',
 		path: '/form',
 		component: 'views/util/form',
@@ -205,6 +218,7 @@ const first = [
 		children: []
 	},
 	{
+		parentId: 0,
 		label: '异常页',
 		path: '/error',
 		meta: {
@@ -240,6 +254,7 @@ const first = [
 		]
 	},
 	{
+		parentId: 0,
 		label: '关于',
 		path: '/about',
 		component: 'views/util/about',
@@ -253,6 +268,7 @@ const first = [
 ];
 const second = [
 	{
+		parentId: 1,
 		label: '系统管理',
 		path: '/system',
 		// component: 'views/util/test',
@@ -306,6 +322,7 @@ const second = [
 		]
 	},
 	{
+		parentId: 1,
 		label: '批量导入',
 		path: '/import-excel',
 		component: 'views/util/import-dialog',

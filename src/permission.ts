@@ -44,9 +44,9 @@ router.beforeEach((to, from, next) => {
 					window.open((query.url as string).replace(/#/g, '&'));
 					return;
 				} else if (meta.isTab !== false) {
-					const name: any = query.name ? query.name : to.name;
+					const name: string = query.name ? (query.name as string) : (to.name as string) || '-';
 					tStore.ADD_TAG({
-						name: name,
+						label: name,
 						path: to.path,
 						fullPath: to.fullPath,
 						params: to.params,
@@ -70,7 +70,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach(to => {
 	const cStore = useCommonStore();
 	NProgress.done();
-	let title = (router as AVueRouter).avueRouter?.generateTitle(to as RouterTag);
+	let title = (router as AVueRouter).avueRouter?.generateTitle({ label: (to.name as string) || '-', ...to });
 	(router as AVueRouter).avueRouter?.setTitle(title);
 	cStore.SET_IS_SEARCH(false);
 });

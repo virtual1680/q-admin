@@ -7,8 +7,8 @@ export default [
 				msg: '操作成功',
 				success: true,
 				data: {
-					total: 50,
-					record: Array(50).fill({
+					total: 10,
+					record: Array(10).fill({
 						name: 'small',
 						sex: 1,
 						status: 0
