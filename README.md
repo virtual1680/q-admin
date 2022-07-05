@@ -8,7 +8,7 @@
 
 #### 二、文档地址
 
-- https://www.avuejs.com/
+[文档](https://www.kancloud.cn/smallwei/avue/579870)
 
 #### 三、仓库地址
 
