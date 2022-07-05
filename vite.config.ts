@@ -32,19 +32,18 @@ export default defineConfig(({ command, mode }) => {
 		},
 		build: {
 			sourcemap: true,
-			minify: 'terser' //esbuild // esbuild 打包更快，但是不能去除 console.log
-			// rollupOptions: {
-			// 	output: {
-			// format: 'es',
-			// 拆分代码
-			// manualChunks: {
-			// 	'element-plus': ['element-plus']
-			// }
-			// chunkFileNames: "assets/js/[name]-[hash].js",
-			// entryFileNames: "assets/js/[name]-[hash].js",
-			// assetFileNames: "assets/[ext]/[name]-[hash].[ext]"
-			// 	}
-			// }
+			minify: 'terser', //esbuild // esbuild 打包更快，但是不能去除 console.log
+			rollupOptions: {
+				output: {
+					// format: 'es',
+					// manualChunks: {
+					// 	'element-plus': ['element-plus']
+					// },
+					chunkFileNames: 'assets/js/[name]-[hash].js',
+					entryFileNames: 'assets/js/[name]-[hash].js',
+					assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
+				}
+			}
 		},
 		plugins: pluginList(env)
 	};
