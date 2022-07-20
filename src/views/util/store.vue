@@ -3,7 +3,7 @@
 		<h3>存储</h3>
 		<el-tag class="title">基本读写删(持久化存储)</el-tag>
 		<div class="box">
-			<el-button type="primary" @click="setItem({ name: 'username', value: 'avue' })">set('username', 'avue')</el-button>
+			<el-button type="primary" @click="setItem({ name: 'username', value: 'qv' })">set('username', 'qv')</el-button>
 
 			<el-button type="success" @click="getItem({ name: 'username' })">get('username')</el-button>
 
@@ -11,7 +11,7 @@
 		</div>
 		<el-tag class="title">设置session(session存储)</el-tag>
 		<div class="box">
-			<el-button type="primary" @click="setItem({ name: 'username', value: 'avue', type: 'session' })">set('username', 'avue')</el-button>
+			<el-button type="primary" @click="setItem({ name: 'username', value: 'qv', type: 'session' })">set('username', 'qv')</el-button>
 
 			<el-button type="success" @click="getItem({ name: 'username', type: 'session' })">get('username')</el-button>
 

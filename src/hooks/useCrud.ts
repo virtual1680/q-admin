@@ -43,10 +43,17 @@ let apiObj = import.meta.glob(`../api/**/**`);
 export const useCrud = <T = any>(option: CrudOption<T>) => {
 	let optionO = optionObj[`../option/${option.apiPath}.ts`];
 	let apiO = apiObj[`../api/${option.optionPath}.ts`];
+	optionO().then(mode => {
+		avueOption.value = mode.default();
+	});
+	apiO().then(mode => {
+		api = mode;
+		getList();
+	});
 	const list = ref([]);
 	let form = ref({});
 	let params = reactive({});
-	let avueOption = ref({});
+	let avueOption: Ref<any> = ref({});
 	let api = reactive({});
 	let crud: Ref<HTMLElement | undefined> = ref();
 	let loading = ref(false);
@@ -79,13 +86,7 @@ export const useCrud = <T = any>(option: CrudOption<T>) => {
 	const rowKey = computed(() => {
 		return option.rowKey || 'id';
 	});
-	optionO().then(mode => {
-		avueOption.value = mode.default();
-	});
-	apiO().then(mode => {
-		api = mode;
-		getList();
-	});
+
 	// * 分页数据请求
 	const getList = () => {
 		const callback = () => {
@@ -201,5 +202,5 @@ export const useCrud = <T = any>(option: CrudOption<T>) => {
 		getList();
 	};
 
-	return { bindVal, onEvent, rowKey, crud, refreshChange, page, form, params };
+	return { bindVal, onEvent, rowKey, crud, refreshChange, page, form, params, avueOption };
 };

@@ -21,8 +21,8 @@
 			</el-descriptions-item>
 			<el-descriptions-item>
 				<template #label> 预览地址 </template>
-				<a href="https://cli.avuejs.com" target="_blank">
-					<el-tag>https://cli.avuejs.com</el-tag>
+				<a href="https://cli.qvjs.com" target="_blank">
+					<el-tag>https://cli.qvjs.com</el-tag>
 				</a>
 			</el-descriptions-item>
 		</el-descriptions>

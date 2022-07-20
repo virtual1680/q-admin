@@ -5,6 +5,7 @@ import router from 'router/index';
 import 'virtual:svg-icons-register';
 import i18n from './lang/index';
 import ElementPlus from 'element-plus';
+import 'element-plus/theme-chalk/index.css';
 import Avue from '@smallwei/avue';
 import QvVue from 'qv-vue';
 import 'qv-vue/theme-chalk/index.css';
@@ -13,6 +14,7 @@ import componentList from './components';
 import './permission';
 import error from './error';
 import './styles/common.scss';
+import * as Icon from '@element-plus/icons-vue';
 
 const app = createApp(App);
 app.use(i18n);
@@ -24,3 +26,6 @@ app.use(ElementPlus);
 app.use(Avue, { axios });
 app.use(QvVue);
 app.mount('#app');
+Object.keys(Icon).forEach(item => {
+	app.component(item, Icon[item as keyof typeof Icon]);
+});

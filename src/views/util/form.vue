@@ -1,7 +1,7 @@
 <template>
 	<basic-container>
 		<h3>表单例子</h3>
-		<avue-form :option="option" v-model="form"></avue-form>
+		<qv-form :option="option" v-model="form"></qv-form>
 	</basic-container>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
 	<basic-container>
-		<avue-crud v-bind="bindVal" v-on="onEvent" v-model:page="page" v-model="form"> </avue-crud>
+		<qv-crud v-bind="bindVal" v-on="onEvent" v-model:page="page" v-model="form"> </qv-crud>
 	</basic-container>
 </template>
 
@@ -13,7 +13,7 @@ interface RowData {
 	name: string;
 	sex: string;
 }
-let { bindVal, onEvent, page, form, crud } = useCrud<RowData>({
+let { bindVal, onEvent, page, form, crud, avueOption } = useCrud<RowData>({
 	apiPath: 'crud/index',
 	optionPath: 'crud/index',
 	// 对搜索的参数进行改变 返回我们需要的参数格式
@@ -35,6 +35,9 @@ let { bindVal, onEvent, page, form, crud } = useCrud<RowData>({
 });
 onMounted(() => {
 	console.log(crud.value);
+	setTimeout(() => {
+		avueOption.value.border = false;
+	}, 2000);
 });
 </script>
 
