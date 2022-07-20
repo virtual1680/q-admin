@@ -7,14 +7,14 @@ import i18n from './lang/index';
 import ElementPlus from 'element-plus';
 import 'element-plus/theme-chalk/index.css';
 import Avue from '@smallwei/avue';
-import QvVue from 'qv-vue';
-import 'qv-vue/theme-chalk/index.css';
+// import QvVue from './qv-vue';
+// import './qv-vue/theme-chalk/index.css';
 import axios from './http/axios';
 import componentList from './components';
 import './permission';
 import error from './error';
 import './styles/common.scss';
-import * as Icon from '@element-plus/icons-vue';
+// import * as Icon from '@element-plus/icons-vue';
 
 const app = createApp(App);
 app.use(i18n);
@@ -24,8 +24,8 @@ app.use(componentList);
 app.use(error);
 app.use(ElementPlus);
 app.use(Avue, { axios });
-app.use(QvVue);
+// app.use(QvVue, { axios });
 app.mount('#app');
-Object.keys(Icon).forEach(item => {
-	app.component(item, Icon[item as keyof typeof Icon]);
-});
+// Object.keys(Icon).forEach(item => {
+// 	app.component(item, Icon[item as keyof typeof Icon]);
+// });

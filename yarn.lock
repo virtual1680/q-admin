@@ -2773,7 +2773,7 @@ element-plus@2.2.6:
     memoize-one "^6.0.0"
     normalize-wheel-es "^1.1.2"
 
-element-plus@^2.2.5:
+element-plus@2.2.9:
   version "2.2.9"
   resolved "https://registry.npmmirror.com/element-plus/-/element-plus-2.2.9.tgz#f0366dfb2048d614813926274cb443f17e5fdef2"
   integrity sha512-jYbL0JkCdv95rkT6trZJjCAizLPySa0qcd2cgq+57SKQnCZAcNDDq4GbTuFRnNavdoeCJnuM3HIficTIUpsMOQ==
