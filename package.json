@@ -16,7 +16,7 @@
 		"commit": "git pull && git add -A && git-cz &&  git push"
 	},
 	"dependencies": {
-		"@smallwei/avue": "^3.0.17",
+		"@smallwei/avue": "^3.0.18",
 		"@types/js-base64": "^3.3.1",
 		"@types/js-cookie": "^3.0.2",
 		"@types/js-md5": "^0.4.3",
@@ -36,6 +36,7 @@
 		"pinia": "^2.0.14",
 		"pinia-plugin-persistedstate": "^1.6.1",
 		"qs": "^6.10.5",
+		"qv-vue": "^0.0.1-bate.1",
 		"vue": "^3.2.25",
 		"vue-i18n": "^9.1.10",
 		"vue-router": "^4.0.16"

@@ -1,6 +1,6 @@
 <template>
 	<basic-container>
-		<avue-crud v-bind="bindVal" v-on="onEvent" v-model:page="page" v-model="form"> </avue-crud>
+		<qv-crud v-bind="bindVal" v-on="onEvent" v-model:page="page" v-model="form"> </qv-crud>
 	</basic-container>
 </template>
 
