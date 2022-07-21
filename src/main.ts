@@ -7,7 +7,7 @@ import i18n from './lang/index';
 import ElementPlus from 'element-plus';
 import Avue from '@smallwei/avue';
 import QvVue from 'qv-vue';
-import 'qv-vue/theme-chalk/src/index.scss';
+import 'qv-vue/theme-chalk/index.css';
 import axios from './http/axios';
 import componentList from './components';
 import './permission';

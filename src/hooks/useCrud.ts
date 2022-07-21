@@ -41,8 +41,10 @@ let apiObj = import.meta.glob(`../api/**/**`);
  * 表单基本逻辑
  */
 export const useCrud = <T = any>(option: CrudOption<T>) => {
-	let optionO = optionObj[`../option/${option.apiPath}.ts`];
-	let apiO = apiObj[`../api/${option.optionPath}.ts`];
+	console.log(option.optionPath);
+
+	let optionO = optionObj[`../option/${option.optionPath}.ts`];
+	let apiO = apiObj[`../api/${option.apiPath}.ts`];
 	const list = ref([]);
 	let form = ref({});
 	let params = reactive({});

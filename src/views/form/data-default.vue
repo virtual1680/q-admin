@@ -1,41 +1,43 @@
 <template>
-	<basic-container>
-		<qv-crud v-bind="bindVal" v-on="onEvent" v-model:page="page" v-model="form"> </qv-crud>
-	</basic-container>
+	<div>
+		<div class="wel__header">数据默认值</div>
+		<qv-form v-model="config.form" ref="qvFormRef" :option="option"> </qv-form>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { useCrud } from '@/hooks/useCrud';
-import { onMounted } from 'vue';
-// import { getCurrentInstance, onMounted } from 'vue';
-// const instance = getCurrentInstance();
-interface RowData {
-	name: string;
-	sex: string;
-}
-let { bindVal, onEvent, page, form, crud } = useCrud<RowData>({
-	apiPath: 'crud/index',
-	optionPath: 'crud/index',
-	// 对搜索的参数进行改变 返回我们需要的参数格式
-	searchParams: params => {
-		if (Reflect.has(params, 'queryTime')) {
-			params.startTime = params.queryTime[0];
-			params.endTime = params.queryTime[0];
-			Reflect.deleteProperty(params, 'queryTime');
-		}
-		return params;
-	},
-	listBefore: () => {
-		// params['queryTime'];
-		// page.value.size = 50;
-	},
-	listAfter: res => {
-		console.log('this is listAfter', res.record[0].name);
+import { reactive, ref, computed } from 'vue';
+import type { FormInstance } from 'qv-vue';
+import type { Ref } from 'vue';
+const qvFormRef: Ref<FormInstance | undefined> = ref();
+let config = reactive({
+	form: {
+		text: ''
 	}
 });
-onMounted(() => {
-	console.log(crud.value);
+const option = computed(() => {
+	return {
+		column: [
+			{
+				label: '姓名',
+				prop: 'text',
+				rules: [{ required: true, message: '请输入姓名', trigger: 'blur' }]
+			}
+		]
+	};
 });
+config.form.text = '9090909';
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped="scoped" lang="scss">
+.wel {
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 25px 40px;
+		background-color: #ffffff;
+		border-bottom: 1px solid #e8e8e8;
+	}
+}
+</style>

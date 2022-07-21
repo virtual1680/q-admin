@@ -1,41 +1,46 @@
 <template>
-	<basic-container>
-		<qv-crud v-bind="bindVal" v-on="onEvent" v-model:page="page" v-model="form"> </qv-crud>
-	</basic-container>
+	<div>
+		<div class="wel__header">标题字段宽度</div>
+		<qv-form v-model="config.form" :option="config.option"></qv-form>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { useCrud } from '@/hooks/useCrud';
-import { onMounted } from 'vue';
-// import { getCurrentInstance, onMounted } from 'vue';
-// const instance = getCurrentInstance();
-interface RowData {
-	name: string;
-	sex: string;
-}
-let { bindVal, onEvent, page, form, crud } = useCrud<RowData>({
-	apiPath: 'crud/index',
-	optionPath: 'crud/index',
-	// 对搜索的参数进行改变 返回我们需要的参数格式
-	searchParams: params => {
-		if (Reflect.has(params, 'queryTime')) {
-			params.startTime = params.queryTime[0];
-			params.endTime = params.queryTime[0];
-			Reflect.deleteProperty(params, 'queryTime');
-		}
-		return params;
+import { reactive } from 'vue';
+
+let config = reactive({
+	form: {
+		name: '我是50的宽度',
+		sex: '我的宽度是150'
 	},
-	listBefore: () => {
-		// params['queryTime'];
-		// page.value.size = 50;
-	},
-	listAfter: res => {
-		console.log('this is listAfter', res.record[0].name);
+	option: {
+		// 所有字段生效
+		labelWidth: 150,
+		column: [
+			{
+				// 单个字段生效 优先级高于所有字段
+				labelWidth: 50,
+				label: '姓名',
+				prop: 'name'
+			},
+			{
+				label: '性别',
+				prop: 'sex'
+			}
+		]
 	}
-});
-onMounted(() => {
-	console.log(crud.value);
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped="scoped" lang="scss">
+.wel {
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 25px 40px;
+		background-color: #ffffff;
+		border-bottom: 1px solid #e8e8e8;
+	}
+}
+</style>

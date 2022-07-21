@@ -14,7 +14,7 @@ const top = [
 	{
 		label: '测试',
 		icon: 'el-icon-document',
-		path: '/system',
+		path: '/form',
 		meta: {
 			i18n: 'test'
 		},

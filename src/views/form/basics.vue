@@ -1,41 +1,232 @@
 <template>
-	<basic-container>
-		<qv-crud v-bind="bindVal" v-on="onEvent" v-model:page="page" v-model="form"> </qv-crud>
-	</basic-container>
+	<div>
+		<div class="wel__header">基础用法</div>
+		<qv-form ref="form" v-model="config.obj" :option="option" @reset-change="emptytChange" @submit="submit">
+			<template #menu-form>
+				<el-button @click="tip">自定义按钮</el-button>
+			</template>
+		</qv-form>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { useCrud } from '@/hooks/useCrud';
-import { onMounted } from 'vue';
-// import { getCurrentInstance, onMounted } from 'vue';
-// const instance = getCurrentInstance();
-interface RowData {
-	name: string;
-	sex: string;
-}
-let { bindVal, onEvent, page, form, crud } = useCrud<RowData>({
-	apiPath: 'crud/index',
-	optionPath: 'crud/index',
-	// 对搜索的参数进行改变 返回我们需要的参数格式
-	searchParams: params => {
-		if (Reflect.has(params, 'queryTime')) {
-			params.startTime = params.queryTime[0];
-			params.endTime = params.queryTime[0];
-			Reflect.deleteProperty(params, 'queryTime');
-		}
-		return params;
-	},
-	listBefore: () => {
-		// params['queryTime'];
-		// page.value.size = 50;
-	},
-	listAfter: res => {
-		console.log('this is listAfter', res.record[0].name);
-	}
+import { computed, reactive } from 'vue';
+import { ElMessage } from 'element-plus';
+const DIC = {
+	VAILD: [
+		{ label: '真', value: 'true' },
+		{ label: '假', value: 'false' }
+	],
+	SEX: [
+		{ label: '男', value: 0 },
+		{ label: '女', value: 1 }
+	]
+};
+let config = reactive({
+	showLoading: false,
+	obj: {},
+	sizeValue: 'default'
 });
-onMounted(() => {
-	console.log(crud.value);
+const option = computed(() => {
+	return {
+		size: config.sizeValue,
+		submitText: '完成',
+		printBtn: false,
+		column: [
+			{
+				label: '用户名',
+				prop: 'username',
+				tip: '这是信息提示',
+				span: 8,
+				suffixIcon: 'Plus',
+				prefixIcon: 'Search',
+				maxlength: 3,
+				minlength: 2,
+				rules: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+				click: ({ value, column }: { value: string; column: unknown }) => {
+					console.log(value, column);
+					ElMessage.success('click');
+				}
+			},
+			{ label: '姓名', prop: 'name', disabled: true, span: 8 },
+			{ label: '密码', prop: 'password', type: 'password', span: 8 },
+			{ label: '类型', prop: 'type', type: 'select', dicData: DIC.VAILD, span: 6 },
+			{
+				label: '权限',
+				prop: 'grade',
+				span: 6,
+				type: 'checkbox',
+				dicData: DIC.VAILD
+			},
+			{
+				label: '开关',
+				prop: 'switch',
+				span: 6,
+				type: 'switch',
+				dicData: DIC.SEX,
+				hide: true,
+				row: true
+			},
+			{
+				label: '性别',
+				prop: 'sex',
+				type: 'radio',
+				dicData: DIC.SEX,
+				row: true
+			},
+			{
+				label: '数字',
+				prop: 'number',
+				type: 'number',
+				span: 6,
+				precision: 2,
+				minRows: 0,
+				maxRows: 3,
+				row: true
+			},
+			{
+				label: '网站',
+				span: 12,
+				prop: 'url',
+				prepend: 'http://',
+				append: 'com',
+				row: true,
+				value: '90909090'
+			},
+			{
+				label: '日期',
+				prop: 'date',
+				type: 'date',
+				span: 8,
+				format: 'YYYY-MM-DD',
+				valueFormat: 'YYYY-MM-DD'
+			},
+			{
+				label: '日期时间',
+				prop: 'datetime',
+				type: 'datetime',
+				span: 8,
+				format: 'YYYY-MM-DD hh:mm:ss',
+				valueFormat: 'YYYY-MM-DD hh:mm:ss'
+			},
+			{
+				label: '时间',
+				prop: 'time',
+				type: 'time',
+				span: 8,
+				format: 'HH:mm:ss',
+				valueFormat: 'HH:mm:ss'
+			},
+			{
+				label: '地址',
+				span: 24,
+				prop: 'address'
+			},
+			{
+				label: '建议',
+				span: 24,
+				type: 'upload',
+				action: 'api/upload',
+				// listType: 'picture-card',
+				prop: 'adit'
+			}
+		]
+	};
 });
+const emptytChange = () => {
+	ElMessage.success('清空方法回调');
+};
+const submit = (form: any, done: () => void) => {
+	console.log('过滤数据--', form);
+	console.log('正常数据--', config.obj);
+	done();
+	// ElMessage.success('当前数据' + JSON.stringify(config.obj));
+};
+const tip = () => {
+	ElMessage.success('自定义按钮');
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped="scoped" lang="scss">
+.wel {
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 25px 40px;
+		background-color: #ffffff;
+		border-bottom: 1px solid #e8e8e8;
+	}
+	&__info {
+		display: flex;
+		align-items: center;
+		&-img {
+			display: block;
+			width: 72px;
+			height: 72px;
+			border-radius: 72px;
+			img {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+		}
+		&-content {
+			position: relative;
+			margin-left: 24px;
+			line-height: 22px;
+			color: rgb(0 0 0 / 45%);
+		}
+		&-title {
+			margin-bottom: 12px;
+			font-size: 20px;
+			font-weight: 500;
+			line-height: 28px;
+			color: rgb(0 0 0 / 85%);
+		}
+		&-subtitle {
+			position: relative;
+			font-size: 14px;
+			line-height: 22px;
+			color: rgb(0 0 0 / 45%);
+		}
+	}
+	&__extra {
+		&-item {
+			position: relative;
+			display: inline-block;
+			padding: 0 32px;
+			&:last-child {
+				&::after {
+					display: none;
+				}
+			}
+			&::after {
+				position: absolute;
+				top: 30px;
+				right: 0;
+				width: 1px;
+				height: 40px;
+				content: '';
+				background-color: #e8e8e8;
+			}
+		}
+		&-title {
+			margin-bottom: 4px;
+			font-size: 14px;
+			line-height: 22px;
+			color: rgb(0 0 0 / 45%);
+		}
+		&-subtitle {
+			margin: 0;
+			font-size: 30px;
+			line-height: 38px;
+			color: rgb(0 0 0 / 85%);
+			span {
+				font-size: 20px;
+				color: rgb(0 0 0 / 45%);
+			}
+		}
+	}
+}
+</style>
