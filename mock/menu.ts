@@ -269,54 +269,179 @@ const first = [
 const second = [
 	{
 		parentId: 1,
-		label: '系统管理',
-		path: '/system',
-		// component: 'views/util/test',
+		label: 'FORM表单',
+		path: '/form',
 		icon: 'icon-caidan',
-		meta: {
-			// i18n: 'test'
-		},
 		children: [
 			{
-				label: '用户管理',
-				path: '/user',
-				component: 'views/util/test',
+				label: '基础',
+				path: 'basics',
+				component: 'views/form/basics',
 				iconBgColor: randomColor(),
 				icon: 'icon-caidan',
-				meta: {
-					// i18n: 'test'
-				},
 				children: []
 			},
 			{
-				label: '菜单管理',
-				path: 'menu/index',
-				component: 'views/system/menu/index',
+				label: '标题字段宽度',
+				path: 'title-width',
+				component: 'views/form/title-width',
 				icon: 'icon-caidan',
 				iconBgColor: randomColor(),
-				meta: {
-					// i18n: 'test'
-				},
 				children: []
 			},
 			{
-				label: '角色管理',
-				path: 'rule',
-				component: 'views/util/test',
+				label: '隐藏字段',
+				path: 'display',
+				component: 'views/form/display',
 				icon: 'icon-caidan',
-				meta: {
-					// i18n: 'test'
-				},
+				iconBgColor: randomColor(),
 				children: []
 			},
 			{
-				label: '机构管理',
-				path: 'dept',
-				component: 'views/util/test',
+				label: '自定义卡槽',
+				path: 'custom-slot',
+				component: 'views/form/custom-slot',
 				icon: 'icon-caidan',
-				meta: {
-					// i18n: 'test'
-				},
+				children: []
+			},
+			{
+				label: '数据默认值',
+				path: 'data-default',
+				component: 'views/form/data-default',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '数据验证',
+				path: 'data-validate',
+				component: 'views/form/data-validate',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '数据字典',
+				path: 'data-dic',
+				component: 'views/form/data-dic',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '数据类型',
+				path: 'data-type',
+				component: 'views/form/data-type',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '数据过滤',
+				path: 'data-filter',
+				component: 'views/form/data-filter',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '防重复提交',
+				path: 'submit',
+				component: 'views/form/submit',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '深层次对象绑定',
+				path: 'deep-obj',
+				component: 'views/form/deep-obj',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '字段排序',
+				path: 'item-sort',
+				component: 'views/form/item-sort',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '引入三方组件',
+				path: 'load-component',
+				component: 'views/form/load-component',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '组件事件',
+				path: 'component-event',
+				component: 'views/form/component-event',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '布局设置',
+				path: 'layout-setting',
+				component: 'views/form/layout-setting',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '组件对象',
+				path: 'component-ref',
+				component: 'views/form/component-ref',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '详情编辑',
+				path: 'detail-edit',
+				component: 'views/form/detail-edit',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '分组展示',
+				path: 'group',
+				component: 'views/form/group',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '选项卡展示',
+				path: 'tabs',
+				component: 'views/form/tabs',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '控制其它字段',
+				path: 'control',
+				component: 'views/form/control',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '与其它字段交互',
+				path: 'control-more',
+				component: 'views/form/control-more',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '辅助提示语',
+				path: 'tip',
+				component: 'views/form/tip',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '动态配置项',
+				path: 'dynamic',
+				component: 'views/form/dynamic',
+				icon: 'icon-caidan',
+				children: []
+			},
+			{
+				label: '表单个体项',
+				path: 'form-item',
+				component: 'views/form/form-item',
+				icon: 'icon-caidan',
 				children: []
 			}
 		]
