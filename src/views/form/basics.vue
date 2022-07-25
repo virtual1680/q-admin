@@ -12,6 +12,7 @@
 <script lang="ts" setup>
 import { computed, reactive } from 'vue';
 import { ElMessage } from 'element-plus';
+import { QvOption, QvValue } from 'qv-vue/es/types/qvue-ui';
 const DIC = {
 	VAILD: [
 		{ label: '真', value: 'true' },
@@ -25,9 +26,9 @@ const DIC = {
 let config = reactive({
 	showLoading: false,
 	obj: {},
-	sizeValue: 'default'
+	sizeValue: 'default' as '' | 'default' | 'small' | 'large'
 });
-const option = computed(() => {
+const option = computed<QvOption>((): QvOption => {
 	return {
 		size: config.sizeValue,
 		submitText: '完成',
@@ -43,7 +44,7 @@ const option = computed(() => {
 				maxlength: 3,
 				minlength: 2,
 				rules: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-				click: ({ value, column }: { value: string; column: unknown }) => {
+				click: ({ value, column }: { value: QvValue; column: unknown }) => {
 					console.log(value, column);
 					ElMessage.success('click');
 				}

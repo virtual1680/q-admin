@@ -21,7 +21,7 @@ export const useDownload = async (api: (params: unknown) => Promise<AxiosRespons
 		});
 	}
 	try {
-		const res = await api.call(this, rest);
+		const res = await api.call(api, rest);
 		console.log(res);
 		let blob = new Blob([res.data], { type: 'application/octet-stream;charset=utf-8;' });
 		let filename = res.headers['content-disposition'].split(';')[1];

@@ -35,6 +35,7 @@ import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import type { FormInstance } from 'qv-vue';
 import type { Ref } from 'vue';
+import { QvOption } from 'qv-vue/es/types/qvue-ui';
 const qvFormRef: Ref<FormInstance | undefined> = ref();
 let config = reactive({
 	form: {
@@ -63,7 +64,7 @@ let config = reactive({
 				className: 'formClassName' //自定义样式
 			}
 		]
-	}
+	} as QvOption
 });
 const handleEmpty = () => {
 	qvFormRef.value?.resetForm();

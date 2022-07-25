@@ -6258,10 +6258,10 @@ quick-lru@^4.0.1:
   resolved "https://registry.npmmirror.com/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==
 
-qv-vue@^0.0.1-bate.1:
-  version "0.0.1-bate.1"
-  resolved "https://registry.npmmirror.com/qv-vue/-/qv-vue-0.0.1-bate.1.tgz#c4377f91a42a3d1c881d456f8eb9e06c6dd850c6"
-  integrity sha512-WyQvqDFQ8VUhEYuOArk94W/zecgnlPWKceC4uV6rw+DnSIWJOb4yjfv1yaOiWFqv+96riGqNs1V/DUGBMoKdNw==
+qv-vue@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmmirror.com/qv-vue/-/qv-vue-0.0.2.tgz#1ded7334acd96b9805b5bfad94cdfdfc8d267980"
+  integrity sha512-21z8RdBmizjx3dyGChrcufwMU06IPF3ldMNpf6TahnfFZYKu1UkF6mSJ/cUyFNho2SviQogW7ym/MXTDvVacvQ==
   dependencies:
     "@ctrl/tinycolor" "^3.4.1"
     "@element-plus/icons-vue" "^2.0.6"
