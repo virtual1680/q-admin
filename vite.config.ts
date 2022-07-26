@@ -27,7 +27,11 @@ export default defineConfig(({ command, mode }) => {
 		},
 		// server: server(env),
 		// preview: preview(env),
-		server: { port: 4020 },
+		server: {
+			host: true,
+			open: 7098,
+			https: false
+		},
 		esbuild: {
 			pure: env.VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : []
 		},

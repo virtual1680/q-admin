@@ -10,7 +10,7 @@ export interface ARouter {
 	generateTitle: (item: RouterTag, props?: Partial<MenuKey>) => string;
 	setTitle: (title?: string) => string;
 	closeTag: (value?: string) => void;
-	formatRoutes: (aMenu: RouterMenu[], first: boolean) => RouteRecordRaw[] | undefined;
+	formatRoutes: (aMenu: RouterMenu[], first: boolean) => RouteRecordRaw[];
 }
 export interface AVueRouter extends Router {
 	avueRouter?: ARouter;

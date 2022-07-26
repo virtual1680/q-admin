@@ -11,6 +11,7 @@ import type { FormInstance } from 'qv-vue';
 import type { Ref } from 'vue';
 import { ElMessage } from 'element-plus';
 const qvFormRef: Ref<FormInstance | undefined> = ref();
+
 const dic = [
 	{
 		value: 'zhinan',
@@ -35,9 +36,26 @@ const dic = [
 ];
 let config = reactive({
 	form: {
-		name: '张三'
+		name: '张三',
+		password: ''
 	}
 });
+const validatePass = (_: unknown, value: string, callback: (error?: Error) => void) => {
+	if (value === '') {
+		callback(new Error('请输入密码'));
+	} else {
+		callback();
+	}
+};
+const validatePass2 = (_: unknown, value: string, callback: (error?: Error) => void) => {
+	if (value === '') {
+		callback(new Error('请再次输入密码'));
+	} else if (value !== config.form.password) {
+		callback(new Error('两次输入密码不一致!'));
+	} else {
+		callback();
+	}
+};
 const option = computed(() => {
 	return {
 		column: [
@@ -57,6 +75,18 @@ const option = computed(() => {
 				type: 'cascader',
 				dicData: dic,
 				rules: [{ required: true, type: 'array', message: '请选择多选', trigger: 'blur' }]
+			},
+			{
+				label: '密码',
+				prop: 'password',
+				type: 'password',
+				rules: [{ validator: validatePass, trigger: 'blur' }]
+			},
+			{
+				label: '确认密码',
+				prop: 'oldpassword',
+				type: 'password',
+				rules: [{ validator: validatePass2, trigger: 'blur' }]
 			}
 		]
 	};

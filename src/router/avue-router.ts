@@ -50,10 +50,10 @@ export default class RouterPlugin {
 				return title;
 			},
 			//动态路由
-			formatRoutes: function (aMenu: RouterMenu[] = [], first: boolean = false): RouteRecordRaw[] | undefined {
+			formatRoutes: function (aMenu: RouterMenu[] = [], first: boolean = false): RouteRecordRaw[] {
 				const aRouter = [];
 				const propsDefault = website.menu;
-				if (aMenu && aMenu.length === 0) return;
+				if (aMenu && aMenu.length === 0) return [] as RouteRecordRaw[];
 				for (let i = 0; i < aMenu.length; i++) {
 					const oMenu = aMenu[i];
 					let path = oMenu[propsDefault.path],
@@ -121,14 +121,15 @@ export default class RouterPlugin {
 									}
 									return [];
 							  })()
-							: ((): RouteRecordRaw[] | undefined => {
+							: ((): RouteRecordRaw[] => {
 									return this.formatRoutes(children, false);
 							  })()
 					};
-					if (!isURL(path)) aRouter.push(oRouter);
+					if (!isURL(path)) aRouter.push(oRouter as RouteRecordRaw);
 				}
 				if (first) {
 					aRouter.forEach(ele => router.addRoute(ele));
+					return [] as RouteRecordRaw[];
 				} else {
 					return aRouter;
 				}
