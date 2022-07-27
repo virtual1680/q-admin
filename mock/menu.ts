@@ -339,62 +339,7 @@ const second = [
 				icon: 'icon-caidan',
 				children: []
 			},
-			{
-				label: '防重复提交',
-				path: 'submit',
-				component: 'views/form/submit',
-				icon: 'icon-caidan',
-				children: []
-			},
-			{
-				label: '深层次对象绑定',
-				path: 'deep-obj',
-				component: 'views/form/deep-obj',
-				icon: 'icon-caidan',
-				children: []
-			},
-			{
-				label: '字段排序',
-				path: 'item-sort',
-				component: 'views/form/item-sort',
-				icon: 'icon-caidan',
-				children: []
-			},
-			{
-				label: '引入三方组件',
-				path: 'load-component',
-				component: 'views/form/load-component',
-				icon: 'icon-caidan',
-				children: []
-			},
-			{
-				label: '组件事件',
-				path: 'component-event',
-				component: 'views/form/component-event',
-				icon: 'icon-caidan',
-				children: []
-			},
-			{
-				label: '布局设置',
-				path: 'layout-setting',
-				component: 'views/form/layout-setting',
-				icon: 'icon-caidan',
-				children: []
-			},
-			{
-				label: '组件对象',
-				path: 'component-ref',
-				component: 'views/form/component-ref',
-				icon: 'icon-caidan',
-				children: []
-			},
-			{
-				label: '详情编辑',
-				path: 'detail-edit',
-				component: 'views/form/detail-edit',
-				icon: 'icon-caidan',
-				children: []
-			},
+
 			{
 				label: '分组展示',
 				path: 'group',
@@ -413,34 +358,6 @@ const second = [
 				label: '控制其它字段',
 				path: 'control',
 				component: 'views/form/control',
-				icon: 'icon-caidan',
-				children: []
-			},
-			{
-				label: '与其它字段交互',
-				path: 'control-more',
-				component: 'views/form/control-more',
-				icon: 'icon-caidan',
-				children: []
-			},
-			{
-				label: '辅助提示语',
-				path: 'tip',
-				component: 'views/form/tip',
-				icon: 'icon-caidan',
-				children: []
-			},
-			{
-				label: '动态配置项',
-				path: 'dynamic',
-				component: 'views/form/dynamic',
-				icon: 'icon-caidan',
-				children: []
-			},
-			{
-				label: '表单个体项',
-				path: 'form-item',
-				component: 'views/form/form-item',
 				icon: 'icon-caidan',
 				children: []
 			}

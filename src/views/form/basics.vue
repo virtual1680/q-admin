@@ -1,6 +1,12 @@
 <template>
 	<div>
 		<div class="wel__header">基础用法</div>
+		<div>设置gutter属性调节栏之间的距离</div>
+		<el-slider v-model="config.gutter"></el-slider>
+		<div>
+			详情展示:<el-button @click="config.detail = !config.detail" style="margin-left: 20px">{{ !config.detail ? '展示详情' : '展示表单' }}</el-button>
+		</div>
+
 		<qv-form ref="form" v-model="config.obj" :option="option" @reset-change="emptytChange" @submit="submit">
 			<template #menu-form>
 				<el-button @click="tip">自定义按钮</el-button>
@@ -26,19 +32,23 @@ const DIC = {
 let config = reactive({
 	showLoading: false,
 	obj: {},
-	sizeValue: 'default' as '' | 'default' | 'small' | 'large'
+	sizeValue: 'default' as '' | 'default' | 'small' | 'large',
+	gutter: 20,
+	detail: false
 });
 const option = computed<QvOption>((): QvOption => {
 	return {
 		size: config.sizeValue,
 		submitText: '完成',
 		printBtn: false,
+		gutter: config.gutter,
+		detail: config.detail,
 		column: [
 			{
 				label: '用户名',
 				prop: 'username',
 				tip: '这是信息提示',
-				span: 8,
+				span: 8, //格栅栏数
 				suffixIcon: 'Plus',
 				prefixIcon: 'Search',
 				maxlength: 3,
@@ -51,18 +61,18 @@ const option = computed<QvOption>((): QvOption => {
 			},
 			{ label: '姓名', prop: 'name', disabled: true, span: 8 },
 			{ label: '密码', prop: 'password', type: 'password', span: 8 },
-			{ label: '类型', prop: 'type', type: 'select', dicData: DIC.VAILD, span: 6 },
+			{ label: '类型', prop: 'type', type: 'select', dicData: DIC.VAILD, span: 8 },
 			{
 				label: '权限',
 				prop: 'grade',
-				span: 6,
+				span: 8,
 				type: 'checkbox',
 				dicData: DIC.VAILD
 			},
 			{
 				label: '开关',
 				prop: 'switch',
-				span: 6,
+				span: 8,
 				type: 'switch',
 				dicData: DIC.SEX,
 				hide: true,
@@ -73,17 +83,17 @@ const option = computed<QvOption>((): QvOption => {
 				prop: 'sex',
 				type: 'radio',
 				dicData: DIC.SEX,
-				row: true
+				row: true,
+				span: 24,
+				order: 1 // 字段排序
 			},
 			{
 				label: '数字',
 				prop: 'number',
 				type: 'number',
-				span: 6,
 				precision: 2,
 				minRows: 0,
-				maxRows: 3,
-				row: true
+				maxRows: 3
 			},
 			{
 				label: '网站',
@@ -128,7 +138,7 @@ const option = computed<QvOption>((): QvOption => {
 				span: 24,
 				type: 'upload',
 				action: 'api/upload',
-				// listType: 'picture-card',
+				listType: 'picture-img',
 				prop: 'adit'
 			}
 		]
