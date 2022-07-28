@@ -6258,24 +6258,22 @@ quick-lru@^4.0.1:
   resolved "https://registry.npmmirror.com/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==
 
-qv-vue@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.npmmirror.com/qv-vue/-/qv-vue-0.0.4.tgz#e7efd24b205545550a0e01cda81e5f6bfbd7ff12"
-  integrity sha512-1EcRyXW6nU+DiklqvrRRVUAKpfyeJsqY4IvHiCJYEEzV1IYzJAie9m79IXsmBQ/8uZdFdYx+KoPp3Z3O0qlAPg==
+qv-vue@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.npmmirror.com/qv-vue/-/qv-vue-0.0.5.tgz#1bbf8e45b6efd01e445b903319e1c8873abd3ea7"
+  integrity sha512-79mmjAksTbl6+14O5Y8JTaQxR+5S3HkTpW1OO7vmI3OlwE9DHWscYf9zgoXLb7lFZ1ceq+feK7sw/45XEWpHKA==
   dependencies:
     "@ctrl/tinycolor" "^3.4.1"
     "@element-plus/icons-vue" "^2.0.6"
     "@floating-ui/dom" "^0.5.4"
     "@popperjs/core" "npm:@sxzz/popperjs-es@^2.11.7"
     "@types/lodash" "^4.14.182"
-    "@types/lodash-es" "^4.17.6"
     "@vueuse/core" "^8.7.5"
     async-validator "^4.2.5"
     dayjs "^1.11.3"
     element-plus "^2.2.9"
     escape-html "^1.0.3"
     lodash "^4.17.21"
-    lodash-es "^4.17.21"
     lodash-unified "^1.0.2"
     memoize-one "^6.0.0"
     normalize-wheel-es "^1.1.2"
