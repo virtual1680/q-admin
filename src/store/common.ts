@@ -45,7 +45,7 @@ export const useCommonStore = defineStore({
 		getLanguage: state => state.language,
 		getSetting: state => state.setting,
 		getThemeName: state => state.themeName,
-		getIsMacOs: state => state.themeName == 'mac-os',
+		getIsMacOs: state => state.themeName === 'mac-os',
 		getIsRefresh: state => state.isRefresh,
 		getIsSearch: state => state.isSearch,
 		getIsHorizontal: state => state.setting.sidebar === 'horizontal',

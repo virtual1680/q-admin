@@ -80,7 +80,7 @@ export default class RouterPlugin {
 								const commonStore = window.localStorage.getItem('CommonStore');
 								let isMacOs = false;
 								if (commonStore) {
-									isMacOs = JSON.parse(commonStore).isMacOs;
+									isMacOs = JSON.parse(commonStore).themeName === 'mac-os';
 								}
 								return modules[isMacOs ? '../page/index/layout.vue' : '../page/index/index.vue'];
 								// 判断是否为多层路由

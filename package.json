@@ -36,7 +36,7 @@
 		"pinia": "^2.0.14",
 		"pinia-plugin-persistedstate": "^1.6.1",
 		"qs": "^6.10.5",
-		"qv-vue": "^0.0.5",
+		"qv-vue": "^0.0.7",
 		"vue": "^3.2.25",
 		"vue-i18n": "^9.1.10",
 		"vue-router": "^4.0.16"
