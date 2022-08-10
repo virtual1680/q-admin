@@ -79,7 +79,8 @@ let option = reactive({
 			label: '姓名',
 			prop: 'name',
 			span: 14,
-			row: true
+			row: true,
+			fixed: true
 		},
 		{
 			label: '密码',
