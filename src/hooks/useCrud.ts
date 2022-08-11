@@ -34,8 +34,8 @@ interface CrudOption<T> {
 	totalKey?: string;
 	dataKey?: string;
 }
-let optionObj = import.meta.glob(`../option/**/**`);
-let apiObj = import.meta.glob(`../api/**/**`);
+let optionObj = import.meta.globEager(`../option/**/**`);
+let apiObj = import.meta.globEager(`../api/**/**`);
 
 /**
  * 表单基本逻辑
@@ -43,13 +43,12 @@ let apiObj = import.meta.glob(`../api/**/**`);
 export const useCrud = <T = any>(option: CrudOption<T>) => {
 	console.log(option.optionPath);
 
-	let optionO = optionObj[`../option/${option.optionPath}.ts`];
-	let apiO = apiObj[`../api/${option.apiPath}.ts`];
+	let avueOption = ref(optionObj[`../option/${option.optionPath}.ts`].default());
+	let api = apiObj[`../api/${option.apiPath}.ts`];
+
 	const list = ref([]);
 	let form = ref({});
 	let params = reactive({});
-	let avueOption = ref({});
-	let api = reactive({});
 	let crud: Ref<HTMLElement | undefined> = ref();
 	let loading = ref(false);
 	const page = ref({
@@ -81,13 +80,6 @@ export const useCrud = <T = any>(option: CrudOption<T>) => {
 	const rowKey = computed(() => {
 		return option.rowKey || 'id';
 	});
-	optionO().then(mode => {
-		avueOption.value = mode.default();
-	});
-	apiO().then(mode => {
-		api = mode;
-		getList();
-	});
 	// * 分页数据请求
 	const getList = () => {
 		const callback = () => {
@@ -101,7 +93,7 @@ export const useCrud = <T = any>(option: CrudOption<T>) => {
 					const result = data[option.dataKey || 'record'];
 					list.value = result;
 					if (isFunction(option.listAfter)) {
-						option.listAfter(data);
+						option.listAfter?.(data);
 					}
 				})
 				.finally(() => {
@@ -109,7 +101,7 @@ export const useCrud = <T = any>(option: CrudOption<T>) => {
 				});
 		};
 		if (isFunction(option.listBefore)) {
-			option.listBefore();
+			option.listBefore?.();
 		}
 		callback();
 	};
@@ -202,6 +194,6 @@ export const useCrud = <T = any>(option: CrudOption<T>) => {
 		page.value.current = val;
 		getList();
 	};
-
-	return { bindVal, onEvent, rowKey, crud, refreshChange, page, form, params };
+	getList();
+	return { bindVal, onEvent, rowKey, crud, refreshChange, page, form, params, api, avueOption };
 };
