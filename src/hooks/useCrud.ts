@@ -1,4 +1,4 @@
-import { ref, Ref, reactive, computed } from 'vue';
+import { ref, Ref, computed, nextTick } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { isFunction } from 'lodash-es';
 import { DataPage, Result } from '@/typings/axios';
@@ -48,7 +48,7 @@ export const useCrud = <T = any>(option: CrudOption<T>) => {
 
 	const list = ref([]);
 	let form = ref({});
-	let params = reactive({});
+	let params = ref({});
 	let crud: Ref<HTMLElement | undefined> = ref();
 	let loading = ref(false);
 	const page = ref({
@@ -177,7 +177,7 @@ export const useCrud = <T = any>(option: CrudOption<T>) => {
 	const searchChange = (sep: SearchParams, done: () => void) => {
 		console.log('原参数---', sep);
 		if (done) done();
-		params = option.searchParams?.(sep) || sep;
+		params.value = option.searchParams?.(sep) || sep;
 		console.log('改造变后参数---', params);
 		page.value.current = 1;
 		getList();
@@ -194,6 +194,8 @@ export const useCrud = <T = any>(option: CrudOption<T>) => {
 		page.value.current = val;
 		getList();
 	};
-	getList();
+	nextTick(() => {
+		getList();
+	});
 	return { bindVal, onEvent, rowKey, crud, refreshChange, page, form, params, api, avueOption };
 };
