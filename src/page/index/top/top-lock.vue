@@ -43,7 +43,7 @@ const handleSetLock = async (elForm: FormInstance | undefined) => {
 	});
 };
 const handleLock = () => {
-	if (validatenull(lockPasswd)) {
+	if (validatenull(lockPasswd.value)) {
 		box.value = true;
 		return;
 	}
