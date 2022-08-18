@@ -1,3 +1,9 @@
+<!--
+ * @Author: qinhongyang virtual1680@gmail.com
+ * @Date: 2022-08-11 17:21:48
+ * @LastEditTime: 2022-08-18 08:04:38
+ * @Description: 锁屏
+-->
 <template>
 	<span v-if="text" @click="handleLock">{{ text }}</span>
 	<i v-else class="icon-suoping" @click="handleLock"></i>
@@ -43,7 +49,7 @@ const handleSetLock = async (elForm: FormInstance | undefined) => {
 	});
 };
 const handleLock = () => {
-	if (validatenull(lockPasswd)) {
+	if (validatenull(lockPasswd.value)) {
 		box.value = true;
 		return;
 	}
