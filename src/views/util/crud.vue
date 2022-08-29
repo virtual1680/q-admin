@@ -1,3 +1,9 @@
+<!--
+ * @Author: qinhongyang virtual1680@gmail.com
+ * @Date: 2022-08-11 17:21:48
+ * @LastEditTime: 2022-08-29 14:06:40
+ * @Description: 暂无
+-->
 <template>
 	<basic-container>
 		<qv-crud v-bind="bindVal" v-on="onEvent" v-model:page="page" v-model="form"> </qv-crud>
@@ -7,8 +13,8 @@
 <script lang="ts" setup>
 import { useCrud } from '@/hooks/useCrud';
 import { onMounted } from 'vue';
-// import { getCurrentInstance, onMounted } from 'vue';
-// const instance = getCurrentInstance();
+// import { getCurrentInstance } from 'vue';
+// const { proxy } = getCurrentInstance();
 interface RowData {
 	name: string;
 	sex: string;
