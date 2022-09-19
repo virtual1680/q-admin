@@ -365,6 +365,22 @@ const second = [
 	},
 	{
 		parentId: 1,
+		label: 'CRUD表格',
+		path: '/crud',
+		icon: 'icon-caidan',
+		children: [
+			{
+				label: 'CRUD基础',
+				path: 'basics',
+				component: 'views/crud/basics',
+				iconBgColor: randomColor(),
+				icon: 'icon-caidan',
+				children: []
+			}
+		]
+	},
+	{
+		parentId: 1,
 		label: '批量导入',
 		path: '/import-excel',
 		component: 'views/util/import-dialog',

@@ -1,6 +1,9 @@
 <template>
 	<div class="basic-container" :style="styleName" :class="{ 'basic-container--block': block }">
 		<el-card class="basic-container__card">
+			<template #header>
+				<slot name="header"></slot>
+			</template>
 			<slot></slot>
 		</el-card>
 	</div>

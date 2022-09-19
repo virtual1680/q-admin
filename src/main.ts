@@ -22,5 +22,5 @@ app.use(componentList);
 app.use(error);
 app.use(ElementPlus);
 app.use(Avue, { axios });
-app.use(QvVue, { axios });
+app.use(QvVue);
 app.mount('#app');

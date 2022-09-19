@@ -21,7 +21,7 @@
 					</router-view>
 				</div>
 				<div class="avue-footer">
-					<p class="copyright">© 2018-2021 Avue designed by smallwei</p>
+					<div class="copyright">© 2022 QvVue designed by virtual1680</div>
 				</div>
 			</div>
 		</div>
