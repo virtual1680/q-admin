@@ -376,6 +376,14 @@ const second = [
 				iconBgColor: randomColor(),
 				icon: 'icon-caidan',
 				children: []
+			},
+			{
+				label: 'CRUD分页',
+				path: 'page',
+				component: 'views/crud/page',
+				iconBgColor: randomColor(),
+				icon: 'icon-caidan',
+				children: []
 			}
 		]
 	},

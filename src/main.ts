@@ -1,3 +1,9 @@
+/*
+ * @Author: qinhongyang virtual1680@gmail.com
+ * @Date: 2022-09-19 16:58:59
+ * @LastEditTime: 2022-09-20 14:58:45
+ * @Description: 暂无
+ */
 import { createApp } from 'vue';
 import App from 'app/App.vue';
 import store from 'store/index';
@@ -6,7 +12,7 @@ import 'virtual:svg-icons-register';
 import i18n from './lang/index';
 import ElementPlus from 'element-plus';
 import Avue from '@smallwei/avue';
-import QvVue from 'qv-vue';
+import QvVue from './qv-vue';
 import 'qv-vue/theme-chalk/index.css';
 import axios from './http/axios';
 import componentList from './components';
@@ -22,5 +28,5 @@ app.use(componentList);
 app.use(error);
 app.use(ElementPlus);
 app.use(Avue, { axios });
-app.use(QvVue);
+app.use(QvVue, { axios });
 app.mount('#app');
