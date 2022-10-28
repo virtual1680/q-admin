@@ -1,6 +1,6 @@
 import { getMenu, getTopMenu, getUserInfo, loginByUsername, logout, refeshToken } from '@/api/user';
 import { setStore } from 'utils/store';
-import { formatPath } from '@/router/avue-router';
+import { formatPath } from '@/router/qv-router';
 import { deepClone, encryption } from '@/utils/util';
 import { defineStore } from 'pinia';
 import { PersistedStateOptions } from 'pinia-plugin-persistedstate';

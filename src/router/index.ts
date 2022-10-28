@@ -1,7 +1,13 @@
+/*
+ * @Author: virtual1680 virtual1680@gmail.com
+ * @Date: 2022-07-20 23:45:34
+ * @LastEditTime: 2022-10-28 14:39:06
+ * @Description: 暂无
+ */
 import { createRouter, createWebHistory, Router, RouteRecordRaw } from 'vue-router';
 import PageRouter from './page/index';
 import ViewsRouter from './views/index';
-import AvueRouter from './avue-router';
+import AvueRouter from './qv-router';
 import i18n from 'app/lang/index';
 import { getStore } from 'utils/store';
 import { VueI18n } from 'vue-i18n';
