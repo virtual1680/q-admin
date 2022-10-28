@@ -1,7 +1,7 @@
 <template>
 	<basic-container>
 		<h3>表格例子</h3>
-		<avue-crud :option="option" :data="data"></avue-crud>
+		<qv-crud :option="option" :data="data"></qv-crud>
 	</basic-container>
 </template>
 
